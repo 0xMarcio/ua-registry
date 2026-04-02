@@ -101,7 +101,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           VERSION_SUMMARY="$(node -e 'const fs=require("node:fs"); const meta=JSON.parse(fs.readFileSync("docs/api/meta.json","utf8")); process.stdout.write(`chrome ${meta.resolved_versions.chrome.current.version}, safari ${meta.resolved_versions.safari.current.version}, edge ${meta.resolved_versions.edge.current.version}, firefox ${meta.resolved_versions.firefox.current.version}`)')"
           git add docs README.md
-          git commit -m "chore: refresh UA data (${VERSION_SUMMARY})"
+          git commit -m "refresh UA data (${VERSION_SUMMARY})"
           git push
 
       - name: Upload Pages artifact
