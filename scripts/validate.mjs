@@ -102,9 +102,15 @@ export function validateSiteModel(site) {
   invariant(manifest, "api/index.json was not generated.");
 
   for (const entry of manifest.endpoints) {
+    const existsInJson = Object.prototype.hasOwnProperty.call(site.endpoints, entry.path);
+    const existsInText = Object.prototype.hasOwnProperty.call(site.textEndpoints ?? {}, entry.path);
+    invariant(existsInJson || existsInText, `Manifest entry ${entry.path} does not point to a generated endpoint.`);
+  }
+
+  for (const [pathname, content] of Object.entries(site.textEndpoints ?? {})) {
     invariant(
-      Object.prototype.hasOwnProperty.call(site.endpoints, entry.path),
-      `Manifest entry ${entry.path} does not point to a generated endpoint.`
+      typeof content === "string" && content.startsWith("Mozilla/5.0"),
+      `${pathname} must be a plain-text UA string.`
     );
   }
 }
@@ -129,16 +135,23 @@ async function walk(directory) {
 
 export async function validateOutputDirectory(rootDirectory) {
   const apiDirectory = path.join(rootDirectory, "api");
-  const files = (await walk(apiDirectory)).filter((filePath) => filePath.endsWith(".json"));
+  const files = await walk(apiDirectory);
   const endpoints = {};
+  const textEndpoints = {};
 
   for (const filePath of files) {
     const relativePath = path.relative(rootDirectory, filePath).replaceAll(path.sep, "/");
-    endpoints[relativePath] = JSON.parse(await readFile(filePath, "utf8"));
+
+    if (filePath.endsWith(".json")) {
+      endpoints[relativePath] = JSON.parse(await readFile(filePath, "utf8"));
+      continue;
+    }
+
+    textEndpoints[relativePath] = await readFile(filePath, "utf8");
   }
 
-  validateSiteModel({ endpoints });
-  return endpoints;
+  validateSiteModel({ endpoints, textEndpoints });
+  return { endpoints, textEndpoints };
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {

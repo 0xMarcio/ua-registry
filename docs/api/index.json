@@ -27,10 +27,24 @@
       "count": 4
     },
     {
+      "path": "api/chrome/latest-desktop",
+      "group": "chrome",
+      "description": "Google Chrome latest desktop UA string",
+      "count": 1,
+      "format": "text"
+    },
+    {
       "path": "api/chrome/latest-desktop.json",
       "group": "chrome",
       "description": "Google Chrome latest desktop UA",
       "count": 1
+    },
+    {
+      "path": "api/chrome/latest-mobile",
+      "group": "chrome",
+      "description": "Google Chrome latest mobile UA string",
+      "count": 1,
+      "format": "text"
     },
     {
       "path": "api/chrome/latest-mobile.json",
@@ -69,10 +83,24 @@
       "count": 4
     },
     {
+      "path": "api/edge/latest-desktop",
+      "group": "edge",
+      "description": "Microsoft Edge latest desktop UA string",
+      "count": 1,
+      "format": "text"
+    },
+    {
       "path": "api/edge/latest-desktop.json",
       "group": "edge",
       "description": "Microsoft Edge latest desktop UA",
       "count": 1
+    },
+    {
+      "path": "api/edge/latest-mobile",
+      "group": "edge",
+      "description": "Microsoft Edge latest mobile UA string",
+      "count": 1,
+      "format": "text"
     },
     {
       "path": "api/edge/latest-mobile.json",
@@ -105,10 +133,24 @@
       "count": 4
     },
     {
+      "path": "api/firefox/latest-desktop",
+      "group": "firefox",
+      "description": "Mozilla Firefox latest desktop UA string",
+      "count": 1,
+      "format": "text"
+    },
+    {
       "path": "api/firefox/latest-desktop.json",
       "group": "firefox",
       "description": "Mozilla Firefox latest desktop UA",
       "count": 1
+    },
+    {
+      "path": "api/firefox/latest-mobile",
+      "group": "firefox",
+      "description": "Mozilla Firefox latest mobile UA string",
+      "count": 1,
+      "format": "text"
     },
     {
       "path": "api/firefox/latest-mobile.json",
@@ -163,10 +205,24 @@
       "count": 2
     },
     {
+      "path": "api/safari/latest-desktop",
+      "group": "safari",
+      "description": "Apple Safari latest desktop UA string",
+      "count": 1,
+      "format": "text"
+    },
+    {
       "path": "api/safari/latest-desktop.json",
       "group": "safari",
       "description": "Apple Safari latest desktop UA",
       "count": 1
+    },
+    {
+      "path": "api/safari/latest-mobile",
+      "group": "safari",
+      "description": "Apple Safari latest mobile UA string",
+      "count": 1,
+      "format": "text"
     },
     {
       "path": "api/safari/latest-mobile.json",

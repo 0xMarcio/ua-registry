@@ -32,6 +32,35 @@ function singlePayload(generatedAt, item) {
   };
 }
 
+function plainTextPayload(item) {
+  return `${item.user_agent}\n`;
+}
+
+function buildReadme(latest) {
+  const lines = ["# Latest Browser User Agents", ""];
+
+  for (const browser of BROWSER_ORDER) {
+    const label = BROWSER_LABELS[browser];
+    const browserLatest = latest[browser];
+    lines.push(`## ${label}`);
+    lines.push("");
+    lines.push(`Desktop`);
+    lines.push("");
+    lines.push("```text");
+    lines.push(browserLatest.desktop.user_agent);
+    lines.push("```");
+    lines.push("");
+    lines.push(`Mobile`);
+    lines.push("");
+    lines.push("```text");
+    lines.push(browserLatest.mobile.user_agent);
+    lines.push("```");
+    lines.push("");
+  }
+
+  return `${lines.join("\n").trimEnd()}\n`;
+}
+
 function buildManifest(generatedAt, collections) {
   const endpoints = [
     {
@@ -107,10 +136,24 @@ function buildManifest(generatedAt, collections) {
         count: 1
       },
       {
+        path: `api/${browser}/latest-desktop`,
+        group: browser,
+        description: `${BROWSER_LABELS[browser]} latest desktop UA string`,
+        count: 1,
+        format: "text"
+      },
+      {
         path: `api/${browser}/latest-mobile.json`,
         group: browser,
         description: `${BROWSER_LABELS[browser]} latest mobile UA`,
         count: 1
+      },
+      {
+        path: `api/${browser}/latest-mobile`,
+        group: browser,
+        description: `${BROWSER_LABELS[browser]} latest mobile UA string`,
+        count: 1,
+        format: "text"
       }
     );
   }
@@ -188,7 +231,7 @@ async function loadExistingMeta(docsDirectory) {
 }
 
 function buildEndpointMap(generatedAt, collections, meta) {
-  const endpoints = {
+  const jsonEndpoints = {
     "api/all.json": listPayload(generatedAt, "all", "all", collections.allItems),
     "api/desktop.json": listPayload(generatedAt, "all", "desktop", collections.desktopItems),
     "api/mobile.json": listPayload(generatedAt, "all", "mobile", collections.mobileItems),
@@ -202,30 +245,50 @@ function buildEndpointMap(generatedAt, collections, meta) {
   for (const browser of BROWSER_ORDER) {
     const items = collections.browserItems[browser];
     const latest = collections.latest[browser];
-    endpoints[`api/${browser}.json`] = listPayload(generatedAt, browser, "all", items);
-    endpoints[`api/${browser}/desktop.json`] = listPayload(
+    jsonEndpoints[`api/${browser}.json`] = listPayload(generatedAt, browser, "all", items);
+    jsonEndpoints[`api/${browser}/desktop.json`] = listPayload(
       generatedAt,
       browser,
       "desktop",
       items.filter((item) => item.device_class === "desktop")
     );
-    endpoints[`api/${browser}/mobile.json`] = listPayload(
+    jsonEndpoints[`api/${browser}/mobile.json`] = listPayload(
       generatedAt,
       browser,
       "mobile",
       items.filter((item) => item.device_class === "mobile")
     );
-    endpoints[`api/${browser}/latest.json`] = {
+    jsonEndpoints[`api/${browser}/latest.json`] = {
       generated_at: generatedAt,
       desktop: latest.desktop,
       mobile: latest.mobile
     };
-    endpoints[`api/${browser}/latest-desktop.json`] = singlePayload(generatedAt, latest.desktop);
-    endpoints[`api/${browser}/latest-mobile.json`] = singlePayload(generatedAt, latest.mobile);
+    jsonEndpoints[`api/${browser}/latest-desktop.json`] = singlePayload(
+      generatedAt,
+      latest.desktop
+    );
+    jsonEndpoints[`api/${browser}/latest-mobile.json`] = singlePayload(
+      generatedAt,
+      latest.mobile
+    );
   }
 
-  endpoints["api/index.json"] = buildManifest(generatedAt, collections);
-  return endpoints;
+  jsonEndpoints["api/index.json"] = buildManifest(generatedAt, collections);
+
+  const textEndpoints = Object.fromEntries(
+    BROWSER_ORDER.flatMap((browser) => {
+      const latest = collections.latest[browser];
+      return [
+        [`api/${browser}/latest-desktop`, plainTextPayload(latest.desktop)],
+        [`api/${browser}/latest-mobile`, plainTextPayload(latest.mobile)]
+      ];
+    })
+  );
+
+  return {
+    jsonEndpoints,
+    textEndpoints
+  };
 }
 
 export async function buildProject({
@@ -276,8 +339,11 @@ export async function buildProject({
     collections
   });
 
-  const endpoints = buildEndpointMap(generatedAt, collections, finalMeta);
-  const site = { endpoints };
+  const { jsonEndpoints, textEndpoints } = buildEndpointMap(generatedAt, collections, finalMeta);
+  const generatedFiles = {
+    "README.md": buildReadme(collections.latest)
+  };
+  const site = { endpoints: jsonEndpoints, textEndpoints, generatedFiles };
 
   validateSiteModel(site);
   const changedFiles = await writeSite(docsDirectory, site);
@@ -285,7 +351,8 @@ export async function buildProject({
   return {
     changedFiles,
     generatedAt,
-    endpoints,
+    endpoints: jsonEndpoints,
+    textEndpoints,
     meta: finalMeta
   };
 }

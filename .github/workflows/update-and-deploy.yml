@@ -1,5 +1,8 @@
 name: Update and Deploy
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   schedule:
     - cron: "17 6 * * *"
@@ -85,7 +88,7 @@ jobs:
       - name: Detect generated changes
         id: changes
         run: |
-          if [ -n "$(git status --porcelain -- docs)" ]; then
+          if [ -n "$(git status --porcelain -- docs README.md)" ]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
           else
             echo "changed=false" >> "$GITHUB_OUTPUT"
@@ -97,7 +100,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           VERSION_SUMMARY="$(node -e 'const fs=require("node:fs"); const meta=JSON.parse(fs.readFileSync("docs/api/meta.json","utf8")); process.stdout.write(`chrome ${meta.resolved_versions.chrome.current.version}, safari ${meta.resolved_versions.safari.current.version}, edge ${meta.resolved_versions.edge.current.version}, firefox ${meta.resolved_versions.firefox.current.version}`)')"
-          git add docs
+          git add docs README.md
           git commit -m "chore: refresh UA data (${VERSION_SUMMARY})"
           git push
 

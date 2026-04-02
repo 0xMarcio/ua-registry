@@ -1,25 +1,57 @@
-# UA Registry
+# Latest Browser User Agents
 
-Static JSON registry of current browser user-agent strings.
+## Google Chrome
 
-This repo publishes full literal UA strings for Chrome, Safari, Edge, and Firefox through GitHub Pages. The output is meant to be easy to consume: no API server, no UA fragment assembly, just plain files under `docs/api/`.
+Desktop
 
-Examples:
+```text
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36
+```
 
-- `api/index.json`
-- `api/all.json`
-- `api/latest.json`
-- `api/chrome/latest.json`
-- `api/safari/latest.json`
-- `api/edge/latest.json`
-- `api/firefox/latest.json`
+Mobile
 
-Each entry includes a complete `user_agent` string. Browser-specific top lists always contain 5 unique values.
+```text
+Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Mobile Safari/537.36
+```
 
-Official browser release data is used where possible, with a small amount of templating to turn version data into complete UA strings.
+## Apple Safari
 
-```bash
-npm test
-npm run build
-npm run preview
+Desktop
+
+```text
+Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Safari/605.1.15
+```
+
+Mobile
+
+```text
+Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Mobile/15E148 Safari/604.1
+```
+
+## Microsoft Edge
+
+Desktop
+
+```text
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36 Edg/146.0.0.0
+```
+
+Mobile
+
+```text
+Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Mobile Safari/537.36 EdgA/146.0.0.0
+```
+
+## Mozilla Firefox
+
+Desktop
+
+```text
+Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+```
+
+Mobile
+
+```text
+Mozilla/5.0 (Android 15; Mobile; rv:149.0) Gecko/149.0 Firefox/149.0
 ```

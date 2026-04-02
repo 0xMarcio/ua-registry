@@ -136,7 +136,14 @@ test("buildProject writes deterministic outputs and preserves generated_at when 
   const meta = JSON.parse(
     await readFile(path.join(tempRoot, "docs", "api", "meta.json"), "utf8")
   );
+  const readme = await readFile(path.join(tempRoot, "README.md"), "utf8");
+  const chromeText = await readFile(
+    path.join(tempRoot, "docs", "api", "chrome", "latest-desktop"),
+    "utf8"
+  );
 
   assert.equal(meta.generated_at, "2026-04-02T12:34:56Z");
   assert.equal(meta.build_sha, "1111111");
+  assert.match(readme, /^# Latest Browser User Agents/);
+  assert.match(chromeText, /^Mozilla\/5\.0/);
 });

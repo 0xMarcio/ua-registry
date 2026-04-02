@@ -384,6 +384,7 @@ load();
 export async function writeSite(rootDirectory, site) {
   const changedFiles = [];
   const docsDirectory = rootDirectory;
+  const repositoryRoot = path.resolve(docsDirectory, "..");
 
   const staticFiles = {
     ".nojekyll": "",
@@ -404,6 +405,22 @@ export async function writeSite(rootDirectory, site) {
     const filePath = path.join(docsDirectory, relativePath);
 
     if (await writeIfChanged(filePath, stringifyJson(payload))) {
+      changedFiles.push(relativePath);
+    }
+  }
+
+  for (const [relativePath, content] of Object.entries(site.textEndpoints ?? {})) {
+    const filePath = path.join(docsDirectory, relativePath);
+
+    if (await writeIfChanged(filePath, content)) {
+      changedFiles.push(relativePath);
+    }
+  }
+
+  for (const [relativePath, content] of Object.entries(site.generatedFiles ?? {})) {
+    const filePath = path.join(repositoryRoot, relativePath);
+
+    if (await writeIfChanged(filePath, content)) {
       changedFiles.push(relativePath);
     }
   }
