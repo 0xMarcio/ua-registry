@@ -1,6 +1,6 @@
 {
   "generated_at": "2026-04-02T16:52:04.567Z",
-  "build_sha": null,
+  "build_sha": "560d6734c598c22fe12023be41275c0e8f4689c7",
   "generator_version": "1.0.0",
   "source_strategy": {
     "primary": "Official vendor version feeds plus deterministic UA template generation.",
