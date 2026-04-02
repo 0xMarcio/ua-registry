@@ -65,6 +65,7 @@ const FIXTURE_VERSIONS = {
 
 test("Chromium-based templates use reduced UA formats", () => {
   const chrome = buildVariantItem("chrome", "current-windows", FIXTURE_VERSIONS);
+  const edgeDesktop = buildVariantItem("edge", "current-windows", FIXTURE_VERSIONS);
   const edge = buildVariantItem("edge", "current-android", FIXTURE_VERSIONS);
 
   assert.equal(
@@ -72,8 +73,12 @@ test("Chromium-based templates use reduced UA formats", () => {
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36"
   );
   assert.equal(
+    edgeDesktop.user_agent,
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36 Edg/146.0.3856.97"
+  );
+  assert.equal(
     edge.user_agent,
-    "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Mobile Safari/537.36 EdgA/146.0.0.0"
+    "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Mobile Safari/537.36 EdgA/146.0.3856.85"
   );
 });
 

@@ -27,7 +27,7 @@ function chromiumPlatformToken(platform) {
   throw new Error(`Unsupported Chromium platform: ${platform}`);
 }
 
-function buildChromiumUserAgent({ browser, platform, version }) {
+function buildChromiumUserAgent({ browser, platform, version, edgeVersion = null }) {
   const major = String(version);
   const base = [
     `Mozilla/5.0 (${chromiumPlatformToken(platform)})`,
@@ -44,11 +44,16 @@ function buildChromiumUserAgent({ browser, platform, version }) {
   }
 
   if (browser === "edge") {
+    // Microsoft publishes platform-specific Edge app versions in the products
+    // feed. Keep the Chromium token reduced, but use the full Edge app version
+    // in the Edg/EdgA token so the UA reflects the latest stable release.
+    const resolvedEdgeVersion = edgeVersion ?? `${major}.0.0.0`;
+
     if (platform === "android") {
-      return [...base, "Mobile Safari/537.36", `EdgA/${major}.0.0.0`].join(" ");
+      return [...base, "Mobile Safari/537.36", `EdgA/${resolvedEdgeVersion}`].join(" ");
     }
 
-    return [...base, "Safari/537.36", `Edg/${major}.0.0.0`].join(" ");
+    return [...base, "Safari/537.36", `Edg/${resolvedEdgeVersion}`].join(" ");
   }
 
   throw new Error(`Unsupported Chromium browser: ${browser}`);
@@ -203,10 +208,18 @@ export function buildVariantItem(browser, variantId, versions) {
   let userAgent;
 
   if (browser === "chrome" || browser === "edge") {
+    const edgeVersion =
+      browser === "edge"
+        ? versionRecord.releases?.[descriptor.platform] ??
+          versionRecord.full_version ??
+          `${versionRecord.version}.0.0.0`
+        : null;
+
     userAgent = buildChromiumUserAgent({
       browser,
       platform: descriptor.platform,
-      version: versionRecord.version
+      version: versionRecord.version,
+      edgeVersion
     });
   } else if (browser === "firefox") {
     userAgent = buildFirefoxUserAgent({

@@ -22,6 +22,10 @@ const expectedPlatforms = {
   firefox: ["windows", "macos", "linux", "android", "ubuntu"]
 };
 
+function escapeRegex(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 test("generated endpoints satisfy counts, manifest integrity, and platform endpoint shape", async () => {
   const { endpoints, textEndpoints } = await validateOutputDirectory(docsDirectory);
   const manifest = endpoints["api/index.json"];
@@ -73,6 +77,16 @@ test("generated endpoints satisfy counts, manifest integrity, and platform endpo
   assert.deepEqual(
     textEndpoints["api/mobile"].trim().split("\n"),
     endpoints["api/mobile.json"].items.map((item) => item.user_agent)
+  );
+
+  const edgeReleaseVersions = endpoints["api/meta.json"].resolved_versions.edge.current.releases;
+  assert.match(
+    endpoints["api/edge/windows.json"].user_agent,
+    new RegExp(`Edg/${escapeRegex(edgeReleaseVersions.windows)}$`)
+  );
+  assert.match(
+    endpoints["api/edge/android.json"].user_agent,
+    new RegExp(`EdgA/${escapeRegex(edgeReleaseVersions.android)}$`)
   );
 
   for (const entry of manifest.endpoints) {
