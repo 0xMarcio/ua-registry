@@ -1,0 +1,10 @@
+{
+  "generated_at": "2026-04-02T16:52:04.567Z",
+  "label": "Chrome on Linux",
+  "browser": "chrome",
+  "platform": "linux",
+  "device_class": "desktop",
+  "track": "current",
+  "version": "147",
+  "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36"
+}

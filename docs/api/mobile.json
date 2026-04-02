@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-04-02T14:00:41.094Z",
+  "generated_at": "2026-04-02T16:52:04.567Z",
   "browser": "all",
   "device_class": "mobile",
-  "count": 6,
+  "count": 5,
   "items": [
     {
       "label": "Chrome on Android",
@@ -30,15 +30,6 @@
       "track": "current",
       "version": "26.4",
       "user_agent": "Mozilla/5.0 (iPad; CPU OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Mobile/15E148 Safari/604.1"
-    },
-    {
-      "label": "Safari previous stable on iPhone",
-      "browser": "safari",
-      "platform": "iphone",
-      "device_class": "mobile",
-      "track": "previous",
-      "version": "26.3",
-      "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1"
     },
     {
       "label": "Microsoft Edge on Android",

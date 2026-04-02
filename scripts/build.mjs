@@ -36,29 +36,51 @@ function plainTextPayload(item) {
   return `${item.user_agent}\n`;
 }
 
-function buildReadme(latest) {
+function plainTextListPayload(items) {
+  return `${items.map((item) => item.user_agent).join("\n")}\n`;
+}
+
+function buildReadme(collections) {
   const lines = ["# Latest Browser User Agents", ""];
 
   for (const browser of BROWSER_ORDER) {
     const label = BROWSER_LABELS[browser];
-    const browserLatest = latest[browser];
+    const items = collections.browserItems[browser];
     lines.push(`## ${label}`);
     lines.push("");
-    lines.push(`Desktop`);
-    lines.push("");
-    lines.push("```text");
-    lines.push(browserLatest.desktop.user_agent);
-    lines.push("```");
-    lines.push("");
-    lines.push(`Mobile`);
-    lines.push("");
-    lines.push("```text");
-    lines.push(browserLatest.mobile.user_agent);
-    lines.push("```");
-    lines.push("");
+
+    for (const item of items) {
+      lines.push(`### ${item.platform}`);
+      lines.push("");
+      lines.push("```text");
+      lines.push(item.user_agent);
+      lines.push("```");
+      lines.push("");
+    }
   }
 
   return `${lines.join("\n").trimEnd()}\n`;
+}
+
+function buildPublishedResolvedVersions(resolvedVersions) {
+  return Object.fromEntries(
+    BROWSER_ORDER.map((browser) => [browser, { current: resolvedVersions[browser].current }])
+  );
+}
+
+function buildPublishedSourceUrls(sourceReferences) {
+  return {
+    chrome: sourceReferences.chrome,
+    edge: sourceReferences.edge,
+    firefox: sourceReferences.firefox,
+    safari: {
+      current_release_notes: sourceReferences.safari.current_release_notes,
+      fallback: sourceReferences.safari.fallback,
+      release_notes_index: sourceReferences.safari.release_notes_index,
+      release_notes_page: sourceReferences.safari.release_notes_page,
+      ua_validation_article: sourceReferences.safari.ua_validation_article
+    }
+  };
 }
 
 function buildManifest(generatedAt, collections) {
@@ -80,10 +102,24 @@ function buildManifest(generatedAt, collections) {
       count: collections.allItems.length
     },
     {
+      path: "api/all",
+      group: "global",
+      description: "All generated UA strings",
+      count: collections.allItems.length,
+      format: "text"
+    },
+    {
       path: "api/desktop.json",
       group: "global",
       description: "All desktop UA entries",
       count: collections.desktopItems.length
+    },
+    {
+      path: "api/desktop",
+      group: "global",
+      description: "All desktop UA strings",
+      count: collections.desktopItems.length,
+      format: "text"
     },
     {
       path: "api/mobile.json",
@@ -92,11 +128,12 @@ function buildManifest(generatedAt, collections) {
       count: collections.mobileItems.length
     },
     {
-      path: "api/latest.json",
+      path: "api/mobile",
       group: "global",
-      description: "Latest desktop and mobile UA per browser family",
-      count: BROWSER_ORDER.length * 2
-    }
+      description: "All mobile UA strings",
+      count: collections.mobileItems.length,
+      format: "text"
+    },
   ];
 
   for (const browser of BROWSER_ORDER) {
@@ -108,8 +145,15 @@ function buildManifest(generatedAt, collections) {
       {
         path: `api/${browser}.json`,
         group: browser,
-        description: `${BROWSER_LABELS[browser]} top-five variants`,
+        description: `${BROWSER_LABELS[browser]} current variants`,
         count: items.length
+      },
+      {
+        path: `api/${browser}/desktop`,
+        group: browser,
+        description: `${BROWSER_LABELS[browser]} desktop UA strings`,
+        count: desktopItems.length,
+        format: "text"
       },
       {
         path: `api/${browser}/desktop.json`,
@@ -118,51 +162,44 @@ function buildManifest(generatedAt, collections) {
         count: desktopItems.length
       },
       {
+        path: `api/${browser}/mobile`,
+        group: browser,
+        description: `${BROWSER_LABELS[browser]} mobile UA strings`,
+        count: mobileItems.length,
+        format: "text"
+      },
+      {
         path: `api/${browser}/mobile.json`,
         group: browser,
         description: `${BROWSER_LABELS[browser]} mobile variants`,
         count: mobileItems.length
-      },
-      {
-        path: `api/${browser}/latest.json`,
-        group: browser,
-        description: `${BROWSER_LABELS[browser]} latest desktop and mobile`,
-        count: 2
-      },
-      {
-        path: `api/${browser}/latest-desktop.json`,
-        group: browser,
-        description: `${BROWSER_LABELS[browser]} latest desktop UA`,
-        count: 1
-      },
-      {
-        path: `api/${browser}/latest-desktop`,
-        group: browser,
-        description: `${BROWSER_LABELS[browser]} latest desktop UA string`,
-        count: 1,
-        format: "text"
-      },
-      {
-        path: `api/${browser}/latest-mobile.json`,
-        group: browser,
-        description: `${BROWSER_LABELS[browser]} latest mobile UA`,
-        count: 1
-      },
-      {
-        path: `api/${browser}/latest-mobile`,
-        group: browser,
-        description: `${BROWSER_LABELS[browser]} latest mobile UA string`,
-        count: 1,
-        format: "text"
       }
     );
+
+    for (const item of items) {
+      endpoints.push(
+        {
+          path: `api/${browser}/${item.platform}`,
+          group: browser,
+          description: `${BROWSER_LABELS[browser]} ${item.platform} UA string`,
+          count: 1,
+          format: "text"
+        },
+        {
+          path: `api/${browser}/${item.platform}.json`,
+          group: browser,
+          description: `${BROWSER_LABELS[browser]} ${item.platform} UA`,
+          count: 1
+        }
+      );
+    }
   }
 
   endpoints.sort((left, right) => left.path.localeCompare(right.path));
 
   return {
     generated_at: generatedAt,
-    description: "Relative-path manifest for the published static JSON endpoints.",
+    description: "Relative-path manifest for the published static JSON and text endpoints.",
     browser_counts: Object.fromEntries(
       BROWSER_ORDER.map((browser) => [browser, collections.browserItems[browser].length])
     ),
@@ -178,6 +215,9 @@ function buildMeta({
   fallbackUse,
   collections
 }) {
+  const publishedResolvedVersions = buildPublishedResolvedVersions(resolvedVersions);
+  const publishedSourceUrls = buildPublishedSourceUrls(sourceReferences);
+
   return {
     generated_at: generatedAt,
     build_sha: buildSha ?? null,
@@ -185,11 +225,11 @@ function buildMeta({
     source_strategy: {
       primary: "Official vendor version feeds plus deterministic UA template generation.",
       fallbacks: [
-        "Safari current-version discovery can fall back to browsers.fyi only when Apple release-note parsing does not safely expose both stable releases."
+        "Safari current-version discovery can fall back to browsers.fyi only when Apple release-note parsing does not safely expose the current stable release."
       ]
     },
-    source_urls: sourceReferences,
-    resolved_versions: resolvedVersions,
+    source_urls: publishedSourceUrls,
+    resolved_versions: publishedResolvedVersions,
     variant_config: {
       signature: getVariantConfigSignature(),
       notes: VARIANT_CONFIG_NOTES
@@ -235,16 +275,11 @@ function buildEndpointMap(generatedAt, collections, meta) {
     "api/all.json": listPayload(generatedAt, "all", "all", collections.allItems),
     "api/desktop.json": listPayload(generatedAt, "all", "desktop", collections.desktopItems),
     "api/mobile.json": listPayload(generatedAt, "all", "mobile", collections.mobileItems),
-    "api/latest.json": {
-      generated_at: generatedAt,
-      browsers: collections.latest
-    },
     "api/meta.json": meta
   };
 
   for (const browser of BROWSER_ORDER) {
     const items = collections.browserItems[browser];
-    const latest = collections.latest[browser];
     jsonEndpoints[`api/${browser}.json`] = listPayload(generatedAt, browser, "all", items);
     jsonEndpoints[`api/${browser}/desktop.json`] = listPayload(
       generatedAt,
@@ -258,31 +293,31 @@ function buildEndpointMap(generatedAt, collections, meta) {
       "mobile",
       items.filter((item) => item.device_class === "mobile")
     );
-    jsonEndpoints[`api/${browser}/latest.json`] = {
-      generated_at: generatedAt,
-      desktop: latest.desktop,
-      mobile: latest.mobile
-    };
-    jsonEndpoints[`api/${browser}/latest-desktop.json`] = singlePayload(
-      generatedAt,
-      latest.desktop
-    );
-    jsonEndpoints[`api/${browser}/latest-mobile.json`] = singlePayload(
-      generatedAt,
-      latest.mobile
-    );
+
+    for (const item of items) {
+      jsonEndpoints[`api/${browser}/${item.platform}.json`] = singlePayload(generatedAt, item);
+    }
   }
 
   jsonEndpoints["api/index.json"] = buildManifest(generatedAt, collections);
 
   const textEndpoints = Object.fromEntries(
-    BROWSER_ORDER.flatMap((browser) => {
-      const latest = collections.latest[browser];
-      return [
-        [`api/${browser}/latest-desktop`, plainTextPayload(latest.desktop)],
-        [`api/${browser}/latest-mobile`, plainTextPayload(latest.mobile)]
-      ];
-    })
+    [
+      ["api/all", plainTextListPayload(collections.allItems)],
+      ["api/desktop", plainTextListPayload(collections.desktopItems)],
+      ["api/mobile", plainTextListPayload(collections.mobileItems)],
+      ...BROWSER_ORDER.flatMap((browser) => {
+        const items = collections.browserItems[browser];
+        const desktopItems = items.filter((item) => item.device_class === "desktop");
+        const mobileItems = items.filter((item) => item.device_class === "mobile");
+
+        return [
+          [`api/${browser}/desktop`, plainTextListPayload(desktopItems)],
+          [`api/${browser}/mobile`, plainTextListPayload(mobileItems)],
+          ...items.map((item) => [`api/${browser}/${item.platform}`, plainTextPayload(item)])
+        ];
+      })
+    ]
   );
 
   return {
@@ -341,7 +376,7 @@ export async function buildProject({
 
   const { jsonEndpoints, textEndpoints } = buildEndpointMap(generatedAt, collections, finalMeta);
   const generatedFiles = {
-    "README.md": buildReadme(collections.latest)
+    "README.md": buildReadme(collections)
   };
   const site = { endpoints: jsonEndpoints, textEndpoints, generatedFiles };
 

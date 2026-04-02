@@ -119,7 +119,7 @@ test("buildProject writes deterministic outputs and preserves generated_at when 
   });
 
   assert.ok(firstBuild.changedFiles.length > 0);
-  assert.equal(firstBuild.endpoints["api/chrome.json"].count, 5);
+  assert.equal(firstBuild.endpoints["api/chrome.json"].count, 4);
 
   const secondBuild = await buildProject({
     rootDirectory: tempRoot,
@@ -138,7 +138,7 @@ test("buildProject writes deterministic outputs and preserves generated_at when 
   );
   const readme = await readFile(path.join(tempRoot, "README.md"), "utf8");
   const chromeText = await readFile(
-    path.join(tempRoot, "docs", "api", "chrome", "latest-desktop"),
+    path.join(tempRoot, "docs", "api", "chrome", "windows"),
     "utf8"
   );
 
@@ -146,4 +146,7 @@ test("buildProject writes deterministic outputs and preserves generated_at when 
   assert.equal(meta.build_sha, "1111111");
   assert.match(readme, /^# Latest Browser User Agents/);
   assert.match(chromeText, /^Mozilla\/5\.0/);
+  assert.doesNotMatch(readme, /previous stable/i);
+  assert.equal("previous" in meta.resolved_versions.chrome, false);
+  assert.equal("previous_release_notes" in meta.source_urls.safari, false);
 });

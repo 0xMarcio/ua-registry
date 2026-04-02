@@ -76,10 +76,10 @@ jobs:
             "## UA build",
             "",
             `- Generated at: ${meta.generated_at}`,
-            `- Chrome: ${meta.resolved_versions.chrome.current.version} (prev ${meta.resolved_versions.chrome.previous.version})`,
-            `- Safari: ${meta.resolved_versions.safari.current.version} (prev ${meta.resolved_versions.safari.previous.version})`,
-            `- Edge: ${meta.resolved_versions.edge.current.version} (prev ${meta.resolved_versions.edge.previous.version})`,
-            `- Firefox: ${meta.resolved_versions.firefox.current.version} (prev ${meta.resolved_versions.firefox.previous.version})`,
+            `- Chrome: ${meta.resolved_versions.chrome.current.version}`,
+            `- Safari: ${meta.resolved_versions.safari.current.version}`,
+            `- Edge: ${meta.resolved_versions.edge.current.version}`,
+            `- Firefox: ${meta.resolved_versions.firefox.current.version}`,
             `- Safari fallback used: ${meta.fallback_source_use.used ? "yes" : "no"}`
           ];
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join("\n")}\n`);

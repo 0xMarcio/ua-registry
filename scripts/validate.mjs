@@ -39,40 +39,12 @@ function validateSingleItemEndpoint(pathname, payload) {
   validateItem(payload, pathname);
 }
 
-function validateBrowserLatestEndpoint(pathname, payload) {
-  invariant(payload.desktop && payload.mobile, `${pathname} must contain desktop and mobile items.`);
-  validateItem(payload.desktop, `${pathname} desktop`);
-  validateItem(payload.mobile, `${pathname} mobile`);
-}
-
-function expectedBrowserCount(pathname) {
-  return /api\/(chrome|safari|edge|firefox)\.json$/.test(pathname) ? 5 : null;
-}
-
 export function validateSiteModel(site) {
   const endpointEntries = Object.entries(site.endpoints);
   invariant(endpointEntries.length > 0, "No endpoints were generated.");
 
   for (const [pathname, payload] of endpointEntries) {
     invariant(pathname.endsWith(".json"), `${pathname} must end in .json.`);
-
-    if (pathname === "api/latest.json") {
-      invariant(payload.browsers, "api/latest.json must contain a browsers map.");
-      for (const [browser, latest] of Object.entries(payload.browsers)) {
-        validateBrowserLatestEndpoint(`api/latest.json ${browser}`, latest);
-      }
-      continue;
-    }
-
-    if (/api\/(chrome|safari|edge|firefox)\/latest\.json$/.test(pathname)) {
-      validateBrowserLatestEndpoint(pathname, payload);
-      continue;
-    }
-
-    if (/latest-(desktop|mobile)\.json$/.test(pathname)) {
-      validateSingleItemEndpoint(pathname, payload);
-      continue;
-    }
 
     if (pathname === "api/index.json") {
       invariant(Array.isArray(payload.endpoints), "api/index.json must contain an endpoints array.");
@@ -84,18 +56,26 @@ export function validateSiteModel(site) {
       continue;
     }
 
-    validateListEndpoint(pathname, payload);
+    if (Array.isArray(payload.items)) {
+      validateListEndpoint(pathname, payload);
 
-    const browserCount = expectedBrowserCount(pathname);
+      if (/api\/(chrome|safari|edge|firefox)\.json$/.test(pathname)) {
+        const uniqueUserAgents = new Set(payload.items.map((item) => item.user_agent));
+        invariant(
+          uniqueUserAgents.size === payload.items.length,
+          `${pathname} contains duplicate user-agent strings.`
+        );
+      }
 
-    if (browserCount !== null) {
-      invariant(payload.items.length === browserCount, `${pathname} must contain exactly 5 items.`);
-      const uniqueUserAgents = new Set(payload.items.map((item) => item.user_agent));
-      invariant(
-        uniqueUserAgents.size === payload.items.length,
-        `${pathname} contains duplicate user-agent strings.`
-      );
+      for (const item of payload.items) {
+        invariant(item.track === "current", `${pathname} should only expose current variants.`);
+      }
+
+      continue;
     }
+
+    validateSingleItemEndpoint(pathname, payload);
+    invariant(payload.track === "current", `${pathname} should only expose current variants.`);
   }
 
   const manifest = site.endpoints["api/index.json"];
@@ -108,10 +88,13 @@ export function validateSiteModel(site) {
   }
 
   for (const [pathname, content] of Object.entries(site.textEndpoints ?? {})) {
-    invariant(
-      typeof content === "string" && content.startsWith("Mozilla/5.0"),
-      `${pathname} must be a plain-text UA string.`
-    );
+    invariant(typeof content === "string" && content.length > 0, `${pathname} must be plain text.`);
+    const lines = content.trim().split("\n");
+    invariant(lines.length > 0, `${pathname} must contain at least one UA string.`);
+
+    for (const line of lines) {
+      invariant(line.startsWith("Mozilla/5.0"), `${pathname} contains an invalid UA string.`);
+    }
   }
 }
 

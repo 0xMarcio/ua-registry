@@ -12,27 +12,9 @@ export const BROWSER_LABELS = {
 export const FIREFOX_ANDROID_VERSION = "15";
 
 export const BROWSER_VARIANT_ORDER = {
-  chrome: [
-    "current-windows",
-    "current-macos",
-    "current-linux",
-    "current-android",
-    "previous-windows"
-  ],
-  safari: [
-    "current-macos",
-    "current-iphone",
-    "current-ipad-mobile",
-    "previous-macos",
-    "previous-iphone"
-  ],
-  edge: [
-    "current-windows",
-    "current-macos",
-    "current-linux",
-    "current-android",
-    "previous-windows"
-  ],
+  chrome: ["current-windows", "current-macos", "current-linux", "current-android"],
+  safari: ["current-macos", "current-iphone", "current-ipad-mobile"],
+  edge: ["current-windows", "current-macos", "current-linux", "current-android"],
   firefox: [
     "current-windows",
     "current-macos",
@@ -45,34 +27,9 @@ export const BROWSER_VARIANT_ORDER = {
 // The fallback pools are intentionally small and browser-local so a duplicate
 // can be replaced without touching generator logic.
 export const BROWSER_VARIANT_FALLBACKS = {
-  chrome: [
-    "current-windows",
-    "current-macos",
-    "current-linux",
-    "current-android",
-    "previous-windows",
-    "previous-macos",
-    "previous-linux",
-    "previous-android"
-  ],
-  safari: [
-    "current-macos",
-    "current-iphone",
-    "current-ipad-mobile",
-    "previous-macos",
-    "previous-iphone",
-    "previous-ipad-mobile"
-  ],
-  edge: [
-    "current-windows",
-    "current-macos",
-    "current-linux",
-    "current-android",
-    "previous-windows",
-    "previous-macos",
-    "previous-linux",
-    "previous-android"
-  ],
+  chrome: ["current-windows", "current-macos", "current-linux", "current-android"],
+  safari: ["current-macos", "current-iphone", "current-ipad-mobile"],
+  edge: ["current-windows", "current-macos", "current-linux", "current-android"],
   firefox: [
     "current-windows",
     "current-macos",
@@ -82,27 +39,8 @@ export const BROWSER_VARIANT_FALLBACKS = {
   ]
 };
 
-export const LATEST_VARIANTS = {
-  chrome: {
-    desktop: "current-windows",
-    mobile: "current-android"
-  },
-  safari: {
-    desktop: "current-macos",
-    mobile: "current-iphone"
-  },
-  edge: {
-    desktop: "current-windows",
-    mobile: "current-android"
-  },
-  firefox: {
-    desktop: "current-windows",
-    mobile: "current-android"
-  }
-};
-
 export const VARIANT_CONFIG_NOTES = [
-  "Each browser-specific endpoint starts from a five-slot default order.",
+  "Each browser-specific endpoint contains current variants only.",
   "If a slot would duplicate an already chosen UA, the generator walks that browser's fallback pool until it finds a unique replacement.",
   "Firefox keeps Android as a fixed mainstream phone variant in config because Mozilla's release feeds do not publish a preferred Android OS token."
 ];
@@ -111,7 +49,6 @@ export function getVariantConfigSignature() {
   return JSON.stringify({
     browserVariantOrder: BROWSER_VARIANT_ORDER,
     browserVariantFallbacks: BROWSER_VARIANT_FALLBACKS,
-    latestVariants: LATEST_VARIANTS,
     firefoxAndroidVersion: FIREFOX_ANDROID_VERSION,
     generatorVersion: GENERATOR_VERSION
   });

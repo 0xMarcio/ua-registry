@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-04-02T14:00:41.094Z",
-  "build_sha": "ed5d31610337bcc07a2102d77e82c245cade373e",
+  "generated_at": "2026-04-02T16:52:04.567Z",
+  "build_sha": null,
   "generator_version": "1.0.0",
   "source_strategy": {
     "primary": "Official vendor version feeds plus deterministic UA template generation.",
     "fallbacks": [
-      "Safari current-version discovery can fall back to browsers.fyi only when Apple release-note parsing does not safely expose both stable releases."
+      "Safari current-version discovery can fall back to browsers.fyi only when Apple release-note parsing does not safely expose the current stable release."
     ]
   },
   "source_urls": {
@@ -29,7 +29,6 @@
     "safari": {
       "current_release_notes": "https://developer.apple.com/documentation/safari-release-notes/safari-26_4-release-notes",
       "fallback": "https://www.browsers.fyi/api/",
-      "previous_release_notes": "https://developer.apple.com/documentation/safari-release-notes/safari-26_3-release-notes",
       "release_notes_index": "https://developer.apple.com/tutorials/data/documentation/safari-release-notes.json",
       "release_notes_page": "https://developer.apple.com/documentation/safari-release-notes/",
       "ua_validation_article": "https://nielsleenheer.com/articles/2025/the-user-agent-string-of-safari-on-ios-26-and-macos-26/"
@@ -41,11 +40,12 @@
         "full_version": "147.0.7727.50",
         "milestone": "147",
         "version": "147"
-      },
-      "previous": {
-        "full_version": "146.0.7680.165",
-        "milestone": "146",
-        "version": "146"
+      }
+    },
+    "safari": {
+      "current": {
+        "release_notes": "https://developer.apple.com/documentation/safari-release-notes/safari-26_4-release-notes",
+        "version": "26.4"
       }
     },
     "edge": {
@@ -59,46 +59,19 @@
           "windows": "146.0.3856.97"
         },
         "version": "146"
-      },
-      "previous": {
-        "derived_major": true,
-        "full_version": null,
-        "release_notes": "https://learn.microsoft.com/en-us/microsoft-edge/web-platform/release-notes/145",
-        "releases": {
-          "android": null,
-          "linux": null,
-          "macos": null,
-          "windows": null
-        },
-        "version": "145"
       }
     },
     "firefox": {
       "current": {
         "full_version": "149.0",
         "version": "149.0"
-      },
-      "esr": "140.9.0esr",
-      "previous": {
-        "full_version": "148.0.2",
-        "version": "148.0.2"
-      }
-    },
-    "safari": {
-      "current": {
-        "release_notes": "https://developer.apple.com/documentation/safari-release-notes/safari-26_4-release-notes",
-        "version": "26.4"
-      },
-      "previous": {
-        "release_notes": "https://developer.apple.com/documentation/safari-release-notes/safari-26_3-release-notes",
-        "version": "26.3"
       }
     }
   },
   "variant_config": {
-    "signature": "{\"browserVariantOrder\":{\"chrome\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\",\"previous-windows\"],\"safari\":[\"current-macos\",\"current-iphone\",\"current-ipad-mobile\",\"previous-macos\",\"previous-iphone\"],\"edge\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\",\"previous-windows\"],\"firefox\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\",\"current-ubuntu\"]},\"browserVariantFallbacks\":{\"chrome\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\",\"previous-windows\",\"previous-macos\",\"previous-linux\",\"previous-android\"],\"safari\":[\"current-macos\",\"current-iphone\",\"current-ipad-mobile\",\"previous-macos\",\"previous-iphone\",\"previous-ipad-mobile\"],\"edge\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\",\"previous-windows\",\"previous-macos\",\"previous-linux\",\"previous-android\"],\"firefox\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\",\"current-ubuntu\"]},\"latestVariants\":{\"chrome\":{\"desktop\":\"current-windows\",\"mobile\":\"current-android\"},\"safari\":{\"desktop\":\"current-macos\",\"mobile\":\"current-iphone\"},\"edge\":{\"desktop\":\"current-windows\",\"mobile\":\"current-android\"},\"firefox\":{\"desktop\":\"current-windows\",\"mobile\":\"current-android\"}},\"firefoxAndroidVersion\":\"15\",\"generatorVersion\":\"1.0.0\"}",
+    "signature": "{\"browserVariantOrder\":{\"chrome\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\"],\"safari\":[\"current-macos\",\"current-iphone\",\"current-ipad-mobile\"],\"edge\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\"],\"firefox\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\",\"current-ubuntu\"]},\"browserVariantFallbacks\":{\"chrome\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\"],\"safari\":[\"current-macos\",\"current-iphone\",\"current-ipad-mobile\"],\"edge\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\"],\"firefox\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\",\"current-ubuntu\"]},\"firefoxAndroidVersion\":\"15\",\"generatorVersion\":\"1.0.0\"}",
     "notes": [
-      "Each browser-specific endpoint starts from a five-slot default order.",
+      "Each browser-specific endpoint contains current variants only.",
       "If a slot would duplicate an already chosen UA, the generator walks that browser's fallback pool until it finds a unique replacement.",
       "Firefox keeps Android as a fixed mainstream phone variant in config because Mozilla's release feeds do not publish a preferred Android OS token."
     ]
@@ -117,13 +90,13 @@
     "note": null
   },
   "counts": {
-    "all": 20,
-    "desktop": 14,
-    "mobile": 6,
+    "all": 16,
+    "desktop": 11,
+    "mobile": 5,
     "by_browser": {
-      "chrome": 5,
-      "safari": 5,
-      "edge": 5,
+      "chrome": 4,
+      "safari": 3,
+      "edge": 4,
       "firefox": 5
     }
   }

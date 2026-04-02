@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-04-02T14:00:41.094Z",
+  "generated_at": "2026-04-02T16:52:04.567Z",
   "browser": "safari",
   "device_class": "desktop",
-  "count": 2,
+  "count": 1,
   "items": [
     {
       "label": "Safari on macOS",
@@ -12,15 +12,6 @@
       "track": "current",
       "version": "26.4",
       "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Safari/605.1.15"
-    },
-    {
-      "label": "Safari previous stable on macOS",
-      "browser": "safari",
-      "platform": "macos",
-      "device_class": "desktop",
-      "track": "previous",
-      "version": "26.3",
-      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Safari/605.1.15"
     }
   ]
 }

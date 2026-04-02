@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-04-02T14:00:41.094Z",
+  "generated_at": "2026-04-02T16:52:04.567Z",
   "browser": "safari",
   "device_class": "all",
-  "count": 5,
+  "count": 3,
   "items": [
     {
       "label": "Safari on macOS",
@@ -30,24 +30,6 @@
       "track": "current",
       "version": "26.4",
       "user_agent": "Mozilla/5.0 (iPad; CPU OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Mobile/15E148 Safari/604.1"
-    },
-    {
-      "label": "Safari previous stable on macOS",
-      "browser": "safari",
-      "platform": "macos",
-      "device_class": "desktop",
-      "track": "previous",
-      "version": "26.3",
-      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Safari/605.1.15"
-    },
-    {
-      "label": "Safari previous stable on iPhone",
-      "browser": "safari",
-      "platform": "iphone",
-      "device_class": "mobile",
-      "track": "previous",
-      "version": "26.3",
-      "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1"
     }
   ]
 }

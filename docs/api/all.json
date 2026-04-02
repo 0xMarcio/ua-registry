@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-04-02T14:00:41.094Z",
+  "generated_at": "2026-04-02T16:52:04.567Z",
   "browser": "all",
   "device_class": "all",
-  "count": 20,
+  "count": 16,
   "items": [
     {
       "label": "Chrome on Windows",
@@ -41,15 +41,6 @@
       "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Mobile Safari/537.36"
     },
     {
-      "label": "Chrome previous stable on Windows",
-      "browser": "chrome",
-      "platform": "windows",
-      "device_class": "desktop",
-      "track": "previous",
-      "version": "146",
-      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
-    },
-    {
       "label": "Safari on macOS",
       "browser": "safari",
       "platform": "macos",
@@ -75,24 +66,6 @@
       "track": "current",
       "version": "26.4",
       "user_agent": "Mozilla/5.0 (iPad; CPU OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Mobile/15E148 Safari/604.1"
-    },
-    {
-      "label": "Safari previous stable on macOS",
-      "browser": "safari",
-      "platform": "macos",
-      "device_class": "desktop",
-      "track": "previous",
-      "version": "26.3",
-      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Safari/605.1.15"
-    },
-    {
-      "label": "Safari previous stable on iPhone",
-      "browser": "safari",
-      "platform": "iphone",
-      "device_class": "mobile",
-      "track": "previous",
-      "version": "26.3",
-      "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1"
     },
     {
       "label": "Microsoft Edge on Windows",
@@ -129,15 +102,6 @@
       "track": "current",
       "version": "146",
       "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Mobile Safari/537.36 EdgA/146.0.0.0"
-    },
-    {
-      "label": "Microsoft Edge previous stable on Windows",
-      "browser": "edge",
-      "platform": "windows",
-      "device_class": "desktop",
-      "track": "previous",
-      "version": "145",
-      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"
     },
     {
       "label": "Firefox on Windows",

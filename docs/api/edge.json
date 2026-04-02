@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-04-02T14:00:41.094Z",
+  "generated_at": "2026-04-02T16:52:04.567Z",
   "browser": "edge",
   "device_class": "all",
-  "count": 5,
+  "count": 4,
   "items": [
     {
       "label": "Microsoft Edge on Windows",
@@ -39,15 +39,6 @@
       "track": "current",
       "version": "146",
       "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Mobile Safari/537.36 EdgA/146.0.0.0"
-    },
-    {
-      "label": "Microsoft Edge previous stable on Windows",
-      "browser": "edge",
-      "platform": "windows",
-      "device_class": "desktop",
-      "track": "previous",
-      "version": "145",
-      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"
     }
   ]
 }

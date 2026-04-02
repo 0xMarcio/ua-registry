@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 function stringifyJson(payload) {
@@ -23,6 +23,50 @@ async function writeIfChanged(filePath, content) {
   return true;
 }
 
+async function pruneGeneratedApiFiles(docsDirectory, expectedApiPaths) {
+  const apiDirectory = path.join(docsDirectory, "api");
+  const removedFiles = [];
+
+  async function walk(directory) {
+    let entries;
+
+    try {
+      entries = await readdir(directory, { withFileTypes: true });
+    } catch (error) {
+      if (error.code === "ENOENT") {
+        return;
+      }
+
+      throw error;
+    }
+
+    for (const entry of entries) {
+      const fullPath = path.join(directory, entry.name);
+
+      if (entry.isDirectory()) {
+        await walk(fullPath);
+        const remaining = await readdir(fullPath);
+
+        if (remaining.length === 0) {
+          await rm(fullPath, { recursive: true, force: true });
+        }
+
+        continue;
+      }
+
+      const relativePath = path.relative(docsDirectory, fullPath).replaceAll(path.sep, "/");
+
+      if (!expectedApiPaths.has(relativePath)) {
+        await rm(fullPath, { force: true });
+        removedFiles.push(relativePath);
+      }
+    }
+  }
+
+  await walk(apiDirectory);
+  return removedFiles;
+}
+
 function buildIndexHtml() {
   return `<!doctype html>
 <html lang="en">
@@ -32,7 +76,7 @@ function buildIndexHtml() {
     <title>UA Registry</title>
     <meta
       name="description"
-      content="Static JSON endpoints for current browser user-agent strings."
+      content="Static JSON and plaintext endpoints for current browser user-agent strings."
     >
     <link rel="stylesheet" href="./styles.css">
   </head>
@@ -43,7 +87,7 @@ function buildIndexHtml() {
           <h1>ua-registry</h1>
           <span id="browser-counts" class="counts"></span>
         </div>
-        <p class="sub">Current user-agent strings for Chrome, Safari, Edge &amp; Firefox as static JSON.</p>
+        <p class="sub">Current user-agent strings for Chrome, Safari, Edge &amp; Firefox as static JSON and plaintext.</p>
         <div class="header-meta">
           <span id="last-updated" class="dim">...</span>
           <span class="sep">|</span>
@@ -61,8 +105,8 @@ function buildIndexHtml() {
 
       <section class="section">
         <h2>Usage</h2>
-        <pre><code>await fetch("https://ua.syntax9.ai/api/chrome/latest-desktop.json").then(r =&gt; r.json())</code></pre>
-        <pre><code>curl https://ua.syntax9.ai/api/latest.json</code></pre>
+        <pre><code>await fetch("https://ua.syntax9.ai/api/chrome/windows.json").then(r =&gt; r.json())</code></pre>
+        <pre><code>curl https://ua.syntax9.ai/api/chrome/desktop</code></pre>
       </section>
 
       <details class="section" id="meta-section">
@@ -385,6 +429,10 @@ export async function writeSite(rootDirectory, site) {
   const changedFiles = [];
   const docsDirectory = rootDirectory;
   const repositoryRoot = path.resolve(docsDirectory, "..");
+  const expectedApiPaths = new Set([
+    ...Object.keys(site.endpoints),
+    ...Object.keys(site.textEndpoints ?? {})
+  ]);
 
   const staticFiles = {
     ".nojekyll": "",
@@ -400,6 +448,9 @@ export async function writeSite(rootDirectory, site) {
       changedFiles.push(relativePath);
     }
   }
+
+  const removedApiFiles = await pruneGeneratedApiFiles(docsDirectory, expectedApiPaths);
+  changedFiles.push(...removedApiFiles);
 
   for (const [relativePath, payload] of Object.entries(site.endpoints)) {
     const filePath = path.join(docsDirectory, relativePath);

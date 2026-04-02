@@ -1,62 +1,90 @@
 {
-  "generated_at": "2026-04-02T14:00:41.094Z",
-  "description": "Relative-path manifest for the published static JSON endpoints.",
+  "generated_at": "2026-04-02T16:52:04.567Z",
+  "description": "Relative-path manifest for the published static JSON and text endpoints.",
   "browser_counts": {
-    "chrome": 5,
-    "safari": 5,
-    "edge": 5,
+    "chrome": 4,
+    "safari": 3,
+    "edge": 4,
     "firefox": 5
   },
   "endpoints": [
     {
+      "path": "api/all",
+      "group": "global",
+      "description": "All generated UA strings",
+      "count": 16,
+      "format": "text"
+    },
+    {
       "path": "api/all.json",
       "group": "global",
       "description": "All generated UA entries",
-      "count": 20
+      "count": 16
     },
     {
       "path": "api/chrome.json",
       "group": "chrome",
-      "description": "Google Chrome top-five variants",
-      "count": 5
+      "description": "Google Chrome current variants",
+      "count": 4
+    },
+    {
+      "path": "api/chrome/android",
+      "group": "chrome",
+      "description": "Google Chrome android UA string",
+      "count": 1,
+      "format": "text"
+    },
+    {
+      "path": "api/chrome/android.json",
+      "group": "chrome",
+      "description": "Google Chrome android UA",
+      "count": 1
+    },
+    {
+      "path": "api/chrome/desktop",
+      "group": "chrome",
+      "description": "Google Chrome desktop UA strings",
+      "count": 3,
+      "format": "text"
     },
     {
       "path": "api/chrome/desktop.json",
       "group": "chrome",
       "description": "Google Chrome desktop variants",
-      "count": 4
+      "count": 3
     },
     {
-      "path": "api/chrome/latest-desktop",
+      "path": "api/chrome/linux",
       "group": "chrome",
-      "description": "Google Chrome latest desktop UA string",
+      "description": "Google Chrome linux UA string",
       "count": 1,
       "format": "text"
     },
     {
-      "path": "api/chrome/latest-desktop.json",
+      "path": "api/chrome/linux.json",
       "group": "chrome",
-      "description": "Google Chrome latest desktop UA",
+      "description": "Google Chrome linux UA",
       "count": 1
     },
     {
-      "path": "api/chrome/latest-mobile",
+      "path": "api/chrome/macos",
       "group": "chrome",
-      "description": "Google Chrome latest mobile UA string",
+      "description": "Google Chrome macos UA string",
       "count": 1,
       "format": "text"
     },
     {
-      "path": "api/chrome/latest-mobile.json",
+      "path": "api/chrome/macos.json",
       "group": "chrome",
-      "description": "Google Chrome latest mobile UA",
+      "description": "Google Chrome macos UA",
       "count": 1
     },
     {
-      "path": "api/chrome/latest.json",
+      "path": "api/chrome/mobile",
       "group": "chrome",
-      "description": "Google Chrome latest desktop and mobile",
-      "count": 2
+      "description": "Google Chrome mobile UA strings",
+      "count": 1,
+      "format": "text"
     },
     {
       "path": "api/chrome/mobile.json",
@@ -65,54 +93,95 @@
       "count": 1
     },
     {
+      "path": "api/chrome/windows",
+      "group": "chrome",
+      "description": "Google Chrome windows UA string",
+      "count": 1,
+      "format": "text"
+    },
+    {
+      "path": "api/chrome/windows.json",
+      "group": "chrome",
+      "description": "Google Chrome windows UA",
+      "count": 1
+    },
+    {
+      "path": "api/desktop",
+      "group": "global",
+      "description": "All desktop UA strings",
+      "count": 11,
+      "format": "text"
+    },
+    {
       "path": "api/desktop.json",
       "group": "global",
       "description": "All desktop UA entries",
-      "count": 14
+      "count": 11
     },
     {
       "path": "api/edge.json",
       "group": "edge",
-      "description": "Microsoft Edge top-five variants",
-      "count": 5
+      "description": "Microsoft Edge current variants",
+      "count": 4
+    },
+    {
+      "path": "api/edge/android",
+      "group": "edge",
+      "description": "Microsoft Edge android UA string",
+      "count": 1,
+      "format": "text"
+    },
+    {
+      "path": "api/edge/android.json",
+      "group": "edge",
+      "description": "Microsoft Edge android UA",
+      "count": 1
+    },
+    {
+      "path": "api/edge/desktop",
+      "group": "edge",
+      "description": "Microsoft Edge desktop UA strings",
+      "count": 3,
+      "format": "text"
     },
     {
       "path": "api/edge/desktop.json",
       "group": "edge",
       "description": "Microsoft Edge desktop variants",
-      "count": 4
+      "count": 3
     },
     {
-      "path": "api/edge/latest-desktop",
+      "path": "api/edge/linux",
       "group": "edge",
-      "description": "Microsoft Edge latest desktop UA string",
+      "description": "Microsoft Edge linux UA string",
       "count": 1,
       "format": "text"
     },
     {
-      "path": "api/edge/latest-desktop.json",
+      "path": "api/edge/linux.json",
       "group": "edge",
-      "description": "Microsoft Edge latest desktop UA",
+      "description": "Microsoft Edge linux UA",
       "count": 1
     },
     {
-      "path": "api/edge/latest-mobile",
+      "path": "api/edge/macos",
       "group": "edge",
-      "description": "Microsoft Edge latest mobile UA string",
+      "description": "Microsoft Edge macos UA string",
       "count": 1,
       "format": "text"
     },
     {
-      "path": "api/edge/latest-mobile.json",
+      "path": "api/edge/macos.json",
       "group": "edge",
-      "description": "Microsoft Edge latest mobile UA",
+      "description": "Microsoft Edge macos UA",
       "count": 1
     },
     {
-      "path": "api/edge/latest.json",
+      "path": "api/edge/mobile",
       "group": "edge",
-      "description": "Microsoft Edge latest desktop and mobile",
-      "count": 2
+      "description": "Microsoft Edge mobile UA strings",
+      "count": 1,
+      "format": "text"
     },
     {
       "path": "api/edge/mobile.json",
@@ -121,10 +190,43 @@
       "count": 1
     },
     {
+      "path": "api/edge/windows",
+      "group": "edge",
+      "description": "Microsoft Edge windows UA string",
+      "count": 1,
+      "format": "text"
+    },
+    {
+      "path": "api/edge/windows.json",
+      "group": "edge",
+      "description": "Microsoft Edge windows UA",
+      "count": 1
+    },
+    {
       "path": "api/firefox.json",
       "group": "firefox",
-      "description": "Mozilla Firefox top-five variants",
+      "description": "Mozilla Firefox current variants",
       "count": 5
+    },
+    {
+      "path": "api/firefox/android",
+      "group": "firefox",
+      "description": "Mozilla Firefox android UA string",
+      "count": 1,
+      "format": "text"
+    },
+    {
+      "path": "api/firefox/android.json",
+      "group": "firefox",
+      "description": "Mozilla Firefox android UA",
+      "count": 1
+    },
+    {
+      "path": "api/firefox/desktop",
+      "group": "firefox",
+      "description": "Mozilla Firefox desktop UA strings",
+      "count": 4,
+      "format": "text"
     },
     {
       "path": "api/firefox/desktop.json",
@@ -133,36 +235,37 @@
       "count": 4
     },
     {
-      "path": "api/firefox/latest-desktop",
+      "path": "api/firefox/linux",
       "group": "firefox",
-      "description": "Mozilla Firefox latest desktop UA string",
+      "description": "Mozilla Firefox linux UA string",
       "count": 1,
       "format": "text"
     },
     {
-      "path": "api/firefox/latest-desktop.json",
+      "path": "api/firefox/linux.json",
       "group": "firefox",
-      "description": "Mozilla Firefox latest desktop UA",
+      "description": "Mozilla Firefox linux UA",
       "count": 1
     },
     {
-      "path": "api/firefox/latest-mobile",
+      "path": "api/firefox/macos",
       "group": "firefox",
-      "description": "Mozilla Firefox latest mobile UA string",
+      "description": "Mozilla Firefox macos UA string",
       "count": 1,
       "format": "text"
     },
     {
-      "path": "api/firefox/latest-mobile.json",
+      "path": "api/firefox/macos.json",
       "group": "firefox",
-      "description": "Mozilla Firefox latest mobile UA",
+      "description": "Mozilla Firefox macos UA",
       "count": 1
     },
     {
-      "path": "api/firefox/latest.json",
+      "path": "api/firefox/mobile",
       "group": "firefox",
-      "description": "Mozilla Firefox latest desktop and mobile",
-      "count": 2
+      "description": "Mozilla Firefox mobile UA strings",
+      "count": 1,
+      "format": "text"
     },
     {
       "path": "api/firefox/mobile.json",
@@ -171,15 +274,35 @@
       "count": 1
     },
     {
+      "path": "api/firefox/ubuntu",
+      "group": "firefox",
+      "description": "Mozilla Firefox ubuntu UA string",
+      "count": 1,
+      "format": "text"
+    },
+    {
+      "path": "api/firefox/ubuntu.json",
+      "group": "firefox",
+      "description": "Mozilla Firefox ubuntu UA",
+      "count": 1
+    },
+    {
+      "path": "api/firefox/windows",
+      "group": "firefox",
+      "description": "Mozilla Firefox windows UA string",
+      "count": 1,
+      "format": "text"
+    },
+    {
+      "path": "api/firefox/windows.json",
+      "group": "firefox",
+      "description": "Mozilla Firefox windows UA",
+      "count": 1
+    },
+    {
       "path": "api/index.json",
       "group": "global",
       "description": "Endpoint manifest"
-    },
-    {
-      "path": "api/latest.json",
-      "group": "global",
-      "description": "Latest desktop and mobile UA per browser family",
-      "count": 8
     },
     {
       "path": "api/meta.json",
@@ -187,60 +310,88 @@
       "description": "Build and source metadata"
     },
     {
+      "path": "api/mobile",
+      "group": "global",
+      "description": "All mobile UA strings",
+      "count": 5,
+      "format": "text"
+    },
+    {
       "path": "api/mobile.json",
       "group": "global",
       "description": "All mobile UA entries",
-      "count": 6
+      "count": 5
     },
     {
       "path": "api/safari.json",
       "group": "safari",
-      "description": "Apple Safari top-five variants",
-      "count": 5
+      "description": "Apple Safari current variants",
+      "count": 3
+    },
+    {
+      "path": "api/safari/desktop",
+      "group": "safari",
+      "description": "Apple Safari desktop UA strings",
+      "count": 1,
+      "format": "text"
     },
     {
       "path": "api/safari/desktop.json",
       "group": "safari",
       "description": "Apple Safari desktop variants",
-      "count": 2
+      "count": 1
     },
     {
-      "path": "api/safari/latest-desktop",
+      "path": "api/safari/ipad",
       "group": "safari",
-      "description": "Apple Safari latest desktop UA string",
+      "description": "Apple Safari ipad UA string",
       "count": 1,
       "format": "text"
     },
     {
-      "path": "api/safari/latest-desktop.json",
+      "path": "api/safari/ipad.json",
       "group": "safari",
-      "description": "Apple Safari latest desktop UA",
+      "description": "Apple Safari ipad UA",
       "count": 1
     },
     {
-      "path": "api/safari/latest-mobile",
+      "path": "api/safari/iphone",
       "group": "safari",
-      "description": "Apple Safari latest mobile UA string",
+      "description": "Apple Safari iphone UA string",
       "count": 1,
       "format": "text"
     },
     {
-      "path": "api/safari/latest-mobile.json",
+      "path": "api/safari/iphone.json",
       "group": "safari",
-      "description": "Apple Safari latest mobile UA",
+      "description": "Apple Safari iphone UA",
       "count": 1
     },
     {
-      "path": "api/safari/latest.json",
+      "path": "api/safari/macos",
       "group": "safari",
-      "description": "Apple Safari latest desktop and mobile",
-      "count": 2
+      "description": "Apple Safari macos UA string",
+      "count": 1,
+      "format": "text"
+    },
+    {
+      "path": "api/safari/macos.json",
+      "group": "safari",
+      "description": "Apple Safari macos UA",
+      "count": 1
+    },
+    {
+      "path": "api/safari/mobile",
+      "group": "safari",
+      "description": "Apple Safari mobile UA strings",
+      "count": 2,
+      "format": "text"
     },
     {
       "path": "api/safari/mobile.json",
       "group": "safari",
       "description": "Apple Safari mobile variants",
-      "count": 3
+      "count": 2
     }
   ]
 }

@@ -3,8 +3,7 @@ import {
   BROWSER_ORDER,
   BROWSER_VARIANT_FALLBACKS,
   BROWSER_VARIANT_ORDER,
-  FIREFOX_ANDROID_VERSION,
-  LATEST_VARIANTS
+  FIREFOX_ANDROID_VERSION
 } from "./variants.mjs";
 import { buildSafariUserAgent } from "./safari-rules.mjs";
 
@@ -264,8 +263,8 @@ function selectUniqueBrowserItems(browser, versions) {
     items.push(selectedItem);
   }
 
-  if (items.length !== 5) {
-    throw new Error(`${browser} endpoint must contain exactly 5 items.`);
+  if (items.length !== requestedVariants.length) {
+    throw new Error(`${browser} endpoint did not resolve the requested number of variants.`);
   }
 
   return items;
@@ -277,32 +276,23 @@ export function buildBrowserItemsMap(versions) {
   );
 }
 
-export function buildLatestMap(versions) {
-  return Object.fromEntries(
-    Object.entries(LATEST_VARIANTS).map(([browser, latestVariants]) => {
-      return [
-        browser,
-        {
-          desktop: buildVariantItem(browser, latestVariants.desktop, versions),
-          mobile: buildVariantItem(browser, latestVariants.mobile, versions)
-        }
-      ];
-    })
-  );
-}
-
 export function buildCollections(versions) {
   const browserItems = buildBrowserItemsMap(versions);
-  const latest = buildLatestMap(versions);
   const allItems = BROWSER_ORDER.flatMap((browser) => browserItems[browser]);
   const desktopItems = allItems.filter((item) => item.device_class === "desktop");
   const mobileItems = allItems.filter((item) => item.device_class === "mobile");
+  const platformItems = Object.fromEntries(
+    BROWSER_ORDER.map((browser) => [
+      browser,
+      Object.fromEntries(browserItems[browser].map((item) => [item.platform, item]))
+    ])
+  );
 
   return {
     browserItems,
-    latest,
     allItems,
     desktopItems,
-    mobileItems
+    mobileItems,
+    platformItems
   };
 }

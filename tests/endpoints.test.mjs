@@ -9,14 +9,30 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const docsDirectory = path.resolve(__dirname, "..", "docs");
 const apiDirectory = path.join(docsDirectory, "api");
 const browsers = ["chrome", "safari", "edge", "firefox"];
+const expectedBrowserCounts = {
+  chrome: 4,
+  safari: 3,
+  edge: 4,
+  firefox: 5
+};
+const expectedPlatforms = {
+  chrome: ["windows", "macos", "linux", "android"],
+  safari: ["macos", "iphone", "ipad"],
+  edge: ["windows", "macos", "linux", "android"],
+  firefox: ["windows", "macos", "linux", "android", "ubuntu"]
+};
 
-test("generated endpoints satisfy counts, manifest integrity, and latest endpoint shape", async () => {
+test("generated endpoints satisfy counts, manifest integrity, and platform endpoint shape", async () => {
   const { endpoints, textEndpoints } = await validateOutputDirectory(docsDirectory);
   const manifest = endpoints["api/index.json"];
 
   for (const browser of browsers) {
     const browserPayload = endpoints[`api/${browser}.json`];
-    assert.equal(browserPayload.items.length, 5, `${browser}.json should expose 5 items`);
+    assert.equal(
+      browserPayload.items.length,
+      expectedBrowserCounts[browser],
+      `${browser}.json should expose only current variants`
+    );
 
     const uniqueUserAgents = new Set(browserPayload.items.map((item) => item.user_agent));
     assert.equal(
@@ -24,26 +40,40 @@ test("generated endpoints satisfy counts, manifest integrity, and latest endpoin
       browserPayload.items.length,
       `${browser}.json should not contain duplicate UA strings`
     );
+    assert.ok(browserPayload.items.every((item) => item.track === "current"));
 
-    const latestPair = endpoints[`api/${browser}/latest.json`];
-    assert.ok(latestPair.desktop, `${browser}/latest.json should contain desktop`);
-    assert.ok(latestPair.mobile, `${browser}/latest.json should contain mobile`);
-    assert.equal(typeof endpoints[`api/${browser}/latest-desktop.json`].user_agent, "string");
-    assert.equal(typeof endpoints[`api/${browser}/latest-mobile.json`].user_agent, "string");
-    assert.equal(
-      textEndpoints[`api/${browser}/latest-desktop`],
-      `${endpoints[`api/${browser}/latest-desktop.json`].user_agent}\n`
-    );
-    assert.equal(
-      textEndpoints[`api/${browser}/latest-mobile`],
-      `${endpoints[`api/${browser}/latest-mobile.json`].user_agent}\n`
-    );
+    const desktopText = textEndpoints[`api/${browser}/desktop`].trim().split("\n");
+    const desktopJson = endpoints[`api/${browser}/desktop.json`].items.map((item) => item.user_agent);
+    assert.deepEqual(desktopText, desktopJson);
+
+    const mobileText = textEndpoints[`api/${browser}/mobile`].trim().split("\n");
+    const mobileJson = endpoints[`api/${browser}/mobile.json`].items.map((item) => item.user_agent);
+    assert.deepEqual(mobileText, mobileJson);
+
+    for (const platform of expectedPlatforms[browser]) {
+      assert.equal(typeof endpoints[`api/${browser}/${platform}.json`].user_agent, "string");
+      assert.equal(
+        textEndpoints[`api/${browser}/${platform}`],
+        `${endpoints[`api/${browser}/${platform}.json`].user_agent}\n`
+      );
+    }
   }
 
-  assert.equal(typeof endpoints["api/latest.json"].browsers.chrome.desktop.user_agent, "string");
   assert.equal(typeof endpoints["api/all.json"].items[0].user_agent, "string");
   assert.equal(typeof endpoints["api/desktop.json"].items[0].user_agent, "string");
   assert.equal(typeof endpoints["api/mobile.json"].items[0].user_agent, "string");
+  assert.deepEqual(
+    textEndpoints["api/all"].trim().split("\n"),
+    endpoints["api/all.json"].items.map((item) => item.user_agent)
+  );
+  assert.deepEqual(
+    textEndpoints["api/desktop"].trim().split("\n"),
+    endpoints["api/desktop.json"].items.map((item) => item.user_agent)
+  );
+  assert.deepEqual(
+    textEndpoints["api/mobile"].trim().split("\n"),
+    endpoints["api/mobile.json"].items.map((item) => item.user_agent)
+  );
 
   for (const entry of manifest.endpoints) {
     assert.ok(
@@ -53,17 +83,24 @@ test("generated endpoints satisfy counts, manifest integrity, and latest endpoin
   }
 });
 
-test("homepage uses relative asset paths and extensionless latest endpoints are present", async () => {
+test("homepage uses relative asset paths and only current routes are present", async () => {
   const topLevelEntries = await readdir(apiDirectory, { withFileTypes: true });
   const apiTopLevelFiles = topLevelEntries.filter((entry) => entry.isFile()).map((entry) => entry.name);
+  const chromeFiles = await readdir(path.join(apiDirectory, "chrome"));
 
   assert.ok(apiTopLevelFiles.includes("all.json"));
-  assert.ok(apiTopLevelFiles.includes("latest.json"));
+  assert.ok(apiTopLevelFiles.includes("all"));
+  assert.ok(apiTopLevelFiles.includes("desktop"));
+  assert.ok(apiTopLevelFiles.includes("mobile"));
+  assert.ok(!apiTopLevelFiles.includes("latest.json"));
+  assert.ok(!chromeFiles.includes("latest.json"));
+  assert.ok(!chromeFiles.includes("latest-desktop"));
+  assert.ok(!chromeFiles.includes("latest-mobile"));
 
   const indexHtml = await readFile(path.join(docsDirectory, "index.html"), "utf8");
   const appJs = await readFile(path.join(docsDirectory, "app.js"), "utf8");
   const chromeTextEndpoint = await readFile(
-    path.join(docsDirectory, "api", "chrome", "latest-desktop"),
+    path.join(docsDirectory, "api", "chrome", "desktop"),
     "utf8"
   );
 
