@@ -1,0 +1,44 @@
+{
+  "generated_at": "2026-04-02T14:00:41.094Z",
+  "browser": "edge",
+  "device_class": "desktop",
+  "count": 4,
+  "items": [
+    {
+      "label": "Microsoft Edge on Windows",
+      "browser": "edge",
+      "platform": "windows",
+      "device_class": "desktop",
+      "track": "current",
+      "version": "146",
+      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36 Edg/146.0.0.0"
+    },
+    {
+      "label": "Microsoft Edge on macOS",
+      "browser": "edge",
+      "platform": "macos",
+      "device_class": "desktop",
+      "track": "current",
+      "version": "146",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36 Edg/146.0.0.0"
+    },
+    {
+      "label": "Microsoft Edge on Linux",
+      "browser": "edge",
+      "platform": "linux",
+      "device_class": "desktop",
+      "track": "current",
+      "version": "146",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36 Edg/146.0.0.0"
+    },
+    {
+      "label": "Microsoft Edge previous stable on Windows",
+      "browser": "edge",
+      "platform": "windows",
+      "device_class": "desktop",
+      "track": "previous",
+      "version": "145",
+      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"
+    }
+  ]
+}

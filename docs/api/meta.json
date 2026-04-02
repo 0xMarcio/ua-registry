@@ -1,0 +1,130 @@
+{
+  "generated_at": "2026-04-02T14:00:41.094Z",
+  "build_sha": null,
+  "generator_version": "1.0.0",
+  "source_strategy": {
+    "primary": "Official vendor version feeds plus deterministic UA template generation.",
+    "fallbacks": [
+      "Safari current-version discovery can fall back to browsers.fyi only when Apple release-note parsing does not safely expose both stable releases."
+    ]
+  },
+  "source_urls": {
+    "chrome": {
+      "last_known_good": "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions.json",
+      "milestones": "https://googlechromelabs.github.io/chrome-for-testing/latest-versions-per-milestone.json",
+      "source_timestamp": "2026-04-02T07:37:29.301Z",
+      "ua_reduction": "https://www.chromium.org/updates/ua-reduction/"
+    },
+    "edge": {
+      "guidance": "https://learn.microsoft.com/en-us/microsoft-edge/web-platform/user-agent-guidance",
+      "products": "https://edgeupdates.microsoft.com/api/products",
+      "useragent_reduction": "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/useragentreduction"
+    },
+    "firefox": {
+      "last_release_date": "2026-03-24",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent/Firefox",
+      "releases": "https://product-details.mozilla.org/1.0/firefox.json",
+      "versions": "https://product-details.mozilla.org/1.0/firefox_versions.json"
+    },
+    "safari": {
+      "current_release_notes": "https://developer.apple.com/documentation/safari-release-notes/safari-26_4-release-notes",
+      "fallback": "https://www.browsers.fyi/api/",
+      "previous_release_notes": "https://developer.apple.com/documentation/safari-release-notes/safari-26_3-release-notes",
+      "release_notes_index": "https://developer.apple.com/tutorials/data/documentation/safari-release-notes.json",
+      "release_notes_page": "https://developer.apple.com/documentation/safari-release-notes/",
+      "ua_validation_article": "https://nielsleenheer.com/articles/2025/the-user-agent-string-of-safari-on-ios-26-and-macos-26/"
+    }
+  },
+  "resolved_versions": {
+    "chrome": {
+      "current": {
+        "full_version": "147.0.7727.50",
+        "milestone": "147",
+        "version": "147"
+      },
+      "previous": {
+        "full_version": "146.0.7680.165",
+        "milestone": "146",
+        "version": "146"
+      }
+    },
+    "edge": {
+      "current": {
+        "full_version": "146.0.3856.97",
+        "release_notes": "https://learn.microsoft.com/en-us/microsoft-edge/web-platform/release-notes/146",
+        "releases": {
+          "android": "146.0.3856.85",
+          "linux": "146.0.3856.97",
+          "macos": "146.0.3856.97",
+          "windows": "146.0.3856.97"
+        },
+        "version": "146"
+      },
+      "previous": {
+        "derived_major": true,
+        "full_version": null,
+        "release_notes": "https://learn.microsoft.com/en-us/microsoft-edge/web-platform/release-notes/145",
+        "releases": {
+          "android": null,
+          "linux": null,
+          "macos": null,
+          "windows": null
+        },
+        "version": "145"
+      }
+    },
+    "firefox": {
+      "current": {
+        "full_version": "149.0",
+        "version": "149.0"
+      },
+      "esr": "140.9.0esr",
+      "previous": {
+        "full_version": "148.0.2",
+        "version": "148.0.2"
+      }
+    },
+    "safari": {
+      "current": {
+        "release_notes": "https://developer.apple.com/documentation/safari-release-notes/safari-26_4-release-notes",
+        "version": "26.4"
+      },
+      "previous": {
+        "release_notes": "https://developer.apple.com/documentation/safari-release-notes/safari-26_3-release-notes",
+        "version": "26.3"
+      }
+    }
+  },
+  "variant_config": {
+    "signature": "{\"browserVariantOrder\":{\"chrome\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\",\"previous-windows\"],\"safari\":[\"current-macos\",\"current-iphone\",\"current-ipad-mobile\",\"previous-macos\",\"previous-iphone\"],\"edge\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\",\"previous-windows\"],\"firefox\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\",\"current-ubuntu\"]},\"browserVariantFallbacks\":{\"chrome\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\",\"previous-windows\",\"previous-macos\",\"previous-linux\",\"previous-android\"],\"safari\":[\"current-macos\",\"current-iphone\",\"current-ipad-mobile\",\"previous-macos\",\"previous-iphone\",\"previous-ipad-mobile\"],\"edge\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\",\"previous-windows\",\"previous-macos\",\"previous-linux\",\"previous-android\"],\"firefox\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\",\"current-ubuntu\"]},\"latestVariants\":{\"chrome\":{\"desktop\":\"current-windows\",\"mobile\":\"current-android\"},\"safari\":{\"desktop\":\"current-macos\",\"mobile\":\"current-iphone\"},\"edge\":{\"desktop\":\"current-windows\",\"mobile\":\"current-android\"},\"firefox\":{\"desktop\":\"current-windows\",\"mobile\":\"current-android\"}},\"firefoxAndroidVersion\":\"15\",\"generatorVersion\":\"1.0.0\"}",
+    "notes": [
+      "Each browser-specific endpoint starts from a five-slot default order.",
+      "If a slot would duplicate an already chosen UA, the generator walks that browser's fallback pool until it finds a unique replacement.",
+      "Firefox keeps Android as a fixed mainstream phone variant in config because Mozilla's release feeds do not publish a preferred Android OS token."
+    ]
+  },
+  "safari_rules": {
+    "version": "2026-04-02",
+    "notes": [
+      "Safari on macOS keeps the frozen Macintosh platform token and Safari/605.1.15.",
+      "Safari on iPhone and iPad uses fixed iOS 18_6 platform tokens for the Safari 26 cycle rather than mirroring the current OS release number.",
+      "The generated iPad variant intentionally uses the mobile Safari token so the public top-five set contains a unique and immediately useful iPad UA."
+    ]
+  },
+  "fallback_source_use": {
+    "used": false,
+    "source": null,
+    "note": null
+  },
+  "counts": {
+    "all": 20,
+    "desktop": 14,
+    "mobile": 6,
+    "by_browser": {
+      "chrome": 5,
+      "safari": 5,
+      "edge": 5,
+      "firefox": 5
+    }
+  }
+}

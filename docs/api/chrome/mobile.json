@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-04-02T14:00:41.094Z",
+  "browser": "chrome",
+  "device_class": "mobile",
+  "count": 1,
+  "items": [
+    {
+      "label": "Chrome on Android",
+      "browser": "chrome",
+      "platform": "android",
+      "device_class": "mobile",
+      "track": "current",
+      "version": "147",
+      "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Mobile Safari/537.36"
+    }
+  ]
+}

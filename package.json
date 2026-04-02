@@ -1,0 +1,23 @@
+{
+  "name": "ua-registry",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static GitHub Pages endpoints for current full browser user-agent strings.",
+  "type": "module",
+  "engines": {
+    "node": ">=25"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "validate": "node scripts/validate.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "preview": "python3 -m http.server 4173 -d docs"
+  },
+  "keywords": [
+    "user-agent",
+    "github-pages",
+    "static-json",
+    "browser"
+  ],
+  "license": "MIT"
+}

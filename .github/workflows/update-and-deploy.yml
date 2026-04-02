@@ -1,0 +1,119 @@
+name: Update and Deploy
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ua-registry-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "25"
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6
+
+      - name: Build static site
+        run: |
+          set -euo pipefail
+          if npm run build 2>&1 | tee build.log; then
+            :
+          else
+            status=$?
+            {
+              echo "## Build failed"
+              echo
+              echo '```text'
+              tail -n 120 build.log
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit "$status"
+          fi
+
+      - name: Run tests
+        run: |
+          set -euo pipefail
+          if npm test 2>&1 | tee test.log; then
+            :
+          else
+            status=$?
+            {
+              echo "## Tests failed"
+              echo
+              echo '```text'
+              tail -n 120 test.log
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit "$status"
+          fi
+
+      - name: Write workflow summary
+        run: |
+          node <<'EOF'
+          const fs = require("node:fs");
+          const meta = JSON.parse(fs.readFileSync("docs/api/meta.json", "utf8"));
+          const lines = [
+            "## UA build",
+            "",
+            `- Generated at: ${meta.generated_at}`,
+            `- Chrome: ${meta.resolved_versions.chrome.current.version} (prev ${meta.resolved_versions.chrome.previous.version})`,
+            `- Safari: ${meta.resolved_versions.safari.current.version} (prev ${meta.resolved_versions.safari.previous.version})`,
+            `- Edge: ${meta.resolved_versions.edge.current.version} (prev ${meta.resolved_versions.edge.previous.version})`,
+            `- Firefox: ${meta.resolved_versions.firefox.current.version} (prev ${meta.resolved_versions.firefox.previous.version})`,
+            `- Safari fallback used: ${meta.fallback_source_use.used ? "yes" : "no"}`
+          ];
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join("\n")}\n`);
+          EOF
+
+      - name: Detect generated changes
+        id: changes
+        run: |
+          if [ -n "$(git status --porcelain -- docs)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit generated updates
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          VERSION_SUMMARY="$(node -e 'const fs=require("node:fs"); const meta=JSON.parse(fs.readFileSync("docs/api/meta.json","utf8")); process.stdout.write(`chrome ${meta.resolved_versions.chrome.current.version}, safari ${meta.resolved_versions.safari.current.version}, edge ${meta.resolved_versions.edge.current.version}, firefox ${meta.resolved_versions.firefox.current.version}`)')"
+          git add docs
+          git commit -m "chore: refresh UA data (${VERSION_SUMMARY})"
+          git push
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

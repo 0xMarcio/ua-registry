@@ -1,0 +1,62 @@
+{
+  "generated_at": "2026-04-02T14:00:41.094Z",
+  "browser": "all",
+  "device_class": "mobile",
+  "count": 6,
+  "items": [
+    {
+      "label": "Chrome on Android",
+      "browser": "chrome",
+      "platform": "android",
+      "device_class": "mobile",
+      "track": "current",
+      "version": "147",
+      "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Mobile Safari/537.36"
+    },
+    {
+      "label": "Safari on iPhone",
+      "browser": "safari",
+      "platform": "iphone",
+      "device_class": "mobile",
+      "track": "current",
+      "version": "26.4",
+      "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Mobile/15E148 Safari/604.1"
+    },
+    {
+      "label": "Safari on iPad",
+      "browser": "safari",
+      "platform": "ipad",
+      "device_class": "mobile",
+      "track": "current",
+      "version": "26.4",
+      "user_agent": "Mozilla/5.0 (iPad; CPU OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Mobile/15E148 Safari/604.1"
+    },
+    {
+      "label": "Safari previous stable on iPhone",
+      "browser": "safari",
+      "platform": "iphone",
+      "device_class": "mobile",
+      "track": "previous",
+      "version": "26.3",
+      "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1"
+    },
+    {
+      "label": "Microsoft Edge on Android",
+      "browser": "edge",
+      "platform": "android",
+      "device_class": "mobile",
+      "track": "current",
+      "version": "146",
+      "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Mobile Safari/537.36 EdgA/146.0.0.0"
+    },
+    {
+      "label": "Firefox on Android",
+      "browser": "firefox",
+      "platform": "android",
+      "device_class": "mobile",
+      "track": "current",
+      "version": "149.0",
+      "user_agent": "Mozilla/5.0 (Android 15; Mobile; rv:149.0) Gecko/149.0 Firefox/149.0"
+    }
+  ]
+}

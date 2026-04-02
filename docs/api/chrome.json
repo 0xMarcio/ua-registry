@@ -1,0 +1,53 @@
+{
+  "generated_at": "2026-04-02T14:00:41.094Z",
+  "browser": "chrome",
+  "device_class": "all",
+  "count": 5,
+  "items": [
+    {
+      "label": "Chrome on Windows",
+      "browser": "chrome",
+      "platform": "windows",
+      "device_class": "desktop",
+      "track": "current",
+      "version": "147",
+      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36"
+    },
+    {
+      "label": "Chrome on macOS",
+      "browser": "chrome",
+      "platform": "macos",
+      "device_class": "desktop",
+      "track": "current",
+      "version": "147",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36"
+    },
+    {
+      "label": "Chrome on Linux",
+      "browser": "chrome",
+      "platform": "linux",
+      "device_class": "desktop",
+      "track": "current",
+      "version": "147",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36"
+    },
+    {
+      "label": "Chrome on Android",
+      "browser": "chrome",
+      "platform": "android",
+      "device_class": "mobile",
+      "track": "current",
+      "version": "147",
+      "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Mobile Safari/537.36"
+    },
+    {
+      "label": "Chrome previous stable on Windows",
+      "browser": "chrome",
+      "platform": "windows",
+      "device_class": "desktop",
+      "track": "previous",
+      "version": "146",
+      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+    }
+  ]
+}

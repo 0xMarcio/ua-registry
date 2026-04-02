@@ -1,0 +1,10 @@
+{
+  "generated_at": "2026-04-02T14:00:41.094Z",
+  "label": "Chrome on Windows",
+  "browser": "chrome",
+  "platform": "windows",
+  "device_class": "desktop",
+  "track": "current",
+  "version": "147",
+  "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36"
+}

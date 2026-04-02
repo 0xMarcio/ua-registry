@@ -1,0 +1,21 @@
+{
+  "generated_at": "2026-04-02T14:00:41.094Z",
+  "desktop": {
+    "label": "Firefox on Windows",
+    "browser": "firefox",
+    "platform": "windows",
+    "device_class": "desktop",
+    "track": "current",
+    "version": "149.0",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0"
+  },
+  "mobile": {
+    "label": "Firefox on Android",
+    "browser": "firefox",
+    "platform": "android",
+    "device_class": "mobile",
+    "track": "current",
+    "version": "149.0",
+    "user_agent": "Mozilla/5.0 (Android 15; Mobile; rv:149.0) Gecko/149.0 Firefox/149.0"
+  }
+}

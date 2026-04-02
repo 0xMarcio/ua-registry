@@ -1,0 +1,35 @@
+{
+  "generated_at": "2026-04-02T14:00:41.094Z",
+  "browser": "safari",
+  "device_class": "mobile",
+  "count": 3,
+  "items": [
+    {
+      "label": "Safari on iPhone",
+      "browser": "safari",
+      "platform": "iphone",
+      "device_class": "mobile",
+      "track": "current",
+      "version": "26.4",
+      "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Mobile/15E148 Safari/604.1"
+    },
+    {
+      "label": "Safari on iPad",
+      "browser": "safari",
+      "platform": "ipad",
+      "device_class": "mobile",
+      "track": "current",
+      "version": "26.4",
+      "user_agent": "Mozilla/5.0 (iPad; CPU OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Mobile/15E148 Safari/604.1"
+    },
+    {
+      "label": "Safari previous stable on iPhone",
+      "browser": "safari",
+      "platform": "iphone",
+      "device_class": "mobile",
+      "track": "previous",
+      "version": "26.3",
+      "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1"
+    }
+  ]
+}

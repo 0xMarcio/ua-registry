@@ -1,0 +1,177 @@
+{
+  "generated_at": "2026-04-02T14:00:41.094Z",
+  "description": "Relative-path manifest for the published static JSON endpoints.",
+  "browser_counts": {
+    "chrome": 5,
+    "safari": 5,
+    "edge": 5,
+    "firefox": 5
+  },
+  "endpoints": [
+    {
+      "path": "api/all.json",
+      "group": "global",
+      "description": "All generated UA entries",
+      "count": 20
+    },
+    {
+      "path": "api/chrome.json",
+      "group": "chrome",
+      "description": "Google Chrome top-five variants",
+      "count": 5
+    },
+    {
+      "path": "api/chrome/desktop.json",
+      "group": "chrome",
+      "description": "Google Chrome desktop variants",
+      "count": 4
+    },
+    {
+      "path": "api/chrome/latest-desktop.json",
+      "group": "chrome",
+      "description": "Google Chrome latest desktop UA"
+    },
+    {
+      "path": "api/chrome/latest-mobile.json",
+      "group": "chrome",
+      "description": "Google Chrome latest mobile UA"
+    },
+    {
+      "path": "api/chrome/latest.json",
+      "group": "chrome",
+      "description": "Google Chrome latest desktop and mobile"
+    },
+    {
+      "path": "api/chrome/mobile.json",
+      "group": "chrome",
+      "description": "Google Chrome mobile variants",
+      "count": 1
+    },
+    {
+      "path": "api/desktop.json",
+      "group": "global",
+      "description": "All desktop UA entries",
+      "count": 14
+    },
+    {
+      "path": "api/edge.json",
+      "group": "edge",
+      "description": "Microsoft Edge top-five variants",
+      "count": 5
+    },
+    {
+      "path": "api/edge/desktop.json",
+      "group": "edge",
+      "description": "Microsoft Edge desktop variants",
+      "count": 4
+    },
+    {
+      "path": "api/edge/latest-desktop.json",
+      "group": "edge",
+      "description": "Microsoft Edge latest desktop UA"
+    },
+    {
+      "path": "api/edge/latest-mobile.json",
+      "group": "edge",
+      "description": "Microsoft Edge latest mobile UA"
+    },
+    {
+      "path": "api/edge/latest.json",
+      "group": "edge",
+      "description": "Microsoft Edge latest desktop and mobile"
+    },
+    {
+      "path": "api/edge/mobile.json",
+      "group": "edge",
+      "description": "Microsoft Edge mobile variants",
+      "count": 1
+    },
+    {
+      "path": "api/firefox.json",
+      "group": "firefox",
+      "description": "Mozilla Firefox top-five variants",
+      "count": 5
+    },
+    {
+      "path": "api/firefox/desktop.json",
+      "group": "firefox",
+      "description": "Mozilla Firefox desktop variants",
+      "count": 4
+    },
+    {
+      "path": "api/firefox/latest-desktop.json",
+      "group": "firefox",
+      "description": "Mozilla Firefox latest desktop UA"
+    },
+    {
+      "path": "api/firefox/latest-mobile.json",
+      "group": "firefox",
+      "description": "Mozilla Firefox latest mobile UA"
+    },
+    {
+      "path": "api/firefox/latest.json",
+      "group": "firefox",
+      "description": "Mozilla Firefox latest desktop and mobile"
+    },
+    {
+      "path": "api/firefox/mobile.json",
+      "group": "firefox",
+      "description": "Mozilla Firefox mobile variants",
+      "count": 1
+    },
+    {
+      "path": "api/index.json",
+      "group": "global",
+      "description": "Endpoint manifest"
+    },
+    {
+      "path": "api/latest.json",
+      "group": "global",
+      "description": "Latest desktop and mobile UA per browser family"
+    },
+    {
+      "path": "api/meta.json",
+      "group": "global",
+      "description": "Build and source metadata"
+    },
+    {
+      "path": "api/mobile.json",
+      "group": "global",
+      "description": "All mobile UA entries",
+      "count": 6
+    },
+    {
+      "path": "api/safari.json",
+      "group": "safari",
+      "description": "Apple Safari top-five variants",
+      "count": 5
+    },
+    {
+      "path": "api/safari/desktop.json",
+      "group": "safari",
+      "description": "Apple Safari desktop variants",
+      "count": 2
+    },
+    {
+      "path": "api/safari/latest-desktop.json",
+      "group": "safari",
+      "description": "Apple Safari latest desktop UA"
+    },
+    {
+      "path": "api/safari/latest-mobile.json",
+      "group": "safari",
+      "description": "Apple Safari latest mobile UA"
+    },
+    {
+      "path": "api/safari/latest.json",
+      "group": "safari",
+      "description": "Apple Safari latest desktop and mobile"
+    },
+    {
+      "path": "api/safari/mobile.json",
+      "group": "safari",
+      "description": "Apple Safari mobile variants",
+      "count": 3
+    }
+  ]
+}
