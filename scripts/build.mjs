@@ -65,7 +65,8 @@ function buildManifest(generatedAt, collections) {
     {
       path: "api/latest.json",
       group: "global",
-      description: "Latest desktop and mobile UA per browser family"
+      description: "Latest desktop and mobile UA per browser family",
+      count: BROWSER_ORDER.length * 2
     }
   ];
 
@@ -96,17 +97,20 @@ function buildManifest(generatedAt, collections) {
       {
         path: `api/${browser}/latest.json`,
         group: browser,
-        description: `${BROWSER_LABELS[browser]} latest desktop and mobile`
+        description: `${BROWSER_LABELS[browser]} latest desktop and mobile`,
+        count: 2
       },
       {
         path: `api/${browser}/latest-desktop.json`,
         group: browser,
-        description: `${BROWSER_LABELS[browser]} latest desktop UA`
+        description: `${BROWSER_LABELS[browser]} latest desktop UA`,
+        count: 1
       },
       {
         path: `api/${browser}/latest-mobile.json`,
         group: browser,
-        description: `${BROWSER_LABELS[browser]} latest mobile UA`
+        description: `${BROWSER_LABELS[browser]} latest mobile UA`,
+        count: 1
       }
     );
   }

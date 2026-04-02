@@ -6,66 +6,43 @@
     <title>UA Registry</title>
     <meta
       name="description"
-      content="Static GitHub Pages JSON endpoints for current full browser user-agent strings."
+      content="Static JSON endpoints for current browser user-agent strings."
     >
     <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
     <main class="page">
-      <header class="hero">
-        <p class="eyebrow">Static JSON on GitHub Pages</p>
-        <h1>Browser user-agent registry</h1>
-        <p class="lede">
-          This site publishes current full user-agent strings for Chrome, Safari, Edge, and
-          Firefox as plain static <code>.json</code> files. Every item exposes the full literal
-          UA in <code>user_agent</code>.
-        </p>
-        <div class="hero-meta">
-          <span id="last-updated">Loading last update…</span>
-          <a class="link-chip" href="./api/index.json">Manifest</a>
-          <a class="link-chip" href="./api/meta.json">Metadata</a>
+      <header class="header">
+        <div class="header-top">
+          <h1>ua-registry</h1>
+          <span id="browser-counts" class="counts"></span>
+        </div>
+        <p class="sub">Current user-agent strings for Chrome, Safari, Edge &amp; Firefox as static JSON.</p>
+        <div class="header-meta">
+          <span id="last-updated" class="dim">...</span>
+          <span class="sep">|</span>
+          <a href="./api/index.json">manifest</a>
+          <a href="./api/meta.json">meta</a>
         </div>
       </header>
 
-      <section class="panel">
-        <div class="panel-heading">
-          <h2>Counts</h2>
-          <p>Per-browser top-five sets from the generated manifest.</p>
-        </div>
-        <div id="browser-counts" class="stat-grid"></div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-heading">
-          <h2>Endpoints</h2>
-          <p>All public JSON endpoints with relative links and one-click copy buttons.</p>
-        </div>
-        <div id="endpoint-list" class="endpoint-list">
-          <p class="empty">Loading endpoints…</p>
+      <section class="section">
+        <h2>Endpoints</h2>
+        <div id="endpoint-list">
+          <p class="dim">Loading...</p>
         </div>
       </section>
 
-      <section class="panel">
-        <div class="panel-heading">
-          <h2>Usage</h2>
-          <p>Fetch examples against the generated files.</p>
-        </div>
-        <div class="examples">
-          <pre><code>fetch("./api/chrome/latest-desktop.json").then((r) =&gt; r.json())</code></pre>
-          <pre><code>curl ./api/all.json</code></pre>
-          <pre><code>fetch("./api/latest.json").then((r) =&gt; r.json())</code></pre>
-        </div>
+      <section class="section">
+        <h2>Usage</h2>
+        <pre><code>fetch("./api/chrome/latest-desktop.json").then(r =&gt; r.json())</code></pre>
+        <pre><code>curl https://&lt;host&gt;/api/latest.json</code></pre>
       </section>
 
-      <section class="panel">
-        <div class="panel-heading">
-          <h2>Notes</h2>
-          <p>Current source and build metadata.</p>
-        </div>
-        <div id="meta-notes" class="notes">
-          <p class="empty">Loading metadata…</p>
-        </div>
-      </section>
+      <details class="section" id="meta-section">
+        <summary><h2>Build info</h2></summary>
+        <div id="meta-notes" class="dim">Loading...</div>
+      </details>
     </main>
 
     <script type="module" src="./app.js"></script>

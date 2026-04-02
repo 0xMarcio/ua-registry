@@ -29,17 +29,20 @@
     {
       "path": "api/chrome/latest-desktop.json",
       "group": "chrome",
-      "description": "Google Chrome latest desktop UA"
+      "description": "Google Chrome latest desktop UA",
+      "count": 1
     },
     {
       "path": "api/chrome/latest-mobile.json",
       "group": "chrome",
-      "description": "Google Chrome latest mobile UA"
+      "description": "Google Chrome latest mobile UA",
+      "count": 1
     },
     {
       "path": "api/chrome/latest.json",
       "group": "chrome",
-      "description": "Google Chrome latest desktop and mobile"
+      "description": "Google Chrome latest desktop and mobile",
+      "count": 2
     },
     {
       "path": "api/chrome/mobile.json",
@@ -68,17 +71,20 @@
     {
       "path": "api/edge/latest-desktop.json",
       "group": "edge",
-      "description": "Microsoft Edge latest desktop UA"
+      "description": "Microsoft Edge latest desktop UA",
+      "count": 1
     },
     {
       "path": "api/edge/latest-mobile.json",
       "group": "edge",
-      "description": "Microsoft Edge latest mobile UA"
+      "description": "Microsoft Edge latest mobile UA",
+      "count": 1
     },
     {
       "path": "api/edge/latest.json",
       "group": "edge",
-      "description": "Microsoft Edge latest desktop and mobile"
+      "description": "Microsoft Edge latest desktop and mobile",
+      "count": 2
     },
     {
       "path": "api/edge/mobile.json",
@@ -101,17 +107,20 @@
     {
       "path": "api/firefox/latest-desktop.json",
       "group": "firefox",
-      "description": "Mozilla Firefox latest desktop UA"
+      "description": "Mozilla Firefox latest desktop UA",
+      "count": 1
     },
     {
       "path": "api/firefox/latest-mobile.json",
       "group": "firefox",
-      "description": "Mozilla Firefox latest mobile UA"
+      "description": "Mozilla Firefox latest mobile UA",
+      "count": 1
     },
     {
       "path": "api/firefox/latest.json",
       "group": "firefox",
-      "description": "Mozilla Firefox latest desktop and mobile"
+      "description": "Mozilla Firefox latest desktop and mobile",
+      "count": 2
     },
     {
       "path": "api/firefox/mobile.json",
@@ -127,7 +136,8 @@
     {
       "path": "api/latest.json",
       "group": "global",
-      "description": "Latest desktop and mobile UA per browser family"
+      "description": "Latest desktop and mobile UA per browser family",
+      "count": 8
     },
     {
       "path": "api/meta.json",
@@ -155,17 +165,20 @@
     {
       "path": "api/safari/latest-desktop.json",
       "group": "safari",
-      "description": "Apple Safari latest desktop UA"
+      "description": "Apple Safari latest desktop UA",
+      "count": 1
     },
     {
       "path": "api/safari/latest-mobile.json",
       "group": "safari",
-      "description": "Apple Safari latest mobile UA"
+      "description": "Apple Safari latest mobile UA",
+      "count": 1
     },
     {
       "path": "api/safari/latest.json",
       "group": "safari",
-      "description": "Apple Safari latest desktop and mobile"
+      "description": "Apple Safari latest desktop and mobile",
+      "count": 2
     },
     {
       "path": "api/safari/mobile.json",

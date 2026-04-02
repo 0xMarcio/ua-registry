@@ -32,66 +32,43 @@ function buildIndexHtml() {
     <title>UA Registry</title>
     <meta
       name="description"
-      content="Static GitHub Pages JSON endpoints for current full browser user-agent strings."
+      content="Static JSON endpoints for current browser user-agent strings."
     >
     <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
     <main class="page">
-      <header class="hero">
-        <p class="eyebrow">Static JSON on GitHub Pages</p>
-        <h1>Browser user-agent registry</h1>
-        <p class="lede">
-          This site publishes current full user-agent strings for Chrome, Safari, Edge, and
-          Firefox as plain static <code>.json</code> files. Every item exposes the full literal
-          UA in <code>user_agent</code>.
-        </p>
-        <div class="hero-meta">
-          <span id="last-updated">Loading last update…</span>
-          <a class="link-chip" href="./api/index.json">Manifest</a>
-          <a class="link-chip" href="./api/meta.json">Metadata</a>
+      <header class="header">
+        <div class="header-top">
+          <h1>ua-registry</h1>
+          <span id="browser-counts" class="counts"></span>
+        </div>
+        <p class="sub">Current user-agent strings for Chrome, Safari, Edge &amp; Firefox as static JSON.</p>
+        <div class="header-meta">
+          <span id="last-updated" class="dim">...</span>
+          <span class="sep">|</span>
+          <a href="./api/index.json">manifest</a>
+          <a href="./api/meta.json">meta</a>
         </div>
       </header>
 
-      <section class="panel">
-        <div class="panel-heading">
-          <h2>Counts</h2>
-          <p>Per-browser top-five sets from the generated manifest.</p>
-        </div>
-        <div id="browser-counts" class="stat-grid"></div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-heading">
-          <h2>Endpoints</h2>
-          <p>All public JSON endpoints with relative links and one-click copy buttons.</p>
-        </div>
-        <div id="endpoint-list" class="endpoint-list">
-          <p class="empty">Loading endpoints…</p>
+      <section class="section">
+        <h2>Endpoints</h2>
+        <div id="endpoint-list">
+          <p class="dim">Loading...</p>
         </div>
       </section>
 
-      <section class="panel">
-        <div class="panel-heading">
-          <h2>Usage</h2>
-          <p>Fetch examples against the generated files.</p>
-        </div>
-        <div class="examples">
-          <pre><code>fetch("./api/chrome/latest-desktop.json").then((r) =&gt; r.json())</code></pre>
-          <pre><code>curl ./api/all.json</code></pre>
-          <pre><code>fetch("./api/latest.json").then((r) =&gt; r.json())</code></pre>
-        </div>
+      <section class="section">
+        <h2>Usage</h2>
+        <pre><code>fetch("./api/chrome/latest-desktop.json").then(r =&gt; r.json())</code></pre>
+        <pre><code>curl https://&lt;host&gt;/api/latest.json</code></pre>
       </section>
 
-      <section class="panel">
-        <div class="panel-heading">
-          <h2>Notes</h2>
-          <p>Current source and build metadata.</p>
-        </div>
-        <div id="meta-notes" class="notes">
-          <p class="empty">Loading metadata…</p>
-        </div>
-      </section>
+      <details class="section" id="meta-section">
+        <summary><h2>Build info</h2></summary>
+        <div id="meta-notes" class="dim">Loading...</div>
+      </details>
     </main>
 
     <script type="module" src="./app.js"></script>
@@ -101,380 +78,302 @@ function buildIndexHtml() {
 }
 
 function buildStylesCss() {
-  return `:root {
-  color-scheme: light;
-  --bg: #f4efe5;
-  --panel: rgba(255, 255, 255, 0.86);
-  --panel-border: rgba(60, 52, 39, 0.14);
-  --text: #1f1b16;
-  --muted: #605747;
-  --accent: #1557ff;
-  --accent-soft: rgba(21, 87, 255, 0.08);
-  --shadow: 0 16px 40px rgba(60, 52, 39, 0.08);
-  --radius: 22px;
-  --radius-sm: 14px;
-  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  return `*,*::before,*::after{box-sizing:border-box;margin:0}
+
+:root{
+  color-scheme:dark;
+  --bg:#09090b;
+  --surface:#111113;
+  --border:#1e1e22;
+  --text:#e4e4e7;
+  --dim:#71717a;
+  --accent:#a1a1aa;
+  --link:#e4e4e7;
+  --mono:"SF Mono","Menlo","Consolas","Liberation Mono",monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 
-* {
-  box-sizing: border-box;
+body{
+  background:var(--bg);
+  color:var(--text);
+  font:14px/1.6 var(--sans);
+  -webkit-font-smoothing:antialiased;
 }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  color: var(--text);
-  background:
-    radial-gradient(circle at top left, rgba(255, 217, 145, 0.6), transparent 38%),
-    linear-gradient(180deg, #fff9ee 0%, var(--bg) 55%, #efe7d7 100%);
+code,pre{font-family:var(--mono);font-size:13px}
+
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.page{
+  max-width:720px;
+  margin:0 auto;
+  padding:3rem 1.5rem 4rem;
 }
 
-code,
-pre {
-  font-family: "SF Mono", "Menlo", "Consolas", monospace;
+/* ---- header ---- */
+.header{
+  padding-bottom:1.5rem;
+  border-bottom:1px solid var(--border);
 }
 
-.page {
-  width: min(1100px, calc(100% - 2rem));
-  margin: 0 auto;
-  padding: 2rem 0 3rem;
+.header-top{
+  display:flex;
+  align-items:baseline;
+  gap:1rem;
+  flex-wrap:wrap;
 }
 
-.hero,
-.panel {
-  background: var(--panel);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--panel-border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+h1{
+  font-size:1.25rem;
+  font-weight:600;
+  letter-spacing:-0.02em;
 }
 
-.hero {
-  padding: 2rem;
-  margin-bottom: 1.25rem;
+.counts{
+  display:flex;
+  gap:0.625rem;
+  font-size:12px;
+  color:var(--dim);
+  font-family:var(--mono);
 }
 
-.eyebrow {
-  margin: 0 0 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.78rem;
-  color: var(--muted);
+.count-badge{
+  padding:2px 8px;
+  border:1px solid var(--border);
+  border-radius:4px;
+  white-space:nowrap;
 }
 
-h1,
-h2,
-p {
-  margin-top: 0;
+.sub{
+  margin-top:0.375rem;
+  color:var(--dim);
+  font-size:13px;
 }
 
-h1 {
-  margin-bottom: 0.75rem;
-  font-size: clamp(2.1rem, 5vw, 3.5rem);
-  line-height: 0.95;
+.header-meta{
+  margin-top:0.75rem;
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  font-size:12px;
+  font-family:var(--mono);
 }
 
-.lede {
-  max-width: 60ch;
-  color: var(--muted);
-  line-height: 1.55;
+.header-meta a{color:var(--dim)}
+.header-meta a:hover{color:var(--text)}
+.sep{color:var(--border)}
+.dim{color:var(--dim)}
+
+/* ---- sections ---- */
+.section{
+  margin-top:2rem;
 }
 
-.hero-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  align-items: center;
-  margin-top: 1.5rem;
+h2{
+  font-size:11px;
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:var(--dim);
+  margin-bottom:0.75rem;
 }
 
-.link-chip,
-.copy-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.35rem;
-  border: 1px solid rgba(21, 87, 255, 0.18);
-  background: var(--accent-soft);
-  color: var(--accent);
-  border-radius: 999px;
-  padding: 0.55rem 0.9rem;
-  font: inherit;
-  text-decoration: none;
-  cursor: pointer;
+/* ---- endpoints ---- */
+.endpoint-group{margin-bottom:1.25rem}
+
+.endpoint-group h3{
+  font-size:12px;
+  font-weight:500;
+  color:var(--accent);
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  margin-bottom:0.25rem;
+  padding-bottom:0.375rem;
+  border-bottom:1px solid var(--border);
 }
 
-.link-chip:hover,
-.copy-button:hover {
-  background: rgba(21, 87, 255, 0.14);
+.endpoint-row{
+  display:grid;
+  grid-template-columns:1fr 8ch auto;
+  align-items:baseline;
+  gap:0.5rem;
+  padding:0.3rem 0;
+  font-family:var(--mono);
+  font-size:13px;
 }
 
-.panel {
-  padding: 1.4rem;
-  margin-bottom: 1rem;
+.endpoint-link{
+  color:var(--text);
+  text-decoration:none;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.endpoint-link:hover{color:#fff;text-decoration:underline}
+
+.endpoint-desc{
+  color:var(--dim);
+  font-size:12px;
+  text-align:right;
 }
 
-.panel-heading {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 1rem;
+.copy-btn{
+  background:none;
+  border:1px solid var(--border);
+  color:var(--dim);
+  font:11px var(--mono);
+  padding:2px 8px;
+  border-radius:3px;
+  cursor:pointer;
+  flex-shrink:0;
 }
+.copy-btn:hover{color:var(--text);border-color:var(--accent)}
 
-.panel-heading p {
-  color: var(--muted);
+/* ---- usage ---- */
+pre{
+  margin-top:0.5rem;
+  padding:0.625rem 0.875rem;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:6px;
+  color:var(--dim);
+  overflow-x:auto;
 }
+pre+pre{margin-top:0.375rem}
 
-.stat-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 0.85rem;
+/* ---- build info ---- */
+details summary{cursor:pointer;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary h2{display:inline;margin:0}
+details summary:hover h2{color:var(--text)}
+
+.note-list{
+  padding:0.5rem 0 0 1rem;
+  color:var(--dim);
+  font-size:13px;
 }
+.note-list li{margin-bottom:0.25rem}
 
-.stat-card {
-  padding: 1rem;
-  border-radius: var(--radius-sm);
-  background: #fffdf8;
-  border: 1px solid rgba(60, 52, 39, 0.08);
-}
-
-.stat-card strong {
-  display: block;
-  font-size: 1.5rem;
-  margin-top: 0.35rem;
-}
-
-.endpoint-group {
-  margin-bottom: 1rem;
-}
-
-.endpoint-group h3 {
-  margin: 0 0 0.65rem;
-  font-size: 1rem;
-}
-
-.endpoint-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.75rem;
-  align-items: center;
-  padding: 0.9rem 0;
-  border-top: 1px solid rgba(60, 52, 39, 0.08);
-}
-
-.endpoint-row:first-of-type {
-  border-top: 0;
-}
-
-.endpoint-link {
-  display: inline-block;
-  font-weight: 600;
-  color: var(--text);
-  text-decoration: none;
-  word-break: break-all;
-}
-
-.endpoint-link:hover {
-  color: var(--accent);
-}
-
-.endpoint-meta {
-  display: block;
-  margin-top: 0.25rem;
-  color: var(--muted);
-  font-size: 0.95rem;
-  line-height: 1.45;
-}
-
-.examples {
-  display: grid;
-  gap: 0.75rem;
-}
-
-pre {
-  margin: 0;
-  padding: 1rem;
-  overflow-x: auto;
-  border-radius: var(--radius-sm);
-  background: #1f1b16;
-  color: #f8f4eb;
-}
-
-.notes,
-.empty {
-  color: var(--muted);
-}
-
-.note-list {
-  margin: 0;
-  padding-left: 1rem;
-}
-
-@media (max-width: 720px) {
-  .page {
-    width: min(100% - 1rem, 1000px);
-    padding-top: 1rem;
-  }
-
-  .hero,
-  .panel {
-    padding: 1.1rem;
-  }
-
-  .endpoint-row {
-    grid-template-columns: 1fr;
-  }
+/* ---- responsive ---- */
+@media(max-width:540px){
+  .page{padding:1.5rem 1rem 3rem}
+  .header-top{flex-direction:column;gap:0.5rem}
+  .endpoint-row{grid-template-columns:1fr auto auto;gap:0.375rem}
 }
 `;
 }
 
 function buildAppJs() {
-  return `const siteBase = new URL("./", document.baseURI);
-const manifestUrl = new URL("./api/index.json", siteBase);
-const metaUrl = new URL("./api/meta.json", siteBase);
-const browserLabels = {
-  chrome: "Chrome",
-  safari: "Safari",
-  edge: "Edge",
-  firefox: "Firefox"
-};
+  return `const base = new URL("./", document.baseURI);
+const manifestUrl = new URL("./api/index.json", base);
+const metaUrl = new URL("./api/meta.json", base);
 
-const endpointList = document.querySelector("#endpoint-list");
-const browserCounts = document.querySelector("#browser-counts");
-const metaNotes = document.querySelector("#meta-notes");
-const lastUpdated = document.querySelector("#last-updated");
+const $ = (s) => document.querySelector(s);
+const endpointList = $("#endpoint-list");
+const browserCounts = $("#browser-counts");
+const metaNotes = $("#meta-notes");
+const lastUpdated = $("#last-updated");
 
-function endpointUrl(relativePath) {
-  return new URL(relativePath, siteBase);
+function url(p) { return new URL(p, base); }
+
+function ts(iso) {
+  return new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(iso));
 }
 
-function formatTimestamp(iso) {
-  return new Intl.DateTimeFormat(undefined, {
-    dateStyle: "medium",
-    timeStyle: "short"
-  }).format(new Date(iso));
-}
-
-async function copyEndpoint(relativePath, button) {
-  const url = endpointUrl(relativePath).href;
-
+async function copy(path, btn) {
+  const u = url(path).href;
   try {
-    await navigator.clipboard.writeText(url);
-    button.textContent = "Copied";
-    window.setTimeout(() => {
-      button.textContent = "Copy";
-    }, 1200);
-  } catch {
-    window.prompt("Copy endpoint URL", url);
-  }
+    await navigator.clipboard.writeText(u);
+    btn.textContent = "ok";
+    setTimeout(() => { btn.textContent = "cp"; }, 900);
+  } catch { prompt("Copy URL", u); }
 }
 
 function renderCounts(manifest) {
   browserCounts.innerHTML = "";
-
-  for (const [browser, count] of Object.entries(manifest.browser_counts)) {
-    const card = document.createElement("article");
-    card.className = "stat-card";
-    card.innerHTML = \`<span>\${browserLabels[browser] || browser}</span><strong>\${count}</strong><small>browser-specific items</small>\`;
-    browserCounts.append(card);
+  for (const [b, c] of Object.entries(manifest.browser_counts)) {
+    const el = document.createElement("span");
+    el.className = "count-badge";
+    el.textContent = \`\${b} \${c}\`;
+    browserCounts.append(el);
   }
 }
 
 function renderEndpoints(manifest) {
   endpointList.innerHTML = "";
   const groups = new Map();
-
-  for (const endpoint of manifest.endpoints) {
-    const group = endpoint.group || "other";
-
-    if (!groups.has(group)) {
-      groups.set(group, []);
-    }
-
-    groups.get(group).push(endpoint);
+  for (const ep of manifest.endpoints) {
+    const g = ep.group || "other";
+    if (!groups.has(g)) groups.set(g, []);
+    groups.get(g).push(ep);
   }
 
-  for (const [groupName, endpoints] of groups) {
-    const section = document.createElement("section");
-    section.className = "endpoint-group";
+  for (const [name, eps] of groups) {
+    const sec = document.createElement("div");
+    sec.className = "endpoint-group";
+    const h = document.createElement("h3");
+    h.textContent = name;
+    sec.append(h);
 
-    const title = document.createElement("h3");
-    title.textContent = groupName;
-    section.append(title);
-
-    for (const endpoint of endpoints) {
+    for (const ep of eps) {
       const row = document.createElement("div");
       row.className = "endpoint-row";
 
-      const info = document.createElement("div");
       const link = document.createElement("a");
       link.className = "endpoint-link";
-      link.href = endpointUrl(endpoint.path);
-      link.textContent = endpoint.path;
-      link.rel = "noopener";
-      info.append(link);
+      link.href = url(ep.path);
+      link.textContent = ep.path;
 
-      const meta = document.createElement("span");
-      meta.className = "endpoint-meta";
-      const countText = Number.isInteger(endpoint.count) ? \` Count: \${endpoint.count}.\` : "";
-      meta.textContent = \`\${endpoint.description}.\${countText}\`;
-      info.append(meta);
+      const desc = document.createElement("span");
+      desc.className = "endpoint-desc";
+      desc.textContent = Number.isInteger(ep.count) ? \`\${ep.count} item\${ep.count === 1 ? "" : "s"}\` : "—";
 
-      const button = document.createElement("button");
-      button.className = "copy-button";
-      button.type = "button";
-      button.textContent = "Copy";
-      button.addEventListener("click", () => copyEndpoint(endpoint.path, button));
+      const btn = document.createElement("button");
+      btn.className = "copy-btn";
+      btn.type = "button";
+      btn.textContent = "cp";
+      btn.addEventListener("click", () => copy(ep.path, btn));
 
-      row.append(info, button);
-      section.append(row);
+      row.append(link, desc, btn);
+      sec.append(row);
     }
-
-    endpointList.append(section);
+    endpointList.append(sec);
   }
 }
 
 function renderMeta(meta) {
-  lastUpdated.textContent = \`Last updated: \${formatTimestamp(meta.generated_at)}\`;
-  const versionSummary = \`Versions: Chrome \${meta.resolved_versions.chrome.current.version}, Safari \${meta.resolved_versions.safari.current.version}, Edge \${meta.resolved_versions.edge.current.version}, Firefox \${meta.resolved_versions.firefox.current.version}\`;
-  const fallback = meta.fallback_source_use?.used
-    ? \`Fallback used: \${meta.fallback_source_use.note}\`
-    : "Fallback used: no";
+  lastUpdated.textContent = ts(meta.generated_at);
+  const v = meta.resolved_versions;
+  const versions = \`Chrome \${v.chrome.current.version} / Safari \${v.safari.current.version} / Edge \${v.edge.current.version} / Firefox \${v.firefox.current.version}\`;
   const notes = [
-    versionSummary,
-    \`Source strategy: \${meta.source_strategy.primary}\`,
-    fallback,
+    versions,
+    \`strategy: \${meta.source_strategy.primary}\`,
+    meta.fallback_source_use?.used ? \`fallback: \${meta.fallback_source_use.note}\` : null,
     ...meta.safari_rules.notes
-  ];
+  ].filter(Boolean);
+
   metaNotes.innerHTML = "";
   const list = document.createElement("ul");
   list.className = "note-list";
-
-  for (const note of notes) {
-    const item = document.createElement("li");
-    item.textContent = note;
-    list.append(item);
+  for (const n of notes) {
+    const li = document.createElement("li");
+    li.textContent = n;
+    list.append(li);
   }
-
   metaNotes.append(list);
 }
 
 async function load() {
   try {
     const [manifest, meta] = await Promise.all([
-      fetch(manifestUrl).then((response) => response.json()),
-      fetch(metaUrl).then((response) => response.json())
+      fetch(manifestUrl).then(r => r.json()),
+      fetch(metaUrl).then(r => r.json())
     ]);
-
     renderCounts(manifest);
     renderEndpoints(manifest);
     renderMeta(meta);
-  } catch (error) {
-    endpointList.innerHTML = \`<p class="empty">Could not load endpoint manifest: \${error.message}</p>\`;
-    metaNotes.innerHTML = \`<p class="empty">Could not load metadata: \${error.message}</p>\`;
-    lastUpdated.textContent = "Last updated: unavailable";
+  } catch (e) {
+    endpointList.innerHTML = \`<p class="dim">Error: \${e.message}</p>\`;
   }
 }
 

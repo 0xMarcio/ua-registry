@@ -1,147 +1,113 @@
-const siteBase = new URL("./", document.baseURI);
-const manifestUrl = new URL("./api/index.json", siteBase);
-const metaUrl = new URL("./api/meta.json", siteBase);
-const browserLabels = {
-  chrome: "Chrome",
-  safari: "Safari",
-  edge: "Edge",
-  firefox: "Firefox"
-};
+const base = new URL("./", document.baseURI);
+const manifestUrl = new URL("./api/index.json", base);
+const metaUrl = new URL("./api/meta.json", base);
 
-const endpointList = document.querySelector("#endpoint-list");
-const browserCounts = document.querySelector("#browser-counts");
-const metaNotes = document.querySelector("#meta-notes");
-const lastUpdated = document.querySelector("#last-updated");
+const $ = (s) => document.querySelector(s);
+const endpointList = $("#endpoint-list");
+const browserCounts = $("#browser-counts");
+const metaNotes = $("#meta-notes");
+const lastUpdated = $("#last-updated");
 
-function endpointUrl(relativePath) {
-  return new URL(relativePath, siteBase);
+function url(p) { return new URL(p, base); }
+
+function ts(iso) {
+  return new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(iso));
 }
 
-function formatTimestamp(iso) {
-  return new Intl.DateTimeFormat(undefined, {
-    dateStyle: "medium",
-    timeStyle: "short"
-  }).format(new Date(iso));
-}
-
-async function copyEndpoint(relativePath, button) {
-  const url = endpointUrl(relativePath).href;
-
+async function copy(path, btn) {
+  const u = url(path).href;
   try {
-    await navigator.clipboard.writeText(url);
-    button.textContent = "Copied";
-    window.setTimeout(() => {
-      button.textContent = "Copy";
-    }, 1200);
-  } catch {
-    window.prompt("Copy endpoint URL", url);
-  }
+    await navigator.clipboard.writeText(u);
+    btn.textContent = "ok";
+    setTimeout(() => { btn.textContent = "cp"; }, 900);
+  } catch { prompt("Copy URL", u); }
 }
 
 function renderCounts(manifest) {
   browserCounts.innerHTML = "";
-
-  for (const [browser, count] of Object.entries(manifest.browser_counts)) {
-    const card = document.createElement("article");
-    card.className = "stat-card";
-    card.innerHTML = `<span>${browserLabels[browser] || browser}</span><strong>${count}</strong><small>browser-specific items</small>`;
-    browserCounts.append(card);
+  for (const [b, c] of Object.entries(manifest.browser_counts)) {
+    const el = document.createElement("span");
+    el.className = "count-badge";
+    el.textContent = `${b} ${c}`;
+    browserCounts.append(el);
   }
 }
 
 function renderEndpoints(manifest) {
   endpointList.innerHTML = "";
   const groups = new Map();
-
-  for (const endpoint of manifest.endpoints) {
-    const group = endpoint.group || "other";
-
-    if (!groups.has(group)) {
-      groups.set(group, []);
-    }
-
-    groups.get(group).push(endpoint);
+  for (const ep of manifest.endpoints) {
+    const g = ep.group || "other";
+    if (!groups.has(g)) groups.set(g, []);
+    groups.get(g).push(ep);
   }
 
-  for (const [groupName, endpoints] of groups) {
-    const section = document.createElement("section");
-    section.className = "endpoint-group";
+  for (const [name, eps] of groups) {
+    const sec = document.createElement("div");
+    sec.className = "endpoint-group";
+    const h = document.createElement("h3");
+    h.textContent = name;
+    sec.append(h);
 
-    const title = document.createElement("h3");
-    title.textContent = groupName;
-    section.append(title);
-
-    for (const endpoint of endpoints) {
+    for (const ep of eps) {
       const row = document.createElement("div");
       row.className = "endpoint-row";
 
-      const info = document.createElement("div");
       const link = document.createElement("a");
       link.className = "endpoint-link";
-      link.href = endpointUrl(endpoint.path);
-      link.textContent = endpoint.path;
-      link.rel = "noopener";
-      info.append(link);
+      link.href = url(ep.path);
+      link.textContent = ep.path;
 
-      const meta = document.createElement("span");
-      meta.className = "endpoint-meta";
-      const countText = Number.isInteger(endpoint.count) ? ` Count: ${endpoint.count}.` : "";
-      meta.textContent = `${endpoint.description}.${countText}`;
-      info.append(meta);
+      const desc = document.createElement("span");
+      desc.className = "endpoint-desc";
+      desc.textContent = Number.isInteger(ep.count) ? `${ep.count} item${ep.count === 1 ? "" : "s"}` : "—";
 
-      const button = document.createElement("button");
-      button.className = "copy-button";
-      button.type = "button";
-      button.textContent = "Copy";
-      button.addEventListener("click", () => copyEndpoint(endpoint.path, button));
+      const btn = document.createElement("button");
+      btn.className = "copy-btn";
+      btn.type = "button";
+      btn.textContent = "cp";
+      btn.addEventListener("click", () => copy(ep.path, btn));
 
-      row.append(info, button);
-      section.append(row);
+      row.append(link, desc, btn);
+      sec.append(row);
     }
-
-    endpointList.append(section);
+    endpointList.append(sec);
   }
 }
 
 function renderMeta(meta) {
-  lastUpdated.textContent = `Last updated: ${formatTimestamp(meta.generated_at)}`;
-  const versionSummary = `Versions: Chrome ${meta.resolved_versions.chrome.current.version}, Safari ${meta.resolved_versions.safari.current.version}, Edge ${meta.resolved_versions.edge.current.version}, Firefox ${meta.resolved_versions.firefox.current.version}`;
-  const fallback = meta.fallback_source_use?.used
-    ? `Fallback used: ${meta.fallback_source_use.note}`
-    : "Fallback used: no";
+  lastUpdated.textContent = ts(meta.generated_at);
+  const v = meta.resolved_versions;
+  const versions = `Chrome ${v.chrome.current.version} / Safari ${v.safari.current.version} / Edge ${v.edge.current.version} / Firefox ${v.firefox.current.version}`;
   const notes = [
-    versionSummary,
-    `Source strategy: ${meta.source_strategy.primary}`,
-    fallback,
+    versions,
+    `strategy: ${meta.source_strategy.primary}`,
+    meta.fallback_source_use?.used ? `fallback: ${meta.fallback_source_use.note}` : null,
     ...meta.safari_rules.notes
-  ];
+  ].filter(Boolean);
+
   metaNotes.innerHTML = "";
   const list = document.createElement("ul");
   list.className = "note-list";
-
-  for (const note of notes) {
-    const item = document.createElement("li");
-    item.textContent = note;
-    list.append(item);
+  for (const n of notes) {
+    const li = document.createElement("li");
+    li.textContent = n;
+    list.append(li);
   }
-
   metaNotes.append(list);
 }
 
 async function load() {
   try {
     const [manifest, meta] = await Promise.all([
-      fetch(manifestUrl).then((response) => response.json()),
-      fetch(metaUrl).then((response) => response.json())
+      fetch(manifestUrl).then(r => r.json()),
+      fetch(metaUrl).then(r => r.json())
     ]);
-
     renderCounts(manifest);
     renderEndpoints(manifest);
     renderMeta(meta);
-  } catch (error) {
-    endpointList.innerHTML = `<p class="empty">Could not load endpoint manifest: ${error.message}</p>`;
-    metaNotes.innerHTML = `<p class="empty">Could not load metadata: ${error.message}</p>`;
-    lastUpdated.textContent = "Last updated: unavailable";
+  } catch (e) {
+    endpointList.innerHTML = `<p class="dim">Error: ${e.message}</p>`;
   }
 }
 
