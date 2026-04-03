@@ -37,6 +37,12 @@ async function copy(path, btn) {
   await copyValue(url(path).href, btn);
 }
 
+function bindUsageCopyButtons() {
+  for (const button of document.querySelectorAll(".usage-copy")) {
+    button.addEventListener("click", () => copyValue(button.dataset.copy ?? "", button));
+  }
+}
+
 function renderUserAgents(payload) {
   uaList.innerHTML = "";
   const grouped = new Map();
@@ -164,6 +170,7 @@ async function load() {
     renderUserAgents(all);
     renderEndpoints(manifest);
     renderMeta(meta);
+    bindUsageCopyButtons();
   } catch (e) {
     uaList.innerHTML = `<p class="dim">Error: ${e.message}</p>`;
     endpointList.innerHTML = `<p class="dim">Error: ${e.message}</p>`;

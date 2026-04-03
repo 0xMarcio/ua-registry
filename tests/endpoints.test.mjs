@@ -124,10 +124,13 @@ test("homepage uses relative asset paths and only current routes are present", a
   assert.match(indexHtml, /<summary><h2>Desktop User Agents<\/h2><\/summary>/);
   assert.doesNotMatch(indexHtml, /id="browser-counts"/);
   assert.doesNotMatch(indexHtml, /id="meta-section"/);
+  assert.match(indexHtml, /class="copy-btn usage-copy"/);
+  assert.match(indexHtml, /data-copy='fetch\("https:\/\/ua\.syntax9\.ai\/api\/chrome\/windows\.json"\)\.then\(r =&gt; r\.json\(\)\)'/);
   assert.match(appJs, /new URL\("\.\/api\/index\.json"/);
   assert.match(appJs, /new URL\("\.\/api\/desktop\.json"/);
   assert.match(appJs, /new URL\("\.\/api\/meta\.json"/);
   assert.match(appJs, /function renderUserAgents\(payload\)/);
+  assert.match(appJs, /function bindUsageCopyButtons\(\)/);
   assert.match(appJs, /browserLabels/);
   assert.match(appJs, /document\.createElement\("details"\)/);
   assert.match(appJs, /document\.createElement\("summary"\)/);

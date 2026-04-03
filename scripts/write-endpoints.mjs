@@ -111,8 +111,16 @@ function buildIndexHtml() {
 
       <section class="section">
         <h2>Usage</h2>
-        <pre><code>fetch("https://ua.syntax9.ai/api/chrome/windows.json").then(r =&gt; r.json())</code></pre>
-        <pre><code>curl https://ua.syntax9.ai/api/chrome/desktop</code></pre>
+        <div id="usage-list">
+          <div class="usage-example">
+            <pre><code>fetch("https://ua.syntax9.ai/api/chrome/windows.json").then(r =&gt; r.json())</code></pre>
+            <button class="copy-btn usage-copy" type="button" data-copy='fetch("https://ua.syntax9.ai/api/chrome/windows.json").then(r =&gt; r.json())'>cp</button>
+          </div>
+          <div class="usage-example">
+            <pre><code>curl https://ua.syntax9.ai/api/chrome/desktop</code></pre>
+            <button class="copy-btn usage-copy" type="button" data-copy="curl https://ua.syntax9.ai/api/chrome/desktop">cp</button>
+          </div>
+        </div>
       </section>
     </main>
 
@@ -366,8 +374,19 @@ details summary:hover h2{
 .copy-btn:hover{color:var(--text);border-color:var(--accent)}
 
 /* ---- usage ---- */
+.usage-example{
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  gap:0.5rem;
+}
+
+.usage-example + .usage-example{
+  margin-top:0.375rem;
+}
+
 pre{
-  margin-top:0.5rem;
+  margin-top:0;
   padding:0.625rem 0.875rem;
   background:var(--surface);
   border:1px solid var(--border);
@@ -375,7 +394,10 @@ pre{
   color:var(--dim);
   overflow-x:auto;
 }
-pre+pre{margin-top:0.375rem}
+
+.usage-copy{
+  align-self:center;
+}
 
 /* ---- responsive ---- */
 @media(max-width:540px){
@@ -423,6 +445,12 @@ async function copyValue(value, btn) {
 
 async function copy(path, btn) {
   await copyValue(url(path).href, btn);
+}
+
+function bindUsageCopyButtons() {
+  for (const button of document.querySelectorAll(".usage-copy")) {
+    button.addEventListener("click", () => copyValue(button.dataset.copy ?? "", button));
+  }
 }
 
 function renderUserAgents(payload) {
@@ -552,6 +580,7 @@ async function load() {
     renderUserAgents(all);
     renderEndpoints(manifest);
     renderMeta(meta);
+    bindUsageCopyButtons();
   } catch (e) {
     uaList.innerHTML = \`<p class="dim">Error: \${e.message}</p>\`;
     endpointList.innerHTML = \`<p class="dim">Error: \${e.message}</p>\`;

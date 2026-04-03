@@ -41,8 +41,16 @@
 
       <section class="section">
         <h2>Usage</h2>
-        <pre><code>fetch("https://ua.syntax9.ai/api/chrome/windows.json").then(r =&gt; r.json())</code></pre>
-        <pre><code>curl https://ua.syntax9.ai/api/chrome/desktop</code></pre>
+        <div id="usage-list">
+          <div class="usage-example">
+            <pre><code>fetch("https://ua.syntax9.ai/api/chrome/windows.json").then(r =&gt; r.json())</code></pre>
+            <button class="copy-btn usage-copy" type="button" data-copy='fetch("https://ua.syntax9.ai/api/chrome/windows.json").then(r =&gt; r.json())'>cp</button>
+          </div>
+          <div class="usage-example">
+            <pre><code>curl https://ua.syntax9.ai/api/chrome/desktop</code></pre>
+            <button class="copy-btn usage-copy" type="button" data-copy="curl https://ua.syntax9.ai/api/chrome/desktop">cp</button>
+          </div>
+        </div>
       </section>
     </main>
 
