@@ -86,7 +86,7 @@ function buildIndexHtml() {
         <div class="header-top">
           <h1>ua-registry</h1>
         </div>
-        <p class="sub">Current user-agent strings for Chrome, Safari, Edge &amp; Firefox as static JSON and plaintext.</p>
+        <p class="sub">Current user-agent strings for Chrome, Safari, Edge &amp; Firefox.</p>
         <div class="header-meta">
           <span id="last-updated" class="dim">...</span>
           <span class="sep">|</span>
@@ -111,7 +111,7 @@ function buildIndexHtml() {
 
       <section class="section">
         <h2>Usage</h2>
-        <pre><code>await fetch("https://ua.syntax9.ai/api/chrome/windows.json").then(r =&gt; r.json())</code></pre>
+        <pre><code>fetch("https://ua.syntax9.ai/api/chrome/windows.json").then(r =&gt; r.json())</code></pre>
         <pre><code>curl https://ua.syntax9.ai/api/chrome/desktop</code></pre>
       </section>
     </main>
