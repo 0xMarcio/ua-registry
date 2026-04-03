@@ -125,7 +125,9 @@ test("homepage uses relative asset paths and only current routes are present", a
   assert.doesNotMatch(indexHtml, /id="browser-counts"/);
   assert.doesNotMatch(indexHtml, /id="meta-section"/);
   assert.match(indexHtml, /class="copy-btn usage-copy"/);
+  assert.match(indexHtml, /<div class="usage-example">\s*<div class="ua-value">/);
   assert.match(indexHtml, /data-copy='fetch\("https:\/\/ua\.syntax9\.ai\/api\/chrome\/windows\.json"\)\.then\(r =&gt; r\.json\(\)\)'/);
+  assert.doesNotMatch(indexHtml, /<pre><code>fetch\("https:\/\/ua\.syntax9\.ai\/api\/chrome\/windows\.json"\)/);
   assert.match(appJs, /new URL\("\.\/api\/index\.json"/);
   assert.match(appJs, /new URL\("\.\/api\/desktop\.json"/);
   assert.match(appJs, /new URL\("\.\/api\/meta\.json"/);

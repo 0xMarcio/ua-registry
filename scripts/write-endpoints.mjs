@@ -113,12 +113,16 @@ function buildIndexHtml() {
         <h2>Usage</h2>
         <div id="usage-list">
           <div class="usage-example">
-            <pre><code>fetch("https://ua.syntax9.ai/api/chrome/windows.json").then(r =&gt; r.json())</code></pre>
-            <button class="copy-btn usage-copy" type="button" data-copy='fetch("https://ua.syntax9.ai/api/chrome/windows.json").then(r =&gt; r.json())'>cp</button>
+            <div class="ua-value">
+              <div class="ua-code">fetch("https://ua.syntax9.ai/api/chrome/windows.json").then(r =&gt; r.json())</div>
+              <button class="copy-btn usage-copy" type="button" data-copy='fetch("https://ua.syntax9.ai/api/chrome/windows.json").then(r =&gt; r.json())'>cp</button>
+            </div>
           </div>
           <div class="usage-example">
-            <pre><code>curl https://ua.syntax9.ai/api/chrome/desktop</code></pre>
-            <button class="copy-btn usage-copy" type="button" data-copy="curl https://ua.syntax9.ai/api/chrome/desktop">cp</button>
+            <div class="ua-value">
+              <div class="ua-code">curl https://ua.syntax9.ai/api/chrome/desktop</div>
+              <button class="copy-btn usage-copy" type="button" data-copy="curl https://ua.syntax9.ai/api/chrome/desktop">cp</button>
+            </div>
           </div>
         </div>
       </section>
@@ -374,25 +378,8 @@ details summary:hover h2{
 .copy-btn:hover{color:var(--text);border-color:var(--accent)}
 
 /* ---- usage ---- */
-.usage-example{
-  display:grid;
-  grid-template-columns:1fr auto;
-  align-items:center;
-  gap:0.5rem;
-}
-
 .usage-example + .usage-example{
   margin-top:0.375rem;
-}
-
-pre{
-  margin-top:0;
-  padding:0.625rem 0.875rem;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:6px;
-  color:var(--dim);
-  overflow-x:auto;
 }
 
 .usage-copy{

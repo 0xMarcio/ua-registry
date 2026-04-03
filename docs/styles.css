@@ -241,25 +241,8 @@ details summary:hover h2{
 .copy-btn:hover{color:var(--text);border-color:var(--accent)}
 
 /* ---- usage ---- */
-.usage-example{
-  display:grid;
-  grid-template-columns:1fr auto;
-  align-items:center;
-  gap:0.5rem;
-}
-
 .usage-example + .usage-example{
   margin-top:0.375rem;
-}
-
-pre{
-  margin-top:0;
-  padding:0.625rem 0.875rem;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:6px;
-  color:var(--dim);
-  overflow-x:auto;
 }
 
 .usage-copy{
