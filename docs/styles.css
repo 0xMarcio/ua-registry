@@ -99,6 +99,23 @@ h2{
   margin-bottom:0.75rem;
 }
 
+/* ---- shared details ---- */
+details summary{
+  cursor:pointer;
+  list-style:none;
+}
+
+details summary::-webkit-details-marker{display:none}
+
+details summary h2{
+  display:inline;
+  margin:0;
+}
+
+details summary:hover h2{
+  color:var(--text);
+}
+
 /* ---- endpoints ---- */
 .endpoint-group{
   margin-bottom:1rem;
@@ -143,6 +160,64 @@ h2{
 
 .endpoint-items{
   padding-bottom:0.5rem;
+}
+
+.ua-browser{
+  margin-top:1rem;
+}
+
+.ua-browser:first-child{
+  margin-top:0.5rem;
+}
+
+.ua-browser h3{
+  font-size:1rem;
+  font-weight:600;
+  margin:0 0 0.625rem;
+  padding-bottom:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.ua-list{
+  display:grid;
+  gap:0.75rem;
+}
+
+.ua-item{
+  display:grid;
+  gap:0.35rem;
+}
+
+.ua-platform{
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+
+.ua-value{
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:start;
+  gap:0.5rem;
+  padding:0.625rem 0.75rem;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:6px;
+}
+
+.ua-code{
+  min-width:0;
+  white-space:nowrap;
+  overflow-x:auto;
+  color:var(--text);
+  font:12px/1.45 var(--mono);
+  scrollbar-width:thin;
+}
+
+.ua-copy{
+  align-self:center;
 }
 
 .endpoint-row{
@@ -192,12 +267,6 @@ pre{
   overflow-x:auto;
 }
 pre+pre{margin-top:0.375rem}
-
-/* ---- build info ---- */
-details summary{cursor:pointer;list-style:none}
-details summary::-webkit-details-marker{display:none}
-details summary h2{display:inline;margin:0}
-details summary:hover h2{color:var(--text)}
 
 .note-list{
   padding:0.5rem 0 0 1rem;

@@ -1,12 +1,21 @@
 const base = new URL("./", document.baseURI);
+const allUrl = new URL("./api/all.json", base);
 const manifestUrl = new URL("./api/index.json", base);
 const metaUrl = new URL("./api/meta.json", base);
 
 const $ = (s) => document.querySelector(s);
+const uaList = $("#ua-list");
 const endpointList = $("#endpoint-list");
 const browserCounts = $("#browser-counts");
 const metaNotes = $("#meta-notes");
 const lastUpdated = $("#last-updated");
+const browserLabels = {
+  chrome: "Google Chrome",
+  safari: "Apple Safari",
+  edge: "Microsoft Edge",
+  firefox: "Mozilla Firefox"
+};
+const browserOrder = ["chrome", "safari", "edge", "firefox"];
 
 function url(p) { return new URL(p, base); }
 
@@ -14,13 +23,20 @@ function ts(iso) {
   return new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(iso));
 }
 
-async function copy(path, btn) {
-  const u = url(path).href;
+function flashCopyState(btn) {
+  btn.textContent = "ok";
+  setTimeout(() => { btn.textContent = "cp"; }, 900);
+}
+
+async function copyValue(value, btn) {
   try {
-    await navigator.clipboard.writeText(u);
-    btn.textContent = "ok";
-    setTimeout(() => { btn.textContent = "cp"; }, 900);
-  } catch { prompt("Copy URL", u); }
+    await navigator.clipboard.writeText(value);
+    flashCopyState(btn);
+  } catch { prompt("Copy", value); }
+}
+
+async function copy(path, btn) {
+  await copyValue(url(path).href, btn);
 }
 
 function renderCounts(manifest) {
@@ -30,6 +46,70 @@ function renderCounts(manifest) {
     el.className = "count-badge";
     el.textContent = `${b} ${c}`;
     browserCounts.append(el);
+  }
+}
+
+function renderUserAgents(payload) {
+  uaList.innerHTML = "";
+  const grouped = new Map();
+
+  for (const browser of browserOrder) {
+    grouped.set(browser, []);
+  }
+
+  for (const item of payload.items) {
+    if (!grouped.has(item.browser)) {
+      grouped.set(item.browser, []);
+    }
+
+    grouped.get(item.browser).push(item);
+  }
+
+  for (const browser of browserOrder) {
+    const items = grouped.get(browser) ?? [];
+
+    if (items.length === 0) {
+      continue;
+    }
+
+    const section = document.createElement("section");
+    section.className = "ua-browser";
+
+    const heading = document.createElement("h3");
+    heading.textContent = browserLabels[browser] ?? browser;
+    section.append(heading);
+
+    const list = document.createElement("div");
+    list.className = "ua-list";
+
+    for (const item of items) {
+      const entry = document.createElement("div");
+      entry.className = "ua-item";
+
+      const platform = document.createElement("div");
+      platform.className = "ua-platform";
+      platform.textContent = item.platform;
+
+      const value = document.createElement("div");
+      value.className = "ua-value";
+
+      const code = document.createElement("div");
+      code.className = "ua-code";
+      code.textContent = item.user_agent;
+
+      const btn = document.createElement("button");
+      btn.className = "copy-btn ua-copy";
+      btn.type = "button";
+      btn.textContent = "cp";
+      btn.addEventListener("click", () => copyValue(item.user_agent, btn));
+
+      value.append(code, btn);
+      entry.append(platform, value);
+      list.append(entry);
+    }
+
+    section.append(list);
+    uaList.append(section);
   }
 }
 
@@ -106,14 +186,17 @@ function renderMeta(meta) {
 
 async function load() {
   try {
-    const [manifest, meta] = await Promise.all([
+    const [all, manifest, meta] = await Promise.all([
+      fetch(allUrl).then(r => r.json()),
       fetch(manifestUrl).then(r => r.json()),
       fetch(metaUrl).then(r => r.json())
     ]);
+    renderUserAgents(all);
     renderCounts(manifest);
     renderEndpoints(manifest);
     renderMeta(meta);
   } catch (e) {
+    uaList.innerHTML = `<p class="dim">Error: ${e.message}</p>`;
     endpointList.innerHTML = `<p class="dim">Error: ${e.message}</p>`;
   }
 }

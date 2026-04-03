@@ -96,6 +96,13 @@ function buildIndexHtml() {
         </div>
       </header>
 
+      <details class="section" id="ua-section" open>
+        <summary><h2>User Agents</h2></summary>
+        <div id="ua-list">
+          <p class="dim">Loading...</p>
+        </div>
+      </details>
+
       <section class="section">
         <h2>Endpoints</h2>
         <div id="endpoint-list">
@@ -223,6 +230,23 @@ h2{
   margin-bottom:0.75rem;
 }
 
+/* ---- shared details ---- */
+details summary{
+  cursor:pointer;
+  list-style:none;
+}
+
+details summary::-webkit-details-marker{display:none}
+
+details summary h2{
+  display:inline;
+  margin:0;
+}
+
+details summary:hover h2{
+  color:var(--text);
+}
+
 /* ---- endpoints ---- */
 .endpoint-group{
   margin-bottom:1rem;
@@ -267,6 +291,64 @@ h2{
 
 .endpoint-items{
   padding-bottom:0.5rem;
+}
+
+.ua-browser{
+  margin-top:1rem;
+}
+
+.ua-browser:first-child{
+  margin-top:0.5rem;
+}
+
+.ua-browser h3{
+  font-size:1rem;
+  font-weight:600;
+  margin:0 0 0.625rem;
+  padding-bottom:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.ua-list{
+  display:grid;
+  gap:0.75rem;
+}
+
+.ua-item{
+  display:grid;
+  gap:0.35rem;
+}
+
+.ua-platform{
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+
+.ua-value{
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:start;
+  gap:0.5rem;
+  padding:0.625rem 0.75rem;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:6px;
+}
+
+.ua-code{
+  min-width:0;
+  white-space:nowrap;
+  overflow-x:auto;
+  color:var(--text);
+  font:12px/1.45 var(--mono);
+  scrollbar-width:thin;
+}
+
+.ua-copy{
+  align-self:center;
 }
 
 .endpoint-row{
@@ -317,12 +399,6 @@ pre{
 }
 pre+pre{margin-top:0.375rem}
 
-/* ---- build info ---- */
-details summary{cursor:pointer;list-style:none}
-details summary::-webkit-details-marker{display:none}
-details summary h2{display:inline;margin:0}
-details summary:hover h2{color:var(--text)}
-
 .note-list{
   padding:0.5rem 0 0 1rem;
   color:var(--dim);
@@ -341,14 +417,23 @@ details summary:hover h2{color:var(--text)}
 
 function buildAppJs() {
   return `const base = new URL("./", document.baseURI);
+const allUrl = new URL("./api/all.json", base);
 const manifestUrl = new URL("./api/index.json", base);
 const metaUrl = new URL("./api/meta.json", base);
 
 const $ = (s) => document.querySelector(s);
+const uaList = $("#ua-list");
 const endpointList = $("#endpoint-list");
 const browserCounts = $("#browser-counts");
 const metaNotes = $("#meta-notes");
 const lastUpdated = $("#last-updated");
+const browserLabels = {
+  chrome: "Google Chrome",
+  safari: "Apple Safari",
+  edge: "Microsoft Edge",
+  firefox: "Mozilla Firefox"
+};
+const browserOrder = ["chrome", "safari", "edge", "firefox"];
 
 function url(p) { return new URL(p, base); }
 
@@ -356,13 +441,20 @@ function ts(iso) {
   return new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(iso));
 }
 
-async function copy(path, btn) {
-  const u = url(path).href;
+function flashCopyState(btn) {
+  btn.textContent = "ok";
+  setTimeout(() => { btn.textContent = "cp"; }, 900);
+}
+
+async function copyValue(value, btn) {
   try {
-    await navigator.clipboard.writeText(u);
-    btn.textContent = "ok";
-    setTimeout(() => { btn.textContent = "cp"; }, 900);
-  } catch { prompt("Copy URL", u); }
+    await navigator.clipboard.writeText(value);
+    flashCopyState(btn);
+  } catch { prompt("Copy", value); }
+}
+
+async function copy(path, btn) {
+  await copyValue(url(path).href, btn);
 }
 
 function renderCounts(manifest) {
@@ -372,6 +464,70 @@ function renderCounts(manifest) {
     el.className = "count-badge";
     el.textContent = \`\${b} \${c}\`;
     browserCounts.append(el);
+  }
+}
+
+function renderUserAgents(payload) {
+  uaList.innerHTML = "";
+  const grouped = new Map();
+
+  for (const browser of browserOrder) {
+    grouped.set(browser, []);
+  }
+
+  for (const item of payload.items) {
+    if (!grouped.has(item.browser)) {
+      grouped.set(item.browser, []);
+    }
+
+    grouped.get(item.browser).push(item);
+  }
+
+  for (const browser of browserOrder) {
+    const items = grouped.get(browser) ?? [];
+
+    if (items.length === 0) {
+      continue;
+    }
+
+    const section = document.createElement("section");
+    section.className = "ua-browser";
+
+    const heading = document.createElement("h3");
+    heading.textContent = browserLabels[browser] ?? browser;
+    section.append(heading);
+
+    const list = document.createElement("div");
+    list.className = "ua-list";
+
+    for (const item of items) {
+      const entry = document.createElement("div");
+      entry.className = "ua-item";
+
+      const platform = document.createElement("div");
+      platform.className = "ua-platform";
+      platform.textContent = item.platform;
+
+      const value = document.createElement("div");
+      value.className = "ua-value";
+
+      const code = document.createElement("div");
+      code.className = "ua-code";
+      code.textContent = item.user_agent;
+
+      const btn = document.createElement("button");
+      btn.className = "copy-btn ua-copy";
+      btn.type = "button";
+      btn.textContent = "cp";
+      btn.addEventListener("click", () => copyValue(item.user_agent, btn));
+
+      value.append(code, btn);
+      entry.append(platform, value);
+      list.append(entry);
+    }
+
+    section.append(list);
+    uaList.append(section);
   }
 }
 
@@ -448,14 +604,17 @@ function renderMeta(meta) {
 
 async function load() {
   try {
-    const [manifest, meta] = await Promise.all([
+    const [all, manifest, meta] = await Promise.all([
+      fetch(allUrl).then(r => r.json()),
       fetch(manifestUrl).then(r => r.json()),
       fetch(metaUrl).then(r => r.json())
     ]);
+    renderUserAgents(all);
     renderCounts(manifest);
     renderEndpoints(manifest);
     renderMeta(meta);
   } catch (e) {
+    uaList.innerHTML = \`<p class="dim">Error: \${e.message}</p>\`;
     endpointList.innerHTML = \`<p class="dim">Error: \${e.message}</p>\`;
   }
 }
