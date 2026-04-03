@@ -121,8 +121,9 @@ test("homepage uses relative asset paths and only current routes are present", a
   assert.match(indexHtml, /href="\.\/styles\.css"/);
   assert.match(indexHtml, /src="\.\/app\.js"/);
   assert.match(indexHtml, /<details class="section" id="ua-section" open>/);
+  assert.match(indexHtml, /<summary><h2>Desktop User Agents<\/h2><\/summary>/);
   assert.match(appJs, /new URL\("\.\/api\/index\.json"/);
-  assert.match(appJs, /new URL\("\.\/api\/all\.json"/);
+  assert.match(appJs, /new URL\("\.\/api\/desktop\.json"/);
   assert.match(appJs, /new URL\("\.\/api\/meta\.json"/);
   assert.match(appJs, /function renderUserAgents\(payload\)/);
   assert.match(appJs, /browserLabels/);

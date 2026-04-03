@@ -1,5 +1,5 @@
 const base = new URL("./", document.baseURI);
-const allUrl = new URL("./api/all.json", base);
+const desktopUrl = new URL("./api/desktop.json", base);
 const manifestUrl = new URL("./api/index.json", base);
 const metaUrl = new URL("./api/meta.json", base);
 
@@ -187,7 +187,7 @@ function renderMeta(meta) {
 async function load() {
   try {
     const [all, manifest, meta] = await Promise.all([
-      fetch(allUrl).then(r => r.json()),
+      fetch(desktopUrl).then(r => r.json()),
       fetch(manifestUrl).then(r => r.json()),
       fetch(metaUrl).then(r => r.json())
     ]);

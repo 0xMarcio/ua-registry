@@ -97,7 +97,7 @@ function buildIndexHtml() {
       </header>
 
       <details class="section" id="ua-section" open>
-        <summary><h2>User Agents</h2></summary>
+        <summary><h2>Desktop User Agents</h2></summary>
         <div id="ua-list">
           <p class="dim">Loading...</p>
         </div>
@@ -417,7 +417,7 @@ pre+pre{margin-top:0.375rem}
 
 function buildAppJs() {
   return `const base = new URL("./", document.baseURI);
-const allUrl = new URL("./api/all.json", base);
+const desktopUrl = new URL("./api/desktop.json", base);
 const manifestUrl = new URL("./api/index.json", base);
 const metaUrl = new URL("./api/meta.json", base);
 
@@ -605,7 +605,7 @@ function renderMeta(meta) {
 async function load() {
   try {
     const [all, manifest, meta] = await Promise.all([
-      fetch(allUrl).then(r => r.json()),
+      fetch(desktopUrl).then(r => r.json()),
       fetch(manifestUrl).then(r => r.json()),
       fetch(metaUrl).then(r => r.json())
     ]);
