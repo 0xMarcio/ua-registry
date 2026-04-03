@@ -224,7 +224,32 @@ h2{
 }
 
 /* ---- endpoints ---- */
-.endpoint-group{margin-bottom:1.25rem}
+.endpoint-group{
+  margin-bottom:1rem;
+  border-bottom:1px solid var(--border);
+}
+
+.endpoint-group summary{
+  cursor:pointer;
+  list-style:none;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:0.75rem;
+  padding-bottom:0.5rem;
+}
+
+.endpoint-group summary::-webkit-details-marker{display:none}
+
+.endpoint-group summary::after{
+  content:"+";
+  color:var(--dim);
+  font:14px/1 var(--mono);
+}
+
+.endpoint-group[open] summary::after{
+  content:"-";
+}
 
 .endpoint-group h3{
   font-size:12px;
@@ -232,9 +257,16 @@ h2{
   color:var(--accent);
   text-transform:uppercase;
   letter-spacing:0.06em;
-  margin-bottom:0.25rem;
-  padding-bottom:0.375rem;
-  border-bottom:1px solid var(--border);
+  margin:0;
+}
+
+.endpoint-group summary:hover h3,
+.endpoint-group[open] summary h3{
+  color:var(--text);
+}
+
+.endpoint-items{
+  padding-bottom:0.5rem;
 }
 
 .endpoint-row{
@@ -353,11 +385,16 @@ function renderEndpoints(manifest) {
   }
 
   for (const [name, eps] of groups) {
-    const sec = document.createElement("div");
+    const sec = document.createElement("details");
     sec.className = "endpoint-group";
+    const summary = document.createElement("summary");
     const h = document.createElement("h3");
     h.textContent = name;
-    sec.append(h);
+    summary.append(h);
+    sec.append(summary);
+
+    const items = document.createElement("div");
+    items.className = "endpoint-items";
 
     for (const ep of eps) {
       const row = document.createElement("div");
@@ -379,8 +416,10 @@ function renderEndpoints(manifest) {
       btn.addEventListener("click", () => copy(ep.path, btn));
 
       row.append(link, desc, btn);
-      sec.append(row);
+      items.append(row);
     }
+
+    sec.append(items);
     endpointList.append(sec);
   }
 }

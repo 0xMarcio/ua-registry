@@ -43,11 +43,16 @@ function renderEndpoints(manifest) {
   }
 
   for (const [name, eps] of groups) {
-    const sec = document.createElement("div");
+    const sec = document.createElement("details");
     sec.className = "endpoint-group";
+    const summary = document.createElement("summary");
     const h = document.createElement("h3");
     h.textContent = name;
-    sec.append(h);
+    summary.append(h);
+    sec.append(summary);
+
+    const items = document.createElement("div");
+    items.className = "endpoint-items";
 
     for (const ep of eps) {
       const row = document.createElement("div");
@@ -69,8 +74,10 @@ function renderEndpoints(manifest) {
       btn.addEventListener("click", () => copy(ep.path, btn));
 
       row.append(link, desc, btn);
-      sec.append(row);
+      items.append(row);
     }
+
+    sec.append(items);
     endpointList.append(sec);
   }
 }

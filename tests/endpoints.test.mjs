@@ -122,6 +122,9 @@ test("homepage uses relative asset paths and only current routes are present", a
   assert.match(indexHtml, /src="\.\/app\.js"/);
   assert.match(appJs, /new URL\("\.\/api\/index\.json"/);
   assert.match(appJs, /new URL\("\.\/api\/meta\.json"/);
+  assert.match(appJs, /document\.createElement\("details"\)/);
+  assert.match(appJs, /document\.createElement\("summary"\)/);
+  assert.doesNotMatch(appJs, /\.open\s*=\s*true/);
   assert.doesNotMatch(appJs, /https?:\/\//);
   assert.match(chromeTextEndpoint, /^Mozilla\/5\.0/);
 });
