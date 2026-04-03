@@ -122,6 +122,8 @@ test("homepage uses relative asset paths and only current routes are present", a
   assert.match(indexHtml, /src="\.\/app\.js"/);
   assert.match(indexHtml, /<details class="section" id="ua-section" open>/);
   assert.match(indexHtml, /<summary><h2>Desktop User Agents<\/h2><\/summary>/);
+  assert.doesNotMatch(indexHtml, /id="browser-counts"/);
+  assert.doesNotMatch(indexHtml, /id="meta-section"/);
   assert.match(appJs, /new URL\("\.\/api\/index\.json"/);
   assert.match(appJs, /new URL\("\.\/api\/desktop\.json"/);
   assert.match(appJs, /new URL\("\.\/api\/meta\.json"/);
@@ -129,6 +131,8 @@ test("homepage uses relative asset paths and only current routes are present", a
   assert.match(appJs, /browserLabels/);
   assert.match(appJs, /document\.createElement\("details"\)/);
   assert.match(appJs, /document\.createElement\("summary"\)/);
+  assert.doesNotMatch(appJs, /browserCounts/);
+  assert.doesNotMatch(appJs, /metaNotes/);
   assert.doesNotMatch(appJs, /#ua-section"\)\.open\s*=\s*false/);
   assert.doesNotMatch(appJs, /https?:\/\//);
   assert.match(chromeTextEndpoint, /^Mozilla\/5\.0/);

@@ -6,8 +6,6 @@ const metaUrl = new URL("./api/meta.json", base);
 const $ = (s) => document.querySelector(s);
 const uaList = $("#ua-list");
 const endpointList = $("#endpoint-list");
-const browserCounts = $("#browser-counts");
-const metaNotes = $("#meta-notes");
 const lastUpdated = $("#last-updated");
 const browserLabels = {
   chrome: "Google Chrome",
@@ -37,16 +35,6 @@ async function copyValue(value, btn) {
 
 async function copy(path, btn) {
   await copyValue(url(path).href, btn);
-}
-
-function renderCounts(manifest) {
-  browserCounts.innerHTML = "";
-  for (const [b, c] of Object.entries(manifest.browser_counts)) {
-    const el = document.createElement("span");
-    el.className = "count-badge";
-    el.textContent = `${b} ${c}`;
-    browserCounts.append(el);
-  }
 }
 
 function renderUserAgents(payload) {
@@ -164,24 +152,6 @@ function renderEndpoints(manifest) {
 
 function renderMeta(meta) {
   lastUpdated.textContent = ts(meta.generated_at);
-  const v = meta.resolved_versions;
-  const versions = `Chrome ${v.chrome.current.version} / Safari ${v.safari.current.version} / Edge ${v.edge.current.version} / Firefox ${v.firefox.current.version}`;
-  const notes = [
-    versions,
-    `strategy: ${meta.source_strategy.primary}`,
-    meta.fallback_source_use?.used ? `fallback: ${meta.fallback_source_use.note}` : null,
-    ...meta.safari_rules.notes
-  ].filter(Boolean);
-
-  metaNotes.innerHTML = "";
-  const list = document.createElement("ul");
-  list.className = "note-list";
-  for (const n of notes) {
-    const li = document.createElement("li");
-    li.textContent = n;
-    list.append(li);
-  }
-  metaNotes.append(list);
 }
 
 async function load() {
@@ -192,7 +162,6 @@ async function load() {
       fetch(metaUrl).then(r => r.json())
     ]);
     renderUserAgents(all);
-    renderCounts(manifest);
     renderEndpoints(manifest);
     renderMeta(meta);
   } catch (e) {

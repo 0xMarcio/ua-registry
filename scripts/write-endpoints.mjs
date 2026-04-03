@@ -85,7 +85,6 @@ function buildIndexHtml() {
       <header class="header">
         <div class="header-top">
           <h1>ua-registry</h1>
-          <span id="browser-counts" class="counts"></span>
         </div>
         <p class="sub">Current user-agent strings for Chrome, Safari, Edge &amp; Firefox as static JSON and plaintext.</p>
         <div class="header-meta">
@@ -115,11 +114,6 @@ function buildIndexHtml() {
         <pre><code>await fetch("https://ua.syntax9.ai/api/chrome/windows.json").then(r =&gt; r.json())</code></pre>
         <pre><code>curl https://ua.syntax9.ai/api/chrome/desktop</code></pre>
       </section>
-
-      <details class="section" id="meta-section">
-        <summary><h2>Build info</h2></summary>
-        <div id="meta-notes" class="dim">Loading...</div>
-      </details>
     </main>
 
     <script type="module" src="./app.js"></script>
@@ -171,7 +165,6 @@ a:hover{text-decoration:underline}
 .header-top{
   display:flex;
   align-items:baseline;
-  gap:1rem;
   flex-wrap:wrap;
 }
 
@@ -179,21 +172,6 @@ h1{
   font-size:1.25rem;
   font-weight:600;
   letter-spacing:-0.02em;
-}
-
-.counts{
-  display:flex;
-  gap:0.625rem;
-  font-size:12px;
-  color:var(--dim);
-  font-family:var(--mono);
-}
-
-.count-badge{
-  padding:2px 8px;
-  border:1px solid var(--border);
-  border-radius:4px;
-  white-space:nowrap;
 }
 
 .sub{
@@ -399,17 +377,9 @@ pre{
 }
 pre+pre{margin-top:0.375rem}
 
-.note-list{
-  padding:0.5rem 0 0 1rem;
-  color:var(--dim);
-  font-size:13px;
-}
-.note-list li{margin-bottom:0.25rem}
-
 /* ---- responsive ---- */
 @media(max-width:540px){
   .page{padding:1.5rem 1rem 3rem}
-  .header-top{flex-direction:column;gap:0.5rem}
   .endpoint-row{grid-template-columns:1fr auto auto;gap:0.375rem}
 }
 `;
@@ -424,8 +394,6 @@ const metaUrl = new URL("./api/meta.json", base);
 const $ = (s) => document.querySelector(s);
 const uaList = $("#ua-list");
 const endpointList = $("#endpoint-list");
-const browserCounts = $("#browser-counts");
-const metaNotes = $("#meta-notes");
 const lastUpdated = $("#last-updated");
 const browserLabels = {
   chrome: "Google Chrome",
@@ -455,16 +423,6 @@ async function copyValue(value, btn) {
 
 async function copy(path, btn) {
   await copyValue(url(path).href, btn);
-}
-
-function renderCounts(manifest) {
-  browserCounts.innerHTML = "";
-  for (const [b, c] of Object.entries(manifest.browser_counts)) {
-    const el = document.createElement("span");
-    el.className = "count-badge";
-    el.textContent = \`\${b} \${c}\`;
-    browserCounts.append(el);
-  }
 }
 
 function renderUserAgents(payload) {
@@ -582,24 +540,6 @@ function renderEndpoints(manifest) {
 
 function renderMeta(meta) {
   lastUpdated.textContent = ts(meta.generated_at);
-  const v = meta.resolved_versions;
-  const versions = \`Chrome \${v.chrome.current.version} / Safari \${v.safari.current.version} / Edge \${v.edge.current.version} / Firefox \${v.firefox.current.version}\`;
-  const notes = [
-    versions,
-    \`strategy: \${meta.source_strategy.primary}\`,
-    meta.fallback_source_use?.used ? \`fallback: \${meta.fallback_source_use.note}\` : null,
-    ...meta.safari_rules.notes
-  ].filter(Boolean);
-
-  metaNotes.innerHTML = "";
-  const list = document.createElement("ul");
-  list.className = "note-list";
-  for (const n of notes) {
-    const li = document.createElement("li");
-    li.textContent = n;
-    list.append(li);
-  }
-  metaNotes.append(list);
 }
 
 async function load() {
@@ -610,7 +550,6 @@ async function load() {
       fetch(metaUrl).then(r => r.json())
     ]);
     renderUserAgents(all);
-    renderCounts(manifest);
     renderEndpoints(manifest);
     renderMeta(meta);
   } catch (e) {
