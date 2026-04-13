@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-10T09:43:59.891Z",
+  "generated_at": "2026-04-13T15:51:05.941Z",
   "browser": "edge",
   "device_class": "all",
   "count": 4,
@@ -10,8 +10,8 @@
       "platform": "windows",
       "device_class": "desktop",
       "track": "current",
-      "version": "146",
-      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36 Edg/146.0.3856.109"
+      "version": "147",
+      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 Edg/147.0.3912.60"
     },
     {
       "label": "Microsoft Edge on macOS",
@@ -19,8 +19,8 @@
       "platform": "macos",
       "device_class": "desktop",
       "track": "current",
-      "version": "146",
-      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36 Edg/146.0.3856.97"
+      "version": "147",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 Edg/147.0.3912.60"
     },
     {
       "label": "Microsoft Edge on Linux",
@@ -28,8 +28,8 @@
       "platform": "linux",
       "device_class": "desktop",
       "track": "current",
-      "version": "146",
-      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36 Edg/146.0.3856.97"
+      "version": "147",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 Edg/147.0.3912.60"
     },
     {
       "label": "Microsoft Edge on Android",
@@ -37,8 +37,8 @@
       "platform": "android",
       "device_class": "mobile",
       "track": "current",
-      "version": "146",
-      "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Mobile Safari/537.36 EdgA/146.0.3856.97"
+      "version": "147",
+      "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Mobile Safari/537.36 EdgA/147.0.3912.60"
     }
   ]
 }
