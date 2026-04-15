@@ -2,10 +2,11 @@ import {
   BROWSER_LABELS,
   BROWSER_ORDER,
   BROWSER_VARIANT_FALLBACKS,
-  BROWSER_VARIANT_ORDER,
-  FIREFOX_ANDROID_VERSION
+  BROWSER_VARIANT_ORDER
 } from "./variants.mjs";
 import { buildSafariUserAgent } from "./safari-rules.mjs";
+
+const DEFAULT_FIREFOX_ANDROID_VERSION = "15";
 
 function chromiumPlatformToken(platform) {
   if (platform === "windows") {
@@ -59,7 +60,7 @@ function buildChromiumUserAgent({ browser, platform, version, edgeVersion = null
   throw new Error(`Unsupported Chromium browser: ${browser}`);
 }
 
-function firefoxPlatformToken(platform) {
+function firefoxPlatformToken(platform, uaContext) {
   if (platform === "windows") {
     return "Windows NT 10.0; Win64; x64";
   }
@@ -77,26 +78,26 @@ function firefoxPlatformToken(platform) {
   }
 
   if (platform === "android") {
-    return `Android ${FIREFOX_ANDROID_VERSION}; Mobile`;
+    return `Android ${uaContext.firefox?.android_version ?? DEFAULT_FIREFOX_ANDROID_VERSION}; Mobile`;
   }
 
   throw new Error(`Unsupported Firefox platform: ${platform}`);
 }
 
-function buildFirefoxUserAgent({ platform, version }) {
+function buildFirefoxUserAgent({ platform, version, uaContext }) {
   const firefoxVersion = String(version);
   const rv = firefoxVersion;
 
   if (platform === "android") {
     return [
-      `Mozilla/5.0 (${firefoxPlatformToken(platform)}; rv:${rv})`,
+      `Mozilla/5.0 (${firefoxPlatformToken(platform, uaContext)}; rv:${rv})`,
       `Gecko/${rv}`,
       `Firefox/${firefoxVersion}`
     ].join(" ");
   }
 
   return [
-    `Mozilla/5.0 (${firefoxPlatformToken(platform)}; rv:${rv})`,
+    `Mozilla/5.0 (${firefoxPlatformToken(platform, uaContext)}; rv:${rv})`,
     "Gecko/20100101",
     `Firefox/${firefoxVersion}`
   ].join(" ");
@@ -198,7 +199,7 @@ function pickVersionRecord(browser, track, versions) {
   throw new Error(`Unsupported track: ${track}`);
 }
 
-export function buildVariantItem(browser, variantId, versions) {
+export function buildVariantItem(browser, variantId, versions, uaContext = {}) {
   const descriptor = variantDescriptor(browser, variantId);
   const versionRecord = pickVersionRecord(browser, descriptor.track, versions);
   const browserLabel = BROWSER_LABELS[browser];
@@ -224,12 +225,15 @@ export function buildVariantItem(browser, variantId, versions) {
   } else if (browser === "firefox") {
     userAgent = buildFirefoxUserAgent({
       platform: descriptor.platform,
-      version: versionRecord.version
+      version: versionRecord.version,
+      uaContext
     });
   } else if (browser === "safari") {
     userAgent = buildSafariUserAgent({
       platform: descriptor.templatePlatform ?? descriptor.platform,
-      version: versionRecord.version
+      version: versionRecord.version,
+      iosIpadosCompatVersion:
+        uaContext.safari?.ios_ipados_compat_version
     });
   } else {
     throw new Error(`Unsupported browser: ${browser}`);
@@ -246,7 +250,7 @@ export function buildVariantItem(browser, variantId, versions) {
   };
 }
 
-function selectUniqueBrowserItems(browser, versions) {
+function selectUniqueBrowserItems(browser, versions, uaContext) {
   const requestedVariants = BROWSER_VARIANT_ORDER[browser];
   const fallbackPool = BROWSER_VARIANT_FALLBACKS[browser];
   const items = [];
@@ -260,7 +264,7 @@ function selectUniqueBrowserItems(browser, versions) {
     let selectedItem = null;
 
     for (const candidate of candidates) {
-      const item = buildVariantItem(browser, candidate, versions);
+      const item = buildVariantItem(browser, candidate, versions, uaContext);
 
       if (!seenUserAgents.has(item.user_agent)) {
         selectedItem = item;
@@ -283,14 +287,14 @@ function selectUniqueBrowserItems(browser, versions) {
   return items;
 }
 
-export function buildBrowserItemsMap(versions) {
+export function buildBrowserItemsMap(versions, uaContext = {}) {
   return Object.fromEntries(
-    BROWSER_ORDER.map((browser) => [browser, selectUniqueBrowserItems(browser, versions)])
+    BROWSER_ORDER.map((browser) => [browser, selectUniqueBrowserItems(browser, versions, uaContext)])
   );
 }
 
-export function buildCollections(versions) {
-  const browserItems = buildBrowserItemsMap(versions);
+export function buildCollections(versions, uaContext = {}) {
+  const browserItems = buildBrowserItemsMap(versions, uaContext);
   const allItems = BROWSER_ORDER.flatMap((browser) => browserItems[browser]);
   const desktopItems = allItems.filter((item) => item.device_class === "desktop");
   const mobileItems = allItems.filter((item) => item.device_class === "mobile");

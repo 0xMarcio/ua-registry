@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-04-15T12:40:23.392Z",
-  "build_sha": "0fe25773c3d41fc300f60000d0a52f18e768524b",
+  "generated_at": "2026-04-15T18:01:52.278Z",
+  "build_sha": null,
   "generator_version": "1.0.0",
   "source_strategy": {
-    "primary": "Official vendor version feeds plus deterministic UA template generation.",
+    "primary": "Official vendor version feeds plus browser-specific UA construction rules from vendor documentation and source.",
     "fallbacks": [
-      "Safari current-version discovery can fall back to browsers.fyi only when Apple release-note parsing does not safely expose the current stable release."
+      "Official-source-only mode: the build fails if Safari's official Apple release-note feeds stop exposing the stable release data needed to generate current UA strings."
     ]
   },
   "source_urls": {
@@ -21,6 +21,7 @@
       "useragent_reduction": "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/useragentreduction"
     },
     "firefox": {
+      "android_latest_updates": "https://developer.android.com/latest-updates/",
       "last_release_date": "2026-03-24",
       "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent/Firefox",
       "releases": "https://product-details.mozilla.org/1.0/firefox.json",
@@ -28,10 +29,10 @@
     },
     "safari": {
       "current_release_notes": "https://developer.apple.com/documentation/safari-release-notes/safari-26_4-release-notes",
-      "fallback": "https://www.browsers.fyi/api/",
+      "ios_ipados_release_notes_index": "https://developer.apple.com/tutorials/data/documentation/ios-ipados-release-notes.json",
       "release_notes_index": "https://developer.apple.com/tutorials/data/documentation/safari-release-notes.json",
       "release_notes_page": "https://developer.apple.com/documentation/safari-release-notes/",
-      "ua_validation_article": "https://nielsleenheer.com/articles/2025/the-user-agent-string-of-safari-on-ios-26-and-macos-26/"
+      "ua_behavior_reference": "https://webkit.org/blog/17333/webkit-features-in-safari-26-0/"
     }
   },
   "resolved_versions": {
@@ -64,30 +65,38 @@
     "firefox": {
       "current": {
         "full_version": "149.0.2",
-        "version": "149.0.2"
+        "version": "149.0"
       }
     }
   },
+  "ua_rule_inputs": {
+    "firefox": {
+      "android_version": "16"
+    },
+    "safari": {
+      "ios_ipados_compat_version": "18.6"
+    }
+  },
   "variant_config": {
-    "signature": "{\"browserVariantOrder\":{\"chrome\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\"],\"safari\":[\"current-macos\",\"current-iphone\",\"current-ipad-mobile\"],\"edge\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\"],\"firefox\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\",\"current-ubuntu\"]},\"browserVariantFallbacks\":{\"chrome\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\"],\"safari\":[\"current-macos\",\"current-iphone\",\"current-ipad-mobile\"],\"edge\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\"],\"firefox\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\",\"current-ubuntu\"]},\"firefoxAndroidVersion\":\"15\",\"generatorVersion\":\"1.0.0\"}",
+    "signature": "{\"browserVariantOrder\":{\"chrome\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\"],\"safari\":[\"current-macos\",\"current-iphone\",\"current-ipad-mobile\"],\"edge\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\"],\"firefox\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\",\"current-ubuntu\"]},\"browserVariantFallbacks\":{\"chrome\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\"],\"safari\":[\"current-macos\",\"current-iphone\",\"current-ipad-mobile\"],\"edge\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\"],\"firefox\":[\"current-windows\",\"current-macos\",\"current-linux\",\"current-android\",\"current-ubuntu\"]},\"generatorVersion\":\"1.0.0\"}",
     "notes": [
       "Each browser-specific endpoint contains current variants only.",
       "If a slot would duplicate an already chosen UA, the generator walks that browser's fallback pool until it finds a unique replacement.",
-      "Firefox keeps Android as a fixed mainstream phone variant in config because Mozilla's release feeds do not publish a preferred Android OS token."
+      "Firefox keeps Android as a single mainstream phone variant in config while the generated Android OS token is resolved from Android Developers because Firefox Android UAs reflect the device OS release."
     ]
   },
   "safari_rules": {
-    "version": "2026-04-02",
+    "version": "2026-04-15",
     "notes": [
       "Safari on macOS keeps the frozen Macintosh platform token and Safari/605.1.15.",
-      "Safari on iPhone and iPad uses fixed iOS 18_6 platform tokens for the Safari 26 cycle rather than mirroring the current OS release number.",
+      "Safari on iPhone and iPad uses the latest stable iOS/iPadOS release line prior to the current Safari cycle as a frozen compatibility token rather than mirroring the current OS release number.",
       "The generated iPad variant intentionally uses the mobile Safari token so the public top-five set contains a unique and immediately useful iPad UA."
     ]
   },
   "fallback_source_use": {
     "used": false,
     "source": null,
-    "note": null
+    "note": "Official-source-only mode; no third-party Safari fallback is configured."
   },
   "counts": {
     "all": 16,

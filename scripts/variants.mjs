@@ -9,8 +9,6 @@ export const BROWSER_LABELS = {
   firefox: "Mozilla Firefox"
 };
 
-export const FIREFOX_ANDROID_VERSION = "15";
-
 export const BROWSER_VARIANT_ORDER = {
   chrome: ["current-windows", "current-macos", "current-linux", "current-android"],
   safari: ["current-macos", "current-iphone", "current-ipad-mobile"],
@@ -42,14 +40,13 @@ export const BROWSER_VARIANT_FALLBACKS = {
 export const VARIANT_CONFIG_NOTES = [
   "Each browser-specific endpoint contains current variants only.",
   "If a slot would duplicate an already chosen UA, the generator walks that browser's fallback pool until it finds a unique replacement.",
-  "Firefox keeps Android as a fixed mainstream phone variant in config because Mozilla's release feeds do not publish a preferred Android OS token."
+  "Firefox keeps Android as a single mainstream phone variant in config while the generated Android OS token is resolved from Android Developers because Firefox Android UAs reflect the device OS release."
 ];
 
 export function getVariantConfigSignature() {
   return JSON.stringify({
     browserVariantOrder: BROWSER_VARIANT_ORDER,
     browserVariantFallbacks: BROWSER_VARIANT_FALLBACKS,
-    firefoxAndroidVersion: FIREFOX_ANDROID_VERSION,
     generatorVersion: GENERATOR_VERSION
   });
 }

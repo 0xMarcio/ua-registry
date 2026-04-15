@@ -75,10 +75,10 @@ function buildPublishedSourceUrls(sourceReferences) {
     firefox: sourceReferences.firefox,
     safari: {
       current_release_notes: sourceReferences.safari.current_release_notes,
-      fallback: sourceReferences.safari.fallback,
+      ios_ipados_release_notes_index: sourceReferences.safari.ios_ipados_release_notes_index,
       release_notes_index: sourceReferences.safari.release_notes_index,
       release_notes_page: sourceReferences.safari.release_notes_page,
-      ua_validation_article: sourceReferences.safari.ua_validation_article
+      ua_behavior_reference: sourceReferences.safari.ua_behavior_reference
     }
   };
 }
@@ -211,6 +211,7 @@ function buildMeta({
   generatedAt,
   buildSha,
   resolvedVersions,
+  uaContext,
   sourceReferences,
   fallbackUse,
   collections
@@ -223,13 +224,14 @@ function buildMeta({
     build_sha: buildSha ?? null,
     generator_version: GENERATOR_VERSION,
     source_strategy: {
-      primary: "Official vendor version feeds plus deterministic UA template generation.",
+      primary: "Official vendor version feeds plus browser-specific UA construction rules from vendor documentation and source.",
       fallbacks: [
-        "Safari current-version discovery can fall back to browsers.fyi only when Apple release-note parsing does not safely expose the current stable release."
+        "Official-source-only mode: the build fails if Safari's official Apple release-note feeds stop exposing the stable release data needed to generate current UA strings."
       ]
     },
     source_urls: publishedSourceUrls,
     resolved_versions: publishedResolvedVersions,
+    ua_rule_inputs: uaContext,
     variant_config: {
       signature: getVariantConfigSignature(),
       notes: VARIANT_CONFIG_NOTES
@@ -332,7 +334,8 @@ export async function buildProject({
   now = new Date().toISOString(),
   resolvedVersionsInput = null,
   sourceReferencesInput = null,
-  fallbackUseInput = null
+  fallbackUseInput = null,
+  uaContextInput = null
 } = {}) {
   const docsDirectory = path.join(rootDirectory, "docs");
   const existingMeta = await loadExistingMeta(docsDirectory);
@@ -342,15 +345,20 @@ export async function buildProject({
       ? {
           resolvedVersions: resolvedVersionsInput,
           sourceReferences: sourceReferencesInput,
-          fallbackUse: fallbackUseInput
+          fallbackUse: fallbackUseInput,
+          uaContext: uaContextInput ?? {}
         }
       : await fetchResolvedVersions({ existingMeta });
 
-  const collections = buildCollections(resolvedSourceData.resolvedVersions);
+  const collections = buildCollections(
+    resolvedSourceData.resolvedVersions,
+    resolvedSourceData.uaContext
+  );
   const provisionalMeta = buildMeta({
     generatedAt: now,
     buildSha,
     resolvedVersions: resolvedSourceData.resolvedVersions,
+    uaContext: resolvedSourceData.uaContext,
     sourceReferences: resolvedSourceData.sourceReferences,
     fallbackUse: resolvedSourceData.fallbackUse,
     collections
@@ -369,6 +377,7 @@ export async function buildProject({
     generatedAt,
     buildSha: finalBuildSha,
     resolvedVersions: resolvedSourceData.resolvedVersions,
+    uaContext: resolvedSourceData.uaContext,
     sourceReferences: resolvedSourceData.sourceReferences,
     fallbackUse: resolvedSourceData.fallbackUse,
     collections

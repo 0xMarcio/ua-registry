@@ -6,9 +6,13 @@ const EDGE_PRODUCTS_URL = "https://edgeupdates.microsoft.com/api/products";
 const FIREFOX_VERSIONS_URL =
   "https://product-details.mozilla.org/1.0/firefox_versions.json";
 const FIREFOX_RELEASES_URL = "https://product-details.mozilla.org/1.0/firefox.json";
+const ANDROID_LATEST_UPDATES_URL = "https://developer.android.com/latest-updates/";
 const SAFARI_RELEASE_NOTES_URL =
   "https://developer.apple.com/tutorials/data/documentation/safari-release-notes.json";
-const SAFARI_FALLBACK_URL = "https://www.browsers.fyi/api/";
+const IOS_IPADOS_RELEASE_NOTES_URL =
+  "https://developer.apple.com/tutorials/data/documentation/ios-ipados-release-notes.json";
+const WEBKIT_SAFARI_UA_BEHAVIOR_URL =
+  "https://webkit.org/blog/17333/webkit-features-in-safari-26-0/";
 
 export const SOURCE_URLS = {
   chrome: {
@@ -26,16 +30,16 @@ export const SOURCE_URLS = {
   firefox: {
     versions: FIREFOX_VERSIONS_URL,
     releases: FIREFOX_RELEASES_URL,
+    android_latest_updates: ANDROID_LATEST_UPDATES_URL,
     reference:
       "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent/Firefox"
   },
   safari: {
     release_notes_index: SAFARI_RELEASE_NOTES_URL,
+    ios_ipados_release_notes_index: IOS_IPADOS_RELEASE_NOTES_URL,
     release_notes_page:
       "https://developer.apple.com/documentation/safari-release-notes/",
-    ua_validation_article:
-      "https://nielsleenheer.com/articles/2025/the-user-agent-string-of-safari-on-ios-26-and-macos-26/",
-    fallback: SAFARI_FALLBACK_URL
+    ua_behavior_reference: WEBKIT_SAFARI_UA_BEHAVIOR_URL
   }
 };
 
@@ -82,6 +86,14 @@ export function extractMajor(version) {
 }
 
 async function fetchJson(url, sourceLabel) {
+  return fetchWithParser(url, sourceLabel, (response) => response.json());
+}
+
+async function fetchText(url, sourceLabel) {
+  return fetchWithParser(url, sourceLabel, (response) => response.text());
+}
+
+async function fetchWithParser(url, sourceLabel, parser) {
   let response;
 
   try {
@@ -102,10 +114,24 @@ async function fetchJson(url, sourceLabel) {
   }
 
   try {
-    return await response.json();
+    return await parser(response);
   } catch (error) {
     throw new Error(`Source parse failed for ${sourceLabel}: ${error.message}`);
   }
+}
+
+export function parseLatestStableAndroidVersion(html) {
+  const match =
+    html.match(
+      />Stable<\/span>[\s\S]{0,1200}?<h3 id="android-(\d+)"[\s\S]{0,400}?>[\s\S]{0,400}?Android\s+\1\b/i
+    ) ??
+    html.match(/<h3 id="android-(\d+)"[\s\S]{0,400}?>[\s\S]{0,400}?Android\s+\1\b/i);
+
+  if (!match) {
+    throw new Error("Android source page did not expose a stable platform version.");
+  }
+
+  return match[1];
 }
 
 function resolveChromeVersions(lastKnownGood, milestones) {
@@ -234,7 +260,17 @@ function isFirefoxStableVersion(version) {
   return /^\d+(?:\.\d+)*$/.test(version);
 }
 
-function resolveFirefoxVersions(firefoxVersions, firefoxReleases) {
+export function toFirefoxUaVersion(version) {
+  const match = String(version).match(/^(\d+)(?:\.(\d+))?/);
+
+  if (!match) {
+    throw new Error(`Could not derive a Firefox UA version from "${version}".`);
+  }
+
+  return `${match[1]}.${match[2] ?? "0"}`;
+}
+
+export function resolveFirefoxVersions(firefoxVersions, firefoxReleases) {
   const currentVersion = firefoxVersions?.LATEST_FIREFOX_VERSION;
 
   if (!currentVersion) {
@@ -259,11 +295,15 @@ function resolveFirefoxVersions(firefoxVersions, firefoxReleases) {
 
   return {
     current: {
-      version: currentVersion,
+      // Firefox patch releases update the shipped application version, but the
+      // browser UA keeps using the milestone form (for example 149.0.2 ships as
+      // Firefox/149.0 in the UA). Keep both values so metadata can report the
+      // current release while templates emit the UA-correct token.
+      version: toFirefoxUaVersion(currentVersion),
       full_version: currentVersion
     },
     previous: {
-      version: previousVersion,
+      version: toFirefoxUaVersion(previousVersion),
       full_version: previousVersion
     },
     esr: firefoxVersions.FIREFOX_ESR ?? null
@@ -335,35 +375,62 @@ async function resolveSafariVersions(appleIndex, existingMeta) {
     };
   }
 
-  const fallbackData = await fetchJson(SAFARI_FALLBACK_URL, "Safari fallback browsers.fyi API");
-  const fallbackCurrent = fallbackData?.safari?.version;
-  const existingPrevious = existingMeta?.resolved_versions?.safari?.previous?.version;
+  throw new Error(
+    "Safari source parsing failed because Apple release notes did not expose two stable releases. Official-source-only mode is enabled, so the build stops instead of falling back to a third-party source."
+  );
+}
 
-  if (!fallbackCurrent || !existingPrevious || fallbackCurrent === existingPrevious) {
+function extractAppleReleaseNotesVersion(identifier) {
+  const match = String(identifier).match(/-(\d+(?:_\d+)*)-release-notes$/);
+
+  if (!match) {
+    return null;
+  }
+
+  return match[1].replaceAll("_", ".");
+}
+
+export function resolveSafariFrozenMobileOsVersion(iosIpadosReleaseNotes, safariVersion) {
+  const currentSafariMajor = Number(extractMajor(safariVersion));
+
+  const sections = iosIpadosReleaseNotes?.topicSections ?? [];
+  const compatibleSection = sections
+    .map((section) => {
+      const match = String(section?.title ?? "").match(/^iOS\s*&\s*iPadOS\s+(\d+)$/i);
+
+      if (!match) {
+        return null;
+      }
+
+      return {
+        major: Number(match[1]),
+        identifiers: section.identifiers ?? []
+      };
+    })
+    .filter(Boolean)
+    .filter((section) => section.major < currentSafariMajor)
+    .sort((left, right) => right.major - left.major)[0];
+
+  if (!compatibleSection) {
     throw new Error(
-      "Safari source parsing failed and the fallback source could not safely reconstruct both current and previous stable versions."
+      `iOS & iPadOS release notes did not expose a stable compatibility line before Safari ${safariVersion}.`
     );
   }
 
-  return {
-    versions: {
-      current: {
-        version: fallbackCurrent,
-        release_notes: fallbackData?.safari?.release_notes ?? null
-      },
-      previous: {
-        version: existingPrevious,
-        release_notes:
-          existingMeta?.resolved_versions?.safari?.previous?.release_notes ?? null
-      }
-    },
-    fallback_use: {
-      used: true,
-      source: SAFARI_FALLBACK_URL,
-      note:
-        "Safari current version came from browsers.fyi because Apple release-note parsing did not expose two stable releases. Previous Safari remained pinned from the last known good metadata."
-    }
-  };
+  const versions = compatibleSection.identifiers
+    .map(extractAppleReleaseNotesVersion)
+    .filter(Boolean)
+    .sort(compareVersions);
+
+  const latestVersion = versions.at(-1);
+
+  if (!latestVersion) {
+    throw new Error(
+      `iOS & iPadOS release notes did not expose a stable point release for compatibility line ${compatibleSection.major}.`
+    );
+  }
+
+  return latestVersion;
 }
 
 export async function fetchResolvedVersions({ existingMeta = null } = {}) {
@@ -373,23 +440,41 @@ export async function fetchResolvedVersions({ existingMeta = null } = {}) {
     edgeProducts,
     firefoxVersions,
     firefoxReleases,
-    safariReleaseNotes
+    androidLatestUpdates,
+    safariReleaseNotes,
+    iosIpadosReleaseNotes
   ] = await Promise.all([
     fetchJson(CHROME_LAST_KNOWN_GOOD_URL, "Chrome last-known-good versions"),
     fetchJson(CHROME_MILESTONES_URL, "Chrome milestone versions"),
     fetchJson(EDGE_PRODUCTS_URL, "Edge products API"),
     fetchJson(FIREFOX_VERSIONS_URL, "Firefox versions feed"),
     fetchJson(FIREFOX_RELEASES_URL, "Firefox releases feed"),
-    fetchJson(SAFARI_RELEASE_NOTES_URL, "Safari release notes index")
+    fetchText(ANDROID_LATEST_UPDATES_URL, "Android latest updates page"),
+    fetchJson(SAFARI_RELEASE_NOTES_URL, "Safari release notes index"),
+    fetchJson(IOS_IPADOS_RELEASE_NOTES_URL, "iOS & iPadOS release notes index")
   ]);
 
   const safari = await resolveSafariVersions(safariReleaseNotes, existingMeta);
+  const firefoxAndroidVersion = parseLatestStableAndroidVersion(androidLatestUpdates);
+  const safariFrozenMobileOsVersion = resolveSafariFrozenMobileOsVersion(
+    iosIpadosReleaseNotes,
+    safari.versions.current.version
+  );
 
   const resolvedVersions = sortObjectKeys({
     chrome: resolveChromeVersions(chromeLastKnownGood, chromeMilestones),
     edge: resolveEdgeVersions(edgeProducts),
     firefox: resolveFirefoxVersions(firefoxVersions, firefoxReleases),
     safari: safari.versions
+  });
+
+  const uaContext = sortObjectKeys({
+    firefox: {
+      android_version: firefoxAndroidVersion
+    },
+    safari: {
+      ios_ipados_compat_version: safariFrozenMobileOsVersion
+    }
   });
 
   const sourceReferences = sortObjectKeys({
@@ -405,25 +490,31 @@ export async function fetchResolvedVersions({ existingMeta = null } = {}) {
       useragent_reduction: SOURCE_URLS.edge.useragent_reduction
     },
     firefox: {
+      android_latest_updates: ANDROID_LATEST_UPDATES_URL,
       versions: FIREFOX_VERSIONS_URL,
       releases: FIREFOX_RELEASES_URL,
       reference: SOURCE_URLS.firefox.reference,
       last_release_date: firefoxVersions?.LAST_RELEASE_DATE ?? null
     },
     safari: {
+      ios_ipados_release_notes_index: IOS_IPADOS_RELEASE_NOTES_URL,
       release_notes_index: SAFARI_RELEASE_NOTES_URL,
       release_notes_page: SOURCE_URLS.safari.release_notes_page,
       current_release_notes: safari.versions.current.release_notes,
       previous_release_notes: safari.versions.previous.release_notes,
-      ua_validation_article: SOURCE_URLS.safari.ua_validation_article,
-      fallback: SOURCE_URLS.safari.fallback
+      ua_behavior_reference: SOURCE_URLS.safari.ua_behavior_reference
     }
   });
 
   return {
     resolvedVersions,
+    uaContext,
     sourceReferences,
-    fallbackUse: safari.fallback_use
+    fallbackUse: {
+      used: false,
+      source: null,
+      note: "Official-source-only mode; no third-party Safari fallback is configured."
+    }
   };
 }
 

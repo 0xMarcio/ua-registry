@@ -2,6 +2,15 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { buildCollections, buildVariantItem } from "../scripts/templates.mjs";
 
+const FIXTURE_UA_CONTEXT = {
+  firefox: {
+    android_version: "16"
+  },
+  safari: {
+    ios_ipados_compat_version: "18.6"
+  }
+};
+
 const FIXTURE_VERSIONS = {
   chrome: {
     current: {
@@ -64,9 +73,9 @@ const FIXTURE_VERSIONS = {
 };
 
 test("Chromium-based templates use reduced UA formats", () => {
-  const chrome = buildVariantItem("chrome", "current-windows", FIXTURE_VERSIONS);
-  const edgeDesktop = buildVariantItem("edge", "current-windows", FIXTURE_VERSIONS);
-  const edge = buildVariantItem("edge", "current-android", FIXTURE_VERSIONS);
+  const chrome = buildVariantItem("chrome", "current-windows", FIXTURE_VERSIONS, FIXTURE_UA_CONTEXT);
+  const edgeDesktop = buildVariantItem("edge", "current-windows", FIXTURE_VERSIONS, FIXTURE_UA_CONTEXT);
+  const edge = buildVariantItem("edge", "current-android", FIXTURE_VERSIONS, FIXTURE_UA_CONTEXT);
 
   assert.equal(
     chrome.user_agent,
@@ -83,8 +92,8 @@ test("Chromium-based templates use reduced UA formats", () => {
 });
 
 test("Safari templates keep the isolated platform quirks", () => {
-  const safariPhone = buildVariantItem("safari", "current-iphone", FIXTURE_VERSIONS);
-  const safariTablet = buildVariantItem("safari", "current-ipad-mobile", FIXTURE_VERSIONS);
+  const safariPhone = buildVariantItem("safari", "current-iphone", FIXTURE_VERSIONS, FIXTURE_UA_CONTEXT);
+  const safariTablet = buildVariantItem("safari", "current-ipad-mobile", FIXTURE_VERSIONS, FIXTURE_UA_CONTEXT);
 
   assert.match(safariPhone.user_agent, /iPhone; CPU iPhone OS 18_6 like Mac OS X/);
   assert.match(safariPhone.user_agent, /Version\/26\.4 Mobile\/15E148 Safari\/604\.1$/);
@@ -92,11 +101,11 @@ test("Safari templates keep the isolated platform quirks", () => {
 });
 
 test("Firefox templates include the expected desktop and mobile forms", () => {
-  const firefoxUbuntu = buildVariantItem("firefox", "current-ubuntu", FIXTURE_VERSIONS);
-  const firefoxAndroid = buildVariantItem("firefox", "current-android", FIXTURE_VERSIONS);
-  const collections = buildCollections(FIXTURE_VERSIONS);
+  const firefoxUbuntu = buildVariantItem("firefox", "current-ubuntu", FIXTURE_VERSIONS, FIXTURE_UA_CONTEXT);
+  const firefoxAndroid = buildVariantItem("firefox", "current-android", FIXTURE_VERSIONS, FIXTURE_UA_CONTEXT);
+  const collections = buildCollections(FIXTURE_VERSIONS, FIXTURE_UA_CONTEXT);
 
   assert.match(firefoxUbuntu.user_agent, /X11; Ubuntu; Linux x86_64/);
-  assert.match(firefoxAndroid.user_agent, /^Mozilla\/5\.0 \(Android 15; Mobile; rv:149\.0\) Gecko\/149\.0 Firefox\/149\.0$/);
+  assert.match(firefoxAndroid.user_agent, /^Mozilla\/5\.0 \(Android 16; Mobile; rv:149\.0\) Gecko\/149\.0 Firefox\/149\.0$/);
   assert.equal(collections.browserItems.firefox.length, 5);
 });

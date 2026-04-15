@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-15T12:40:23.392Z",
+  "generated_at": "2026-04-15T18:01:52.278Z",
   "browser": "all",
   "device_class": "desktop",
   "count": 11,
@@ -73,8 +73,8 @@
       "platform": "windows",
       "device_class": "desktop",
       "track": "current",
-      "version": "149.0.2",
-      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0.2) Gecko/20100101 Firefox/149.0.2"
+      "version": "149.0",
+      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0"
     },
     {
       "label": "Firefox on macOS",
@@ -82,8 +82,8 @@
       "platform": "macos",
       "device_class": "desktop",
       "track": "current",
-      "version": "149.0.2",
-      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:149.0.2) Gecko/20100101 Firefox/149.0.2"
+      "version": "149.0",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:149.0) Gecko/20100101 Firefox/149.0"
     },
     {
       "label": "Firefox on Linux",
@@ -91,8 +91,8 @@
       "platform": "linux",
       "device_class": "desktop",
       "track": "current",
-      "version": "149.0.2",
-      "user_agent": "Mozilla/5.0 (X11; Linux x86_64; rv:149.0.2) Gecko/20100101 Firefox/149.0.2"
+      "version": "149.0",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64; rv:149.0) Gecko/20100101 Firefox/149.0"
     },
     {
       "label": "Firefox on Ubuntu",
@@ -100,8 +100,8 @@
       "platform": "ubuntu",
       "device_class": "desktop",
       "track": "current",
-      "version": "149.0.2",
-      "user_agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:149.0.2) Gecko/20100101 Firefox/149.0.2"
+      "version": "149.0",
+      "user_agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:149.0) Gecko/20100101 Firefox/149.0"
     }
   ]
 }

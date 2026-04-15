@@ -56,13 +56,13 @@ const FIXTURE_VERSIONS = {
   firefox: {
     current: {
       version: "149.0",
-      full_version: "149.0"
+      full_version: "149.0.2"
     },
     previous: {
-      version: "148.0.2",
+      version: "148.0",
       full_version: "148.0.2"
     },
-    esr: "140.9.0esr"
+    esr: "140.9.1esr"
   }
 };
 
@@ -80,6 +80,7 @@ const FIXTURE_SOURCE_REFERENCES = {
       "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/useragentreduction"
   },
   firefox: {
+    android_latest_updates: "https://developer.android.com/latest-updates/",
     last_release_date: "2026-03-24",
     reference:
       "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent/Firefox",
@@ -89,21 +90,31 @@ const FIXTURE_SOURCE_REFERENCES = {
   safari: {
     current_release_notes:
       "https://developer.apple.com/documentation/safari-release-notes/safari-26_4-release-notes",
-    fallback: "https://www.browsers.fyi/api/",
+    ios_ipados_release_notes_index:
+      "https://developer.apple.com/tutorials/data/documentation/ios-ipados-release-notes.json",
     previous_release_notes:
       "https://developer.apple.com/documentation/safari-release-notes/safari-26_3-release-notes",
     release_notes_index:
       "https://developer.apple.com/tutorials/data/documentation/safari-release-notes.json",
     release_notes_page: "https://developer.apple.com/documentation/safari-release-notes/",
-    ua_validation_article:
-      "https://nielsleenheer.com/articles/2025/the-user-agent-string-of-safari-on-ios-26-and-macos-26/"
+    ua_behavior_reference:
+      "https://webkit.org/blog/17333/webkit-features-in-safari-26-0/"
   }
 };
 
 const FIXTURE_FALLBACK = {
   used: false,
   source: null,
-  note: null
+  note: "Official-source-only mode; no third-party Safari fallback is configured."
+};
+
+const FIXTURE_UA_CONTEXT = {
+  firefox: {
+    android_version: "16"
+  },
+  safari: {
+    ios_ipados_compat_version: "18.6"
+  }
 };
 
 test("buildProject writes deterministic outputs and preserves generated_at when inputs do not change", async () => {
@@ -115,7 +126,8 @@ test("buildProject writes deterministic outputs and preserves generated_at when 
     buildSha: "1111111",
     resolvedVersionsInput: FIXTURE_VERSIONS,
     sourceReferencesInput: FIXTURE_SOURCE_REFERENCES,
-    fallbackUseInput: FIXTURE_FALLBACK
+    fallbackUseInput: FIXTURE_FALLBACK,
+    uaContextInput: FIXTURE_UA_CONTEXT
   });
 
   assert.ok(firstBuild.changedFiles.length > 0);
@@ -127,7 +139,8 @@ test("buildProject writes deterministic outputs and preserves generated_at when 
     buildSha: "2222222",
     resolvedVersionsInput: FIXTURE_VERSIONS,
     sourceReferencesInput: FIXTURE_SOURCE_REFERENCES,
-    fallbackUseInput: FIXTURE_FALLBACK
+    fallbackUseInput: FIXTURE_FALLBACK,
+    uaContextInput: FIXTURE_UA_CONTEXT
   });
 
   assert.equal(secondBuild.generatedAt, "2026-04-02T12:34:56Z");
@@ -144,6 +157,10 @@ test("buildProject writes deterministic outputs and preserves generated_at when 
 
   assert.equal(meta.generated_at, "2026-04-02T12:34:56Z");
   assert.equal(meta.build_sha, "1111111");
+  assert.equal(meta.resolved_versions.firefox.current.version, "149.0");
+  assert.equal(meta.resolved_versions.firefox.current.full_version, "149.0.2");
+  assert.equal(meta.ua_rule_inputs.firefox.android_version, "16");
+  assert.equal(meta.ua_rule_inputs.safari.ios_ipados_compat_version, "18.6");
   assert.match(readme, /^# Latest Browser User Agents/);
   assert.match(chromeText, /^Mozilla\/5\.0/);
   assert.doesNotMatch(readme, /previous stable/i);
