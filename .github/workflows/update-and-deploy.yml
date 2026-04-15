@@ -79,8 +79,7 @@ jobs:
             `- Chrome: ${meta.resolved_versions.chrome.current.version}`,
             `- Safari: ${meta.resolved_versions.safari.current.version}`,
             `- Edge: ${meta.resolved_versions.edge.current.version}`,
-            `- Firefox: ${meta.resolved_versions.firefox.current.version}`,
-            `- Safari fallback used: ${meta.fallback_source_use.used ? "yes" : "no"}`
+            `- Firefox: ${meta.resolved_versions.firefox.current.version}`
           ];
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join("\n")}\n`);
           EOF

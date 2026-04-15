@@ -1,18 +1,16 @@
 {
-  "generated_at": "2026-04-15T18:01:52.278Z",
-  "build_sha": "a81775fc75448fa4de97003de5846b496693f196",
+  "generated_at": "2026-04-15T18:39:23.340Z",
+  "build_sha": null,
   "generator_version": "1.0.0",
   "source_strategy": {
     "primary": "Official vendor version feeds plus browser-specific UA construction rules from vendor documentation and source.",
-    "fallbacks": [
-      "Official-source-only mode: the build fails if Safari's official Apple release-note feeds stop exposing the stable release data needed to generate current UA strings."
-    ]
+    "mode": "official-source-only"
   },
   "source_urls": {
     "chrome": {
       "last_known_good": "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions.json",
       "milestones": "https://googlechromelabs.github.io/chrome-for-testing/latest-versions-per-milestone.json",
-      "source_timestamp": "2026-04-15T12:35:30.481Z",
+      "source_timestamp": "2026-04-15T18:35:37.295Z",
       "ua_reduction": "https://www.chromium.org/updates/ua-reduction/"
     },
     "edge": {
@@ -38,7 +36,7 @@
   "resolved_versions": {
     "chrome": {
       "current": {
-        "full_version": "147.0.7727.56",
+        "full_version": "147.0.7727.57",
         "milestone": "147",
         "version": "147"
       }
@@ -92,11 +90,6 @@
       "Safari on iPhone and iPad uses the latest stable iOS/iPadOS release line prior to the current Safari cycle as a frozen compatibility token rather than mirroring the current OS release number.",
       "The generated iPad variant intentionally uses the mobile Safari token so the public top-five set contains a unique and immediately useful iPad UA."
     ]
-  },
-  "fallback_source_use": {
-    "used": false,
-    "source": null,
-    "note": "Official-source-only mode; no third-party Safari fallback is configured."
   },
   "counts": {
     "all": 16,

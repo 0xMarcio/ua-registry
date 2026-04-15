@@ -102,12 +102,6 @@ const FIXTURE_SOURCE_REFERENCES = {
   }
 };
 
-const FIXTURE_FALLBACK = {
-  used: false,
-  source: null,
-  note: "Official-source-only mode; no third-party Safari fallback is configured."
-};
-
 const FIXTURE_UA_CONTEXT = {
   firefox: {
     android_version: "16"
@@ -126,7 +120,6 @@ test("buildProject writes deterministic outputs and preserves generated_at when 
     buildSha: "1111111",
     resolvedVersionsInput: FIXTURE_VERSIONS,
     sourceReferencesInput: FIXTURE_SOURCE_REFERENCES,
-    fallbackUseInput: FIXTURE_FALLBACK,
     uaContextInput: FIXTURE_UA_CONTEXT
   });
 
@@ -139,7 +132,6 @@ test("buildProject writes deterministic outputs and preserves generated_at when 
     buildSha: "2222222",
     resolvedVersionsInput: FIXTURE_VERSIONS,
     sourceReferencesInput: FIXTURE_SOURCE_REFERENCES,
-    fallbackUseInput: FIXTURE_FALLBACK,
     uaContextInput: FIXTURE_UA_CONTEXT
   });
 

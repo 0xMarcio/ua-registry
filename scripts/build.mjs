@@ -213,7 +213,6 @@ function buildMeta({
   resolvedVersions,
   uaContext,
   sourceReferences,
-  fallbackUse,
   collections
 }) {
   const publishedResolvedVersions = buildPublishedResolvedVersions(resolvedVersions);
@@ -224,10 +223,9 @@ function buildMeta({
     build_sha: buildSha ?? null,
     generator_version: GENERATOR_VERSION,
     source_strategy: {
-      primary: "Official vendor version feeds plus browser-specific UA construction rules from vendor documentation and source.",
-      fallbacks: [
-        "Official-source-only mode: the build fails if Safari's official Apple release-note feeds stop exposing the stable release data needed to generate current UA strings."
-      ]
+      primary:
+        "Official vendor version feeds plus browser-specific UA construction rules from vendor documentation and source.",
+      mode: "official-source-only"
     },
     source_urls: publishedSourceUrls,
     resolved_versions: publishedResolvedVersions,
@@ -240,7 +238,6 @@ function buildMeta({
       version: SAFARI_RULES_VERSION,
       notes: SAFARI_RULES_NOTES
     },
-    fallback_source_use: fallbackUse,
     counts: {
       all: collections.allItems.length,
       desktop: collections.desktopItems.length,
@@ -334,18 +331,16 @@ export async function buildProject({
   now = new Date().toISOString(),
   resolvedVersionsInput = null,
   sourceReferencesInput = null,
-  fallbackUseInput = null,
   uaContextInput = null
 } = {}) {
   const docsDirectory = path.join(rootDirectory, "docs");
   const existingMeta = await loadExistingMeta(docsDirectory);
 
   const resolvedSourceData =
-    resolvedVersionsInput && sourceReferencesInput && fallbackUseInput
+    resolvedVersionsInput && sourceReferencesInput
       ? {
           resolvedVersions: resolvedVersionsInput,
           sourceReferences: sourceReferencesInput,
-          fallbackUse: fallbackUseInput,
           uaContext: uaContextInput ?? {}
         }
       : await fetchResolvedVersions({ existingMeta });
@@ -360,7 +355,6 @@ export async function buildProject({
     resolvedVersions: resolvedSourceData.resolvedVersions,
     uaContext: resolvedSourceData.uaContext,
     sourceReferences: resolvedSourceData.sourceReferences,
-    fallbackUse: resolvedSourceData.fallbackUse,
     collections
   });
 
@@ -379,7 +373,6 @@ export async function buildProject({
     resolvedVersions: resolvedSourceData.resolvedVersions,
     uaContext: resolvedSourceData.uaContext,
     sourceReferences: resolvedSourceData.sourceReferences,
-    fallbackUse: resolvedSourceData.fallbackUse,
     collections
   });
 

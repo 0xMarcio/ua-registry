@@ -357,20 +357,13 @@ async function resolveSafariVersions(appleIndex, existingMeta) {
     const [current, previous] = stableEntries;
 
     return {
-      versions: {
-        current: {
-          version: current.version,
-          release_notes: current.release_notes
-        },
-        previous: {
-          version: previous.version,
-          release_notes: previous.release_notes
-        }
+      current: {
+        version: current.version,
+        release_notes: current.release_notes
       },
-      fallback_use: {
-        used: false,
-        source: null,
-        note: null
+      previous: {
+        version: previous.version,
+        release_notes: previous.release_notes
       }
     };
   }
@@ -458,14 +451,14 @@ export async function fetchResolvedVersions({ existingMeta = null } = {}) {
   const firefoxAndroidVersion = parseLatestStableAndroidVersion(androidLatestUpdates);
   const safariFrozenMobileOsVersion = resolveSafariFrozenMobileOsVersion(
     iosIpadosReleaseNotes,
-    safari.versions.current.version
+    safari.current.version
   );
 
   const resolvedVersions = sortObjectKeys({
     chrome: resolveChromeVersions(chromeLastKnownGood, chromeMilestones),
     edge: resolveEdgeVersions(edgeProducts),
     firefox: resolveFirefoxVersions(firefoxVersions, firefoxReleases),
-    safari: safari.versions
+    safari
   });
 
   const uaContext = sortObjectKeys({
@@ -500,8 +493,8 @@ export async function fetchResolvedVersions({ existingMeta = null } = {}) {
       ios_ipados_release_notes_index: IOS_IPADOS_RELEASE_NOTES_URL,
       release_notes_index: SAFARI_RELEASE_NOTES_URL,
       release_notes_page: SOURCE_URLS.safari.release_notes_page,
-      current_release_notes: safari.versions.current.release_notes,
-      previous_release_notes: safari.versions.previous.release_notes,
+      current_release_notes: safari.current.release_notes,
+      previous_release_notes: safari.previous.release_notes,
       ua_behavior_reference: SOURCE_URLS.safari.ua_behavior_reference
     }
   });
@@ -509,12 +502,7 @@ export async function fetchResolvedVersions({ existingMeta = null } = {}) {
   return {
     resolvedVersions,
     uaContext,
-    sourceReferences,
-    fallbackUse: {
-      used: false,
-      source: null,
-      note: "Official-source-only mode; no third-party Safari fallback is configured."
-    }
+    sourceReferences
   };
 }
 
