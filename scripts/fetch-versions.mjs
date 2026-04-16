@@ -121,17 +121,19 @@ async function fetchWithParser(url, sourceLabel, parser) {
 }
 
 export function parseLatestStableAndroidVersion(html) {
-  const match =
-    html.match(
-      />Stable<\/span>[\s\S]{0,1200}?<h3 id="android-(\d+)"[\s\S]{0,400}?>[\s\S]{0,400}?Android\s+\1\b/i
-    ) ??
-    html.match(/<h3 id="android-(\d+)"[\s\S]{0,400}?>[\s\S]{0,400}?Android\s+\1\b/i);
+  const stableVersions = [...String(html).matchAll(
+    /<(?:div|li)\b[^>]*\bandroid-latest-update--stable\b[^>]*>[\s\S]{0,2500}?<h3 id="android-(\d+)"[\s\S]{0,400}?>[\s\S]{0,400}?Android\s+\1\b/gi
+  )]
+    .map((match) => match[1])
+    .sort(compareVersions);
 
-  if (!match) {
+  const latestStableVersion = stableVersions.at(-1);
+
+  if (!latestStableVersion) {
     throw new Error("Android source page did not expose a stable platform version.");
   }
 
-  return match[1];
+  return latestStableVersion;
 }
 
 function resolveChromeVersions(lastKnownGood, milestones) {

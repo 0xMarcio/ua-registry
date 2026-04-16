@@ -50,9 +50,44 @@ test("resolveFirefoxVersions preserves the full shipped release and the UA versi
 
 test("parseLatestStableAndroidVersion resolves the current stable Android major", () => {
   const html = `
-    <div><span>Stable</span></div>
-    <h3 id="android-16"><a href="/about/versions">Android 16</a></h3>
-    <div>The latest version of Android is available for testing, development, and feedback.</div>
+    <div class="devsite-landing-row-item devsite-landing-row-item-no-media android-latest-update--stable fully-clickable">
+      <div class="devsite-landing-row-item-description">
+        <div class="devsite-landing-row-item-body">
+          <div class="devsite-landing-row-item-labels">
+            <span class="devsite-label">Stable</span>
+          </div>
+          <h3 id="android-16">
+            <a href="/about/versions">Android 16</a>
+          </h3>
+          <div>The latest version of Android is available for testing, development, and feedback.</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  assert.equal(parseLatestStableAndroidVersion(html), "16");
+});
+
+test("parseLatestStableAndroidVersion selects the latest Android stable card", () => {
+  const html = `
+    <div class="devsite-landing-row-item devsite-landing-row-item-no-media android-latest-update--stable fully-clickable">
+      <div class="devsite-landing-row-item-description">
+        <div class="devsite-landing-row-item-body">
+          <h3 id="android-15">
+            <a href="/about/versions/15">Android 15</a>
+          </h3>
+        </div>
+      </div>
+    </div>
+    <div class="devsite-landing-row-item devsite-landing-row-item-no-media android-latest-update--stable fully-clickable">
+      <div class="devsite-landing-row-item-description">
+        <div class="devsite-landing-row-item-body">
+          <h3 id="android-16">
+            <a href="/about/versions">Android 16</a>
+          </h3>
+        </div>
+      </div>
+    </div>
   `;
 
   assert.equal(parseLatestStableAndroidVersion(html), "16");

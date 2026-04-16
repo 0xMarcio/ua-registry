@@ -69,17 +69,19 @@ jobs:
 
       - name: Write workflow summary
         run: |
-          node <<'EOF'
-          const fs = require("node:fs");
+          node --input-type=module <<'EOF'
+          import fs from "node:fs";
+          import { formatDisplayVersion } from "./scripts/version-display.mjs";
+
           const meta = JSON.parse(fs.readFileSync("docs/api/meta.json", "utf8"));
           const lines = [
             "## UA build",
             "",
             `- Generated at: ${meta.generated_at}`,
-            `- Chrome: ${meta.resolved_versions.chrome.current.version}`,
-            `- Safari: ${meta.resolved_versions.safari.current.version}`,
-            `- Edge: ${meta.resolved_versions.edge.current.version}`,
-            `- Firefox: ${meta.resolved_versions.firefox.current.version}`
+            `- Chrome: ${formatDisplayVersion(meta.resolved_versions.chrome.current.version)}`,
+            `- Safari: ${formatDisplayVersion(meta.resolved_versions.safari.current.version)}`,
+            `- Edge: ${formatDisplayVersion(meta.resolved_versions.edge.current.version)}`,
+            `- Firefox: ${formatDisplayVersion(meta.resolved_versions.firefox.current.version)}`
           ];
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join("\n")}\n`);
           EOF
@@ -98,7 +100,21 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          VERSION_SUMMARY="$(node -e 'const fs=require("node:fs"); const meta=JSON.parse(fs.readFileSync("docs/api/meta.json","utf8")); process.stdout.write(`chrome ${meta.resolved_versions.chrome.current.version}, safari ${meta.resolved_versions.safari.current.version}, edge ${meta.resolved_versions.edge.current.version}, firefox ${meta.resolved_versions.firefox.current.version}`)')"
+          VERSION_SUMMARY="$(node --input-type=module <<'EOF'
+          import fs from "node:fs";
+          import { formatDisplayVersion } from "./scripts/version-display.mjs";
+
+          const meta = JSON.parse(fs.readFileSync("docs/api/meta.json", "utf8"));
+          const browsers = ["chrome", "safari", "edge", "firefox"];
+          process.stdout.write(
+            browsers
+              .map((browser) => {
+                return `${browser} ${formatDisplayVersion(meta.resolved_versions[browser].current.version)}`;
+              })
+              .join(", ")
+          );
+          EOF
+          )"
           git add docs README.md
           git commit -m "refresh UA data (${VERSION_SUMMARY})"
           git push
