@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-04-21T12:41:59.677Z",
+  "generated_at": "2026-04-21T14:53:17.900Z",
   "label": "Microsoft Edge on Android",
   "browser": "edge",
   "platform": "android",
   "device_class": "mobile",
   "track": "current",
   "version": "147",
-  "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Mobile Safari/537.36 EdgA/147.0.3912.60"
+  "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Mobile Safari/537.36 EdgA/147.0.3912.77"
 }
