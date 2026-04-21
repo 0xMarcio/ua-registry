@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-04-20T19:41:11.680Z",
+  "generated_at": "2026-04-21T12:41:59.677Z",
   "label": "Firefox on Android",
   "browser": "firefox",
   "platform": "android",
   "device_class": "mobile",
   "track": "current",
-  "version": "149.0",
-  "user_agent": "Mozilla/5.0 (Android 16; Mobile; rv:149.0) Gecko/149.0 Firefox/149.0"
+  "version": "150.0",
+  "user_agent": "Mozilla/5.0 (Android 16; Mobile; rv:150.0) Gecko/150.0 Firefox/150.0"
 }
