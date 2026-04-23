@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-04-22T19:44:49.932Z",
+  "generated_at": "2026-04-23T17:51:19.837Z",
   "label": "Chrome on macOS",
   "browser": "chrome",
   "platform": "macos",
   "device_class": "desktop",
   "track": "current",
-  "version": "147",
-  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36"
+  "version": "148",
+  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36"
 }

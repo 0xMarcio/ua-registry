@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-22T19:44:49.932Z",
+  "generated_at": "2026-04-23T17:51:19.837Z",
   "browser": "all",
   "device_class": "mobile",
   "count": 5,
@@ -10,8 +10,8 @@
       "platform": "android",
       "device_class": "mobile",
       "track": "current",
-      "version": "147",
-      "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Mobile Safari/537.36"
+      "version": "148",
+      "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Mobile Safari/537.36"
     },
     {
       "label": "Safari on iPhone",
