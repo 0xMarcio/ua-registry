@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-16T03:27:57.927Z",
+  "generated_at": "2026-06-16T12:56:39.053Z",
   "label": "Firefox on Linux",
   "browser": "firefox",
   "platform": "linux",
   "device_class": "desktop",
   "track": "current",
-  "version": "151.0",
-  "user_agent": "Mozilla/5.0 (X11; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+  "version": "152.0",
+  "user_agent": "Mozilla/5.0 (X11; Linux x86_64; rv:152.0) Gecko/20100101 Firefox/152.0"
 }

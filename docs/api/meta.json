@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-16T03:27:57.927Z",
-  "build_sha": "c77120462ea679bfe4834eb9989e6ae180b8aa86",
+  "generated_at": "2026-06-16T12:56:39.053Z",
+  "build_sha": "f82e251c45205180bff788eda614243a317c0fca",
   "generator_version": "1.0.0",
   "source_strategy": {
     "primary": "Official vendor version feeds plus browser-specific UA construction rules from vendor documentation and source.",
@@ -62,8 +62,8 @@
     },
     "firefox": {
       "current": {
-        "full_version": "151.0.4",
-        "version": "151.0"
+        "full_version": "152.0",
+        "version": "152.0"
       }
     }
   },
