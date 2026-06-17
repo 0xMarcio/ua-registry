@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-17T13:32:24.989Z",
+  "generated_at": "2026-06-17T17:21:25.154Z",
   "label": "Chrome on Android",
   "browser": "chrome",
   "platform": "android",
   "device_class": "mobile",
   "track": "current",
-  "version": "149",
-  "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Mobile Safari/537.36"
+  "version": "150",
+  "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
 }
