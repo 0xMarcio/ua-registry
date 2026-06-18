@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-18T15:27:06.797Z",
+  "generated_at": "2026-06-18T19:06:39.329Z",
   "label": "Microsoft Edge on macOS",
   "browser": "edge",
   "platform": "macos",
   "device_class": "desktop",
   "track": "current",
   "version": "149",
-  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36 Edg/149.0.4022.69"
+  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36 Edg/149.0.4022.80"
 }
