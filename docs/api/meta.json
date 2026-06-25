@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-25T13:59:01.496Z",
-  "build_sha": "281767ea7cc8a7e3820d5aba612e0610fd3c7d83",
+  "generated_at": "2026-06-25T19:57:11.357Z",
+  "build_sha": "a4a2a7f3a945651900a472b47cd44b32d92a47ce",
   "generator_version": "1.0.0",
   "source_strategy": {
     "primary": "Official vendor version feeds plus browser-specific UA construction rules from vendor documentation and source.",
@@ -10,7 +10,7 @@
     "chrome": {
       "last_known_good": "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions.json",
       "milestones": "https://googlechromelabs.github.io/chrome-for-testing/latest-versions-per-milestone.json",
-      "source_timestamp": "2026-06-25T13:00:55.294Z",
+      "source_timestamp": "2026-06-25T18:54:49.216Z",
       "ua_reduction": "https://www.chromium.org/updates/ua-reduction/"
     },
     "edge": {
@@ -53,7 +53,7 @@
         "release_notes": "https://learn.microsoft.com/en-us/microsoft-edge/web-platform/release-notes/149",
         "releases": {
           "android": "149.0.4022.80",
-          "linux": "149.0.4022.80",
+          "linux": "149.0.4022.96",
           "macos": "149.0.4022.80",
           "windows": "149.0.4022.80"
         },
