@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-28T19:47:34.865Z",
+  "generated_at": "2026-06-29T08:08:16.805Z",
   "browser": "all",
   "device_class": "mobile",
   "count": 5,
@@ -38,7 +38,7 @@
       "device_class": "mobile",
       "track": "current",
       "version": "149",
-      "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Mobile Safari/537.36 EdgA/149.0.4022.80"
+      "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Mobile Safari/537.36 EdgA/149.0.4022.96"
     },
     {
       "label": "Firefox on Android",
