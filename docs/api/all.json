@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-02T23:30:15.568Z",
+  "generated_at": "2026-07-03T04:09:06.259Z",
   "browser": "all",
   "device_class": "all",
   "count": 16,
@@ -83,7 +83,7 @@
       "device_class": "desktop",
       "track": "current",
       "version": "150",
-      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36 Edg/150.0.4078.48"
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36 Edg/150.0.4078.50"
     },
     {
       "label": "Microsoft Edge on Linux",
