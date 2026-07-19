@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-18T19:31:53.286Z",
+  "generated_at": "2026-07-19T03:54:43.583Z",
   "browser": "all",
   "device_class": "all",
   "count": 16,
@@ -101,7 +101,7 @@
       "device_class": "mobile",
       "track": "current",
       "version": "150",
-      "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36 EdgA/150.0.4078.65"
+      "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36 EdgA/150.0.4078.81"
     },
     {
       "label": "Firefox on Windows",
