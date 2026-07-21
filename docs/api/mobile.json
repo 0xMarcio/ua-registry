@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-21T06:41:32.073Z",
+  "generated_at": "2026-07-21T14:22:42.398Z",
   "browser": "all",
   "device_class": "mobile",
   "count": 5,
@@ -46,8 +46,8 @@
       "platform": "android",
       "device_class": "mobile",
       "track": "current",
-      "version": "152.0",
-      "user_agent": "Mozilla/5.0 (Android 16; Mobile; rv:152.0) Gecko/152.0 Firefox/152.0"
+      "version": "153.0",
+      "user_agent": "Mozilla/5.0 (Android 16; Mobile; rv:153.0) Gecko/153.0 Firefox/153.0"
     }
   ]
 }

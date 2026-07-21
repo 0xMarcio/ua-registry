@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-21T06:41:32.073Z",
+  "generated_at": "2026-07-21T14:22:42.398Z",
   "browser": "all",
   "device_class": "all",
   "count": 16,
@@ -109,8 +109,8 @@
       "platform": "windows",
       "device_class": "desktop",
       "track": "current",
-      "version": "152.0",
-      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:152.0) Gecko/20100101 Firefox/152.0"
+      "version": "153.0",
+      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:153.0) Gecko/20100101 Firefox/153.0"
     },
     {
       "label": "Firefox on macOS",
@@ -118,8 +118,8 @@
       "platform": "macos",
       "device_class": "desktop",
       "track": "current",
-      "version": "152.0",
-      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:152.0) Gecko/20100101 Firefox/152.0"
+      "version": "153.0",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:153.0) Gecko/20100101 Firefox/153.0"
     },
     {
       "label": "Firefox on Linux",
@@ -127,8 +127,8 @@
       "platform": "linux",
       "device_class": "desktop",
       "track": "current",
-      "version": "152.0",
-      "user_agent": "Mozilla/5.0 (X11; Linux x86_64; rv:152.0) Gecko/20100101 Firefox/152.0"
+      "version": "153.0",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64; rv:153.0) Gecko/20100101 Firefox/153.0"
     },
     {
       "label": "Firefox on Android",
@@ -136,8 +136,8 @@
       "platform": "android",
       "device_class": "mobile",
       "track": "current",
-      "version": "152.0",
-      "user_agent": "Mozilla/5.0 (Android 16; Mobile; rv:152.0) Gecko/152.0 Firefox/152.0"
+      "version": "153.0",
+      "user_agent": "Mozilla/5.0 (Android 16; Mobile; rv:153.0) Gecko/153.0 Firefox/153.0"
     },
     {
       "label": "Firefox on Ubuntu",
@@ -145,8 +145,8 @@
       "platform": "ubuntu",
       "device_class": "desktop",
       "track": "current",
-      "version": "152.0",
-      "user_agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:152.0) Gecko/20100101 Firefox/152.0"
+      "version": "153.0",
+      "user_agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:153.0) Gecko/20100101 Firefox/153.0"
     }
   ]
 }
