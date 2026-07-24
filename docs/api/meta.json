@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-23T22:14:40.916Z",
-  "build_sha": "e52715f52f7ed9421c891eb6f0bd6b3724b2dcc7",
+  "generated_at": "2026-07-24T00:11:48.467Z",
+  "build_sha": "a3702eca8f9f8badf68e144decfc4d7d30b9b883",
   "generator_version": "1.0.0",
   "source_strategy": {
     "primary": "Official vendor version feeds plus browser-specific UA construction rules from vendor documentation and source.",
@@ -54,7 +54,7 @@
         "releases": {
           "android": "150.0.4078.81",
           "linux": "150.0.4078.96",
-          "macos": "150.0.4078.83",
+          "macos": "150.0.4078.96",
           "windows": "150.0.4078.96"
         },
         "version": "150"
