@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-27T18:47:22.724Z",
-  "build_sha": "4bb0eb526dcec37c40e1ed60b35d776432c082f4",
+  "generated_at": "2026-07-27T20:43:07.867Z",
+  "build_sha": "0cd8733c06776349547ac2214fd5acb8c45a3431",
   "generator_version": "1.0.0",
   "source_strategy": {
     "primary": "Official vendor version feeds plus browser-specific UA construction rules from vendor documentation and source.",
@@ -10,7 +10,7 @@
     "chrome": {
       "last_known_good": "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions.json",
       "milestones": "https://googlechromelabs.github.io/chrome-for-testing/latest-versions-per-milestone.json",
-      "source_timestamp": "2026-07-27T09:17:17.426Z",
+      "source_timestamp": "2026-07-27T20:36:48.705Z",
       "ua_reduction": "https://www.chromium.org/updates/ua-reduction/"
     },
     "edge": {
@@ -26,7 +26,7 @@
       "versions": "https://product-details.mozilla.org/1.0/firefox_versions.json"
     },
     "safari": {
-      "current_release_notes": "https://developer.apple.com/documentation/safari-release-notes/safari-26_5-release-notes",
+      "current_release_notes": "https://developer.apple.com/documentation/safari-release-notes/safari-26_6-release-notes",
       "ios_ipados_release_notes_index": "https://developer.apple.com/tutorials/data/documentation/ios-ipados-release-notes.json",
       "release_notes_index": "https://developer.apple.com/tutorials/data/documentation/safari-release-notes.json",
       "release_notes_page": "https://developer.apple.com/documentation/safari-release-notes/",
@@ -43,8 +43,8 @@
     },
     "safari": {
       "current": {
-        "release_notes": "https://developer.apple.com/documentation/safari-release-notes/safari-26_5-release-notes",
-        "version": "26.5"
+        "release_notes": "https://developer.apple.com/documentation/safari-release-notes/safari-26_6-release-notes",
+        "version": "26.6"
       }
     },
     "edge": {
