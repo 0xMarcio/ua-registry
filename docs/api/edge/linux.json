@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-08-10T13:44:33.168Z",
+  "generated_at": "2026-08-10T15:16:10.071Z",
   "label": "Microsoft Edge on Linux",
   "browser": "edge",
   "platform": "linux",
   "device_class": "desktop",
   "track": "current",
   "version": "151",
-  "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.4129.72"
+  "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.4129.78"
 }
