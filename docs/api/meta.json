@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-13T21:03:29.917Z",
-  "build_sha": "31207c238c824d5499a17fc33934d853964e933d",
+  "generated_at": "2026-08-13T23:59:07.183Z",
+  "build_sha": "d6f74af15475c42772ba05f852c1cfc54bfea5b8",
   "generator_version": "1.0.0",
   "source_strategy": {
     "primary": "Official vendor version feeds plus browser-specific UA construction rules from vendor documentation and source.",
@@ -20,7 +20,7 @@
     },
     "firefox": {
       "android_latest_updates": "https://developer.android.com/latest-updates/",
-      "last_release_date": "2026-07-21",
+      "last_release_date": "2026-08-14",
       "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent/Firefox",
       "releases": "https://product-details.mozilla.org/1.0/firefox.json",
       "versions": "https://product-details.mozilla.org/1.0/firefox_versions.json"
