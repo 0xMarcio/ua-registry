@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-08-17T22:41:18.446Z",
+  "generated_at": "2026-08-18T13:08:02.671Z",
   "label": "Firefox on Windows",
   "browser": "firefox",
   "platform": "windows",
   "device_class": "desktop",
   "track": "current",
-  "version": "153.0",
-  "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:153.0) Gecko/20100101 Firefox/153.0"
+  "version": "154.0",
+  "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:154.0) Gecko/20100101 Firefox/154.0"
 }
