@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-21T19:37:27.212Z",
+  "generated_at": "2026-08-23T15:36:19.317Z",
   "browser": "edge",
   "device_class": "mobile",
   "count": 1,
@@ -11,7 +11,7 @@
       "device_class": "mobile",
       "track": "current",
       "version": "151",
-      "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Mobile Safari/537.36 EdgA/151.0.4129.96"
+      "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Mobile Safari/537.36 EdgA/151.0.4129.101"
     }
   ]
 }
