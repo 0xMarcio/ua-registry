@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-27T20:31:08.695Z",
+  "generated_at": "2026-08-28T05:25:00.401Z",
   "browser": "edge",
   "device_class": "desktop",
   "count": 3,
@@ -10,8 +10,8 @@
       "platform": "windows",
       "device_class": "desktop",
       "track": "current",
-      "version": "151",
-      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.4129.107"
+      "version": "152",
+      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.4191.53"
     },
     {
       "label": "Microsoft Edge on macOS",
@@ -19,8 +19,8 @@
       "platform": "macos",
       "device_class": "desktop",
       "track": "current",
-      "version": "151",
-      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.4129.107"
+      "version": "152",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.4191.53"
     },
     {
       "label": "Microsoft Edge on Linux",
@@ -28,8 +28,8 @@
       "platform": "linux",
       "device_class": "desktop",
       "track": "current",
-      "version": "151",
-      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.4129.107"
+      "version": "152",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.4191.53"
     }
   ]
 }

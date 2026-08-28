@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-27T20:31:08.695Z",
-  "build_sha": "598206b50b00b94f1da155b05250524f1f45c345",
+  "generated_at": "2026-08-28T05:25:00.401Z",
+  "build_sha": "d3d2b3dd1397e721886a6616d5cca17c9c296d22",
   "generator_version": "1.0.0",
   "source_strategy": {
     "primary": "Official vendor version feeds plus browser-specific UA construction rules from vendor documentation and source.",
@@ -10,7 +10,7 @@
     "chrome": {
       "last_known_good": "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions.json",
       "milestones": "https://googlechromelabs.github.io/chrome-for-testing/latest-versions-per-milestone.json",
-      "source_timestamp": "2026-08-27T14:45:55.849Z",
+      "source_timestamp": "2026-08-27T22:25:50.454Z",
       "ua_reduction": "https://www.chromium.org/updates/ua-reduction/"
     },
     "edge": {
@@ -20,7 +20,7 @@
     },
     "firefox": {
       "android_latest_updates": "https://developer.android.com/latest-updates/",
-      "last_release_date": "2026-08-18",
+      "last_release_date": "2026-08-28",
       "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent/Firefox",
       "releases": "https://product-details.mozilla.org/1.0/firefox.json",
       "versions": "https://product-details.mozilla.org/1.0/firefox_versions.json"
@@ -49,15 +49,15 @@
     },
     "edge": {
       "current": {
-        "full_version": "151.0.4129.107",
-        "release_notes": "https://learn.microsoft.com/en-us/microsoft-edge/web-platform/release-notes/151",
+        "full_version": "152.0.4191.53",
+        "release_notes": "https://learn.microsoft.com/en-us/microsoft-edge/web-platform/release-notes/152",
         "releases": {
-          "android": "151.0.4129.101",
-          "linux": "151.0.4129.107",
-          "macos": "151.0.4129.107",
-          "windows": "151.0.4129.107"
+          "android": null,
+          "linux": "152.0.4191.53",
+          "macos": null,
+          "windows": "152.0.4191.53"
         },
-        "version": "151"
+        "version": "152"
       }
     },
     "firefox": {
