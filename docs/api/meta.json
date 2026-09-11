@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-11T09:42:29.212Z",
-  "build_sha": "88dee75e2e0e65768d84923db985764ea14b2cb8",
+  "generated_at": "2026-09-11T21:43:33.095Z",
+  "build_sha": "9a5baedbcf9d4a1261e19f17e29177b6d0f35a14",
   "generator_version": "1.0.0",
   "source_strategy": {
     "primary": "Official vendor version feeds plus browser-specific UA construction rules from vendor documentation and source.",
@@ -10,7 +10,7 @@
     "chrome": {
       "last_known_good": "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions.json",
       "milestones": "https://googlechromelabs.github.io/chrome-for-testing/latest-versions-per-milestone.json",
-      "source_timestamp": "2026-09-11T08:27:08.849Z",
+      "source_timestamp": "2026-09-11T21:20:36.270Z",
       "ua_reduction": "https://www.chromium.org/updates/ua-reduction/"
     },
     "edge": {
@@ -26,7 +26,7 @@
       "versions": "https://product-details.mozilla.org/1.0/firefox_versions.json"
     },
     "safari": {
-      "current_release_notes": "https://developer.apple.com/documentation/safari-release-notes/safari-26_6-release-notes",
+      "current_release_notes": "https://developer.apple.com/documentation/safari-release-notes/safari-27-release-notes",
       "ios_ipados_release_notes_index": "https://developer.apple.com/tutorials/data/documentation/ios-ipados-release-notes.json",
       "release_notes_index": "https://developer.apple.com/tutorials/data/documentation/safari-release-notes.json",
       "release_notes_page": "https://developer.apple.com/documentation/safari-release-notes/",
@@ -43,8 +43,8 @@
     },
     "safari": {
       "current": {
-        "release_notes": "https://developer.apple.com/documentation/safari-release-notes/safari-26_6-release-notes",
-        "version": "26.6"
+        "release_notes": "https://developer.apple.com/documentation/safari-release-notes/safari-27-release-notes",
+        "version": "27"
       }
     },
     "edge": {
@@ -72,7 +72,7 @@
       "android_version": "16"
     },
     "safari": {
-      "ios_ipados_compat_version": "18.6"
+      "ios_ipados_compat_version": "26.6"
     }
   },
   "variant_config": {
