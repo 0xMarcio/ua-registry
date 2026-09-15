@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-14T23:08:13.413Z",
-  "build_sha": "e0edcf3e482063162377500bb5b7d8c34883273e",
+  "generated_at": "2026-09-15T13:33:58.867Z",
+  "build_sha": "c96dd141cab5422c7b259759ea6b85238b6d7065",
   "generator_version": "1.0.0",
   "source_strategy": {
     "primary": "Official vendor version feeds plus browser-specific UA construction rules from vendor documentation and source.",
@@ -10,7 +10,7 @@
     "chrome": {
       "last_known_good": "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions.json",
       "milestones": "https://googlechromelabs.github.io/chrome-for-testing/latest-versions-per-milestone.json",
-      "source_timestamp": "2026-09-14T21:16:28.352Z",
+      "source_timestamp": "2026-09-15T11:18:38.903Z",
       "ua_reduction": "https://www.chromium.org/updates/ua-reduction/"
     },
     "edge": {
@@ -20,7 +20,7 @@
     },
     "firefox": {
       "android_latest_updates": "https://developer.android.com/latest-updates/",
-      "last_release_date": "2026-09-11",
+      "last_release_date": "2026-09-15",
       "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent/Firefox",
       "releases": "https://product-details.mozilla.org/1.0/firefox.json",
       "versions": "https://product-details.mozilla.org/1.0/firefox_versions.json"
@@ -62,8 +62,8 @@
     },
     "firefox": {
       "current": {
-        "full_version": "155.0.1",
-        "version": "155.0"
+        "full_version": "156.0",
+        "version": "156.0"
       }
     }
   },
