@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-10-27T10:35:37.163Z",
+  "generated_at": "2026-10-27T16:40:00.744Z",
   "label": "Firefox on macOS",
   "browser": "firefox",
   "platform": "macos",
   "device_class": "desktop",
   "track": "current",
-  "version": "158.0",
-  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:158.0) Gecko/20100101 Firefox/158.0"
+  "version": "159.0",
+  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:159.0) Gecko/20100101 Firefox/159.0"
 }
