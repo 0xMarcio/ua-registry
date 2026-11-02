@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-01T23:36:32.248Z",
-  "build_sha": "745fc6fba2bc21e3360f07db3a1c0e53cb45091f",
+  "generated_at": "2026-11-02T06:05:25.102Z",
+  "build_sha": "c0c0d622749c4fc629652f588d540868ea2771a5",
   "generator_version": "1.0.0",
   "source_strategy": {
     "primary": "Official vendor version feeds plus browser-specific UA construction rules from vendor documentation and source.",
@@ -52,7 +52,7 @@
         "full_version": "156.0.4314.58",
         "release_notes": "https://learn.microsoft.com/en-us/microsoft-edge/web-platform/release-notes/156",
         "releases": {
-          "android": "156.0.4314.43",
+          "android": "156.0.4314.56",
           "linux": "156.0.4314.58",
           "macos": "156.0.4314.58",
           "windows": "156.0.4314.58"
