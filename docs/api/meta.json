@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-02T06:05:25.102Z",
-  "build_sha": "c0c0d622749c4fc629652f588d540868ea2771a5",
+  "generated_at": "2026-11-02T15:55:47.554Z",
+  "build_sha": "690bbcde5df99165edcd399c9bd7be752e953e42",
   "generator_version": "1.0.0",
   "source_strategy": {
     "primary": "Official vendor version feeds plus browser-specific UA construction rules from vendor documentation and source.",
@@ -10,7 +10,7 @@
     "chrome": {
       "last_known_good": "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions.json",
       "milestones": "https://googlechromelabs.github.io/chrome-for-testing/latest-versions-per-milestone.json",
-      "source_timestamp": "2026-11-01T21:09:51.406Z",
+      "source_timestamp": "2026-11-02T15:13:18.722Z",
       "ua_reduction": "https://www.chromium.org/updates/ua-reduction/"
     },
     "edge": {
