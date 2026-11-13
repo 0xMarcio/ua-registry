@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-13T16:25:40.511Z",
+  "generated_at": "2026-11-13T22:38:19.370Z",
   "browser": "edge",
   "device_class": "all",
   "count": 4,
@@ -20,7 +20,7 @@
       "device_class": "desktop",
       "track": "current",
       "version": "157",
-      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.0.4341.57"
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.0.4341.60"
     },
     {
       "label": "Microsoft Edge on Linux",
@@ -29,7 +29,7 @@
       "device_class": "desktop",
       "track": "current",
       "version": "157",
-      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.0.4341.57"
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.0.4341.60"
     },
     {
       "label": "Microsoft Edge on Android",
