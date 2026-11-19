@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-11-19T13:09:46.382Z",
+  "generated_at": "2026-11-19T21:35:38.567Z",
   "label": "Microsoft Edge on Windows",
   "browser": "edge",
   "platform": "windows",
   "device_class": "desktop",
   "track": "current",
-  "version": "157",
-  "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.0.4341.60"
+  "version": "158",
+  "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36 Edg/158.0.4370.33"
 }
